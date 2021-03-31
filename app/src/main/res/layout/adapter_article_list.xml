@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/v_top_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/COLOR_GREY"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_homepage_article_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_below="@id/v_top_line"
+        android:text="扔物线"/>
+
+    <TextView
+        android:id="@+id/tv_homepage_article_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:layout_below="@id/v_top_line"
+        android:text="2021-01-20 15:19" />
+
+    <TextView
+        android:id="@+id/tv_homepage_article_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_homepage_article_author"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:text="Android面试黑洞————当我按下Home键再切回来，会发生什么？" />
+
+    <TextView
+        android:id="@+id/tv_article_like_and_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1322 赞同 · 1832 评论"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_below="@id/tv_homepage_article_title"/>
+
+    <TextView
+        android:id="@+id/tv_homepage_article_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_homepage_article_title"
+        android:layout_alignParentEnd="true"
+        android:text="干货资源 - 干活资源"
+        android:layout_marginEnd="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/COLOR_GREY"
+        android:layout_below="@id/tv_homepage_article_type"/>
+
+</RelativeLayout>

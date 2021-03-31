@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+        <ImageView
+            android:id="@+id/mine_footer_left_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/share"/>
+        <TextView
+            android:id="@+id/mine_footer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="我的积分"
+            android:textColor="@color/black"
+            android:layout_gravity="center_vertical"
+            android:textSize="18dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/mine_footer_right_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/shape_right_triangle"/>
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mvvm.exam.ExamFragment">
+
+    <include layout="@layout/toolbar_layout"
+        android:id="@+id/toolbar"/>
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_exam"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/toolbar"/>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_exam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/WhiteTabStyle"
+        app:tabGravity="fill"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_below="@id/banner_exam"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/COLOR_GREY"
+        android:layout_below="@id/tab_exam"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager_exam"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_exam"/>
+</RelativeLayout>

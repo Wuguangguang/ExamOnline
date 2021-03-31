@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">在线考试系统·</string>
+    <string name="title_first">首页</string>
+    <string name="title_second">论坛</string>
+    <string name="title_third">考试</string>
+    <string name="title_fourth">我的</string>
+    <string name="mine_rank">我的积分</string>
+    <string name="mine_collect">我的收藏</string>
+    <string name="mine_blog">我的博客</string>
+    <string name="mine_history">浏览历史</string>
+    <string name="mine_juejin">掘金</string>
+    <string name="mine_github">Github</string>
+    <string name="mine_exit">退出登录</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="search_tips">请输入要搜索的内容...</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+</resources>

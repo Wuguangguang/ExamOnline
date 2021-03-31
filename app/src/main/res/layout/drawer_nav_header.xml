@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:padding="10dp"
+    android:background="@color/colorAccent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/drawer_header_user_avatar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/img_nomal_head"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/drawer_header_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_above="@+id/drawer_header_user_description"
+        android:text="睡火山"/>
+
+    <TextView
+        android:id="@+id/drawer_header_user_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textSize="18dp"
+        android:textColor="@color/white"
+        android:text="谁不想千色百彩～～"/>
+</RelativeLayout>

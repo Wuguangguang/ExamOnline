@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    tools:context=".mvvm.forum.ExamDetailActivity">
+    tools:context=".mvvm.exam.ExamDetailActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/exam_detail_gl_top"
@@ -33,7 +33,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_green_exit"
+        android:src="@drawable/grey_left_triangle"
         app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"
         app:layout_constraintStart_toEndOf="@id/exam_detail_gl_left"/>
 
@@ -53,10 +53,19 @@
         app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="答题卡"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@id/exam_detail_record"
+        app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>
+
+    <TextView
         android:id="@+id/exam_detail_record"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:text="答题卡 0/10"
+        android:text=""
         android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toStartOf="@id/exam_detail_gl_right"
         app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>

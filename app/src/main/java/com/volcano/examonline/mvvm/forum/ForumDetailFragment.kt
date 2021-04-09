@@ -1,6 +1,7 @@
 package com.volcano.examonline.mvvm.forum
 
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.volcano.examonline.base.BaseMvvmFragment
@@ -22,16 +23,17 @@ class ForumDetailFragment(val mId : Int) : BaseMvvmFragment<ForumDetailFragmentB
 
     override fun initView() {
         mBinding.projectDetailSwipeRefreshL.setOnRefreshListener {
-            mViewModel.getProjectArticles(FIRST_PAGE, mId)
+            mViewModel.getArticles(FIRST_PAGE, mId)
         }
         mBinding.projectDetailRcv.apply {
             layoutManager = LinearLayoutManager(activity)
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             adapter = articleAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     if(newState == RecyclerView.SCROLL_STATE_IDLE && lastItemPosition == articleAdapter.itemCount){
                         if(mViewModel.articles.size < total) {
-                            mViewModel.getProjectArticles(++currentPage, mId)
+                            mViewModel.getArticles(++currentPage, mId)
                         }
                     }
                 }
@@ -47,14 +49,25 @@ class ForumDetailFragment(val mId : Int) : BaseMvvmFragment<ForumDetailFragmentB
     }
 
     override fun initData() {
+
         mViewModel.articlePage.observe(this) {
-            if(it != null && !it.datas.isNullOrEmpty()) {
-                total = it.total!!
-                mViewModel.articles.addAll(it.datas!!)
+            if(!it.isNullOrEmpty()) {
+                mViewModel.articles.addAll(it)
                 articleAdapter.notifyDataSetChanged()
                 mBinding.projectDetailSwipeRefreshL.isRefreshing = false
             }
         }
-        mViewModel.getProjectArticles(currentPage,mId)
+        when(mId) {
+            1 -> {
+                //关注
+            }
+            2 -> {
+                //推荐
+                mViewModel.getArticles(0 ,mId)
+            }
+            3 -> {
+                //热榜
+            }
+        }
     }
 }

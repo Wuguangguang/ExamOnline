@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.homepage
+package com.volcano.examonline.mvvm.homepage.view
 
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager

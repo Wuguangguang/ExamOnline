@@ -6,7 +6,7 @@ import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityMainBinding
 import com.volcano.examonline.mvvm.exam.ExamFragment
 import com.volcano.examonline.mvvm.forum.ForumFragment
-import com.volcano.examonline.mvvm.homepage.HomepageFragment
+import com.volcano.examonline.mvvm.homepage.view.HomepageFragment
 import com.volcano.examonline.mvvm.mine.MineFragment
 
 class MainActivity : BaseMvvmActivity<ActivityMainBinding, MainViewModel>() {

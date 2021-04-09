@@ -5,6 +5,41 @@ data class Exam(
         var examName: String? = null
 )
 
+/**
+ * id : 1
+ * desc : 物理治疗不包含（  ）
+ * type : 单选题
+ * img : null
+ * level : 中等
+ * source : 医学2021-2022春
+ * analysis : 提示：C。物理治疗分成运动疗法和物理因子疗法，其中物理因子疗法包括力、电、光、声、水及温度等物理因子。
+ * correctanswer : C
+ * optiona : 超声波疗法
+ * optionb : 运动疗法
+ * optionc : 环境改造
+ * optiond : 热疗法
+ * optione : 磁疗法
+ * isselect : 1
+ */
+
+data class Question(
+        var id: Int? = null,
+        var desc: String? = null,
+        var type: String? = null,
+        var img: Any? = null,
+        var level: String? = null,
+        var source: String? = null,
+        var analysis: String? = null,
+        var correctanswer: String? = null,
+        var optiona: String? = null,
+        var optionb: String? = null,
+        var optionc: String? = null,
+        var optiond: String? = null,
+        var optione: String? = null,
+        var isselect: Int? = null
+)
+
+
 /*
 {
     "data": [

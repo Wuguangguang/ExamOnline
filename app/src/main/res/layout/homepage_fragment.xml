@@ -19,19 +19,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/homepage_gl_top">
 
-        <ImageView
-            android:id="@+id/discover_top_ranking"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_homepage_ranking"
-            android:visibility="visible"
-            android:layout_marginStart="20dp"
+        <TextView
+            android:id="@+id/tv_upload_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/discover_top_search"
-            app:layout_constraintBottom_toBottomOf="@id/discover_top_search"/>
+            app:layout_constraintTop_toTopOf="@id/tv_search"
+            app:layout_constraintBottom_toBottomOf="@id/tv_search"
+            android:layout_marginStart="20dp"/>
 
         <TextView
-            android:id="@+id/discover_top_search"
+            android:id="@+id/tv_search"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:background="@drawable/shape_white_rect"
@@ -41,7 +43,7 @@
             android:layout_marginBottom="7dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/discover_top_ranking"
+            app:layout_constraintStart_toEndOf="@id/tv_upload_question"
             app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

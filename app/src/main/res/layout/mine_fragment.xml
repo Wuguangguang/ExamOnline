@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".mvvm.mine.MineFragment">
 
-    <include layout="@layout/toolbar_layout"
-        android:id="@+id/toolbar"/>
 
     <RelativeLayout
-        android:id="@+id/mine_user_info"
-        android:layout_below="@+id/toolbar"
+        android:id="@+id/rl_user_info"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:paddingStart="20dp"
@@ -18,21 +16,24 @@
         android:background="@color/colorAccent">
 
             <ImageView
-                android:id="@+id/mine_user_avatar"
+                android:id="@+id/iv_user_avatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:scaleType="centerCrop"
                 android:layout_centerVertical="true"
                 android:background="@drawable/img_nomal_head"/>
+
             <LinearLayout
-                android:layout_toRightOf="@+id/mine_user_avatar"
+                android:id="@+id/ll_user_info"
+                android:layout_toEndOf="@+id/iv_user_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_centerVertical="true"
                 android:paddingStart="20dp"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/mine_user_name"
+                    android:id="@+id/tv_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -40,21 +41,22 @@
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:gravity="center_vertical"
-                    android:text="睡火山"/>
+                    android:text="点击登录"/>
+
                 <TextView
-                    android:id="@+id/mine_user_description"
+                    android:id="@+id/tv_user_phone"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:textSize="18dp"
                     android:textColor="@color/white"
-                    android:text="谁不想千色百彩～～"/>
+                    android:text=""/>
             </LinearLayout>
     </RelativeLayout>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_below="@+id/mine_user_info"
+        android:layout_below="@+id/rl_user_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

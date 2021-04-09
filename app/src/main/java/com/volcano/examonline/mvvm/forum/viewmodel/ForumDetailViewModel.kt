@@ -4,23 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.volcano.examonline.base.ArticleBean
-import com.volcano.examonline.base.ArticleListBean
+import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.network.NetworkRepository
 
 class ForumDetailViewModel : ViewModel() {
 
     inner class Entity(val page : Int, val id : Int)
 
-    var articles = arrayListOf<ArticleBean>()
+    var articles = arrayListOf<Article>()
 
     private val mutableArticlePage = MutableLiveData<Entity>()
 
-    val articlePage : LiveData<ArticleListBean> = Transformations.switchMap(mutableArticlePage) { obj ->
-        NetworkRepository.getInstance().getArticleList(obj.page, obj.id, NetworkRepository.ARTICLE_HOMEPAGE)
+    val articlePage : LiveData<List<Article>> = Transformations.switchMap(mutableArticlePage) { obj ->
+        NetworkRepository.getInstance().getArticles(obj.page, obj.id)
     }
 
-    fun getProjectArticles(page: Int, id : Int) {
+    fun getArticles(page: Int, id: Int) {
         val entity = Entity(page, id)
         mutableArticlePage.value = entity
     }

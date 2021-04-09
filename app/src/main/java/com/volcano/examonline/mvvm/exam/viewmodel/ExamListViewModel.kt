@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.volcano.examonline.base.ArticleBean
-import com.volcano.examonline.base.ArticleListBean
+import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.network.NetworkRepository
 
 class ExamListViewModel : ViewModel() {
@@ -16,11 +15,11 @@ class ExamListViewModel : ViewModel() {
         mutableArticleListPage.value = page
     }
 
-    var articleList : LiveData<ArticleListBean> = Transformations.switchMap(mutableArticleListPage){ page ->
+    var articleList : LiveData<Article> = Transformations.switchMap(mutableArticleListPage){ page ->
         NetworkRepository.getInstance().getArticleList(page,0, NetworkRepository.ARTICLE_HOMEPAGE)
     }
 
-    var articles = ArrayList<ArticleBean>()
+    var articles = ArrayList<Article>()
 
 
 }

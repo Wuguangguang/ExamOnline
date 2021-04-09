@@ -59,8 +59,8 @@ class ExamListFragment(private val examId: Int) : BaseMvvmFragment<ExamListFragm
 
     override fun initData() {
         mViewModel.articleList.observe(activity!!) {
-            if(it != null && !it.datas.isNullOrEmpty()) {
-                mViewModel.articles.addAll(it.datas!!)
+            if(it != null) {
+                mViewModel.articles.add(it)
                 examListAdapter.notifyDataSetChanged()
             }
         }

@@ -1,6 +1,7 @@
-package com.volcano.examonline.mvvm.homepage
+package com.volcano.examonline.mvvm.homepage.view
 
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -33,7 +34,7 @@ class HomepageFragment : BaseMvvmFragment<HomepageFragmentBinding, HomepageViewM
         mBinding.discoverViewPager.apply {
             adapter = homepageAdapter
         }
-        mBinding.discoverTopSearch.setOnClickListener {
+        mBinding.tvSearch.setOnClickListener {
             val intent = Intent(activity, SearchActivity::class.java)
             startActivity(intent)
         }

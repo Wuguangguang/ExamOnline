@@ -2,7 +2,7 @@ package com.volcano.examonline.mvvm.homepage.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.volcano.examonline.mvvm.homepage.HomepageDetailFragment
+import com.volcano.examonline.mvvm.homepage.view.HomepageDetailFragment
 import com.volcano.examonline.mvvm.homepage.model.Subject
 
 class HomepagePagerAdapter(private val fragment : Fragment, val subjects : List<Subject>) : FragmentStateAdapter(fragment) {

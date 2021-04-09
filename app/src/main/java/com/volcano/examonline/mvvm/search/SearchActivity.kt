@@ -64,7 +64,7 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
             if(it != null) {
                 mBinding.hotkeyRcv.visibility = View.GONE
                 mBinding.searchRcv.visibility = View.VISIBLE
-                mViewModel.results.addAll(it.datas!!)
+                mViewModel.results.add(it)
                 articleAdapter.notifyDataSetChanged()
             }
         }

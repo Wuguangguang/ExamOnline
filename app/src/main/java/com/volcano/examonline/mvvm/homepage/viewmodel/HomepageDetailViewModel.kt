@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.volcano.examonline.mvvm.homepage.model.Question
+import com.volcano.examonline.mvvm.exam.model.Question
 import com.volcano.examonline.mvvm.homepage.model.QuestionList
 import com.volcano.examonline.network.NetworkRepository
 

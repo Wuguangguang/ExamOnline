@@ -2,6 +2,7 @@ package com.volcano.examonline.mvvm.exam
 
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
@@ -10,15 +11,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityExamDetailBinding
+import com.volcano.examonline.mvvm.exam.adapter.ExamPagerAdapter
 import com.volcano.examonline.mvvm.exam.viewmodel.ExamDetailViewModel
+import com.volcano.examonline.mvvm.exam.widget.ExamDetailRecordDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetailViewModel>() {
 
-    private val fragments = mutableListOf<Fragment>()
     private var currentPos = 0
+    private var recordDialog : ExamDetailRecordDialog? = null
+    private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions) }
 
     override fun initView() {
         setStatusBarStyle()
@@ -37,23 +41,17 @@ class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetai
         mBinding.examDetailBackImg.setOnClickListener {
             finish()
         }
-        repeat(10) {
-            fragments.add(ExamDetailFragment.newInstance())
-        }
-        mBinding.examDetailViewpager2.apply {
-            adapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
-                override fun getItemCount(): Int {
-                    return fragments.size
-                }
-                override fun createFragment(position: Int): Fragment {
-                    return fragments[position]
-                }
+        mBinding.examDetailRecord.setOnClickListener {
+            if(recordDialog == null) {
+                recordDialog = ExamDetailRecordDialog(this)
             }
-            offscreenPageLimit = 10
-            isUserInputEnabled = false
+            recordDialog!!.show();
         }
+        mBinding.examDetailViewpager2.adapter = examAdapter
+        mBinding.examDetailViewpager2.isUserInputEnabled = false
+
         mBinding.examDetailNextQuest.setOnClickListener {
-            if(currentPos < fragments.size - 1) {
+            if(currentPos < mViewModel.questions.size - 1) {
                 mViewModel.setCurrentPos(++currentPos)
             }
         }
@@ -67,9 +65,20 @@ class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetai
     override fun initData() {
         mViewModel.currentPos.observe(this){
             mBinding.examDetailLastQuest.setTextColor(if(currentPos == 0) Color.GRAY else resources.getColor(R.color.colorAccent))
-            mBinding.examDetailNextQuest.setTextColor(if(currentPos == fragments.size - 1) Color.GRAY else resources.getColor(R.color.colorAccent))
+            mBinding.examDetailNextQuest.setTextColor(if(currentPos == mViewModel.questions.size - 1) Color.GRAY else resources.getColor(R.color.colorAccent))
             mBinding.examDetailViewpager2.currentItem = currentPos
         }
+        mViewModel.question.observe(this) {
+            if(!it.isNullOrEmpty()) {
+                mBinding.examDetailViewpager2.offscreenPageLimit = it.size
+                mViewModel.questions.addAll(it)
+                examAdapter.notifyDataSetChanged()
+                examAdapter.initFragments()
+                mBinding.examDetailViewpager2.currentItem = 0
+                mBinding.examDetailRecord.text = "0/${mViewModel.questions.size}"
+            }
+        }
+        mViewModel.getRandomQuestions(3)
         mViewModel.setCurrentPos(currentPos)
     }
 

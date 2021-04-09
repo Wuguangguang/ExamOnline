@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.volcano.examonline.base.ArticleBean
-import com.volcano.examonline.base.ArticleListBean
 import com.volcano.examonline.mvvm.exam.model.Hotkey
+import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.network.NetworkRepository
 
 class SearchViewModel : ViewModel() {
@@ -31,9 +30,9 @@ class SearchViewModel : ViewModel() {
 
     private val mutableSearchKey = MutableLiveData<Entity>()
 
-    val searchKey : LiveData<ArticleListBean> = Transformations.switchMap(mutableSearchKey){ obj ->
+    val searchKey : LiveData<Article> = Transformations.switchMap(mutableSearchKey){ obj ->
         NetworkRepository.getInstance().getSearchResult(obj.page,obj.key)
     }
 
-    val results = arrayListOf<ArticleBean>()
+    val results = arrayListOf<Article>()
 }

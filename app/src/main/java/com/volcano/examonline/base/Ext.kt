@@ -13,27 +13,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.reflect.ParameterizedType
 
-fun <T> Observable<BaseResponse<T>>.transform(result : MutableLiveData<T>) {
-    this.map {
-        it.data!!
-    }
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(object : Observer<T> {
-            override fun onSubscribe(d: Disposable) {
-            }
-            override fun onNext(t: T) {
-                result.value = t
-            }
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-            }
-            override fun onComplete() {
-            }
-        })
-}
-
-fun <T> Observable<Response<T>>.trans(result : MutableLiveData<T>) {
+fun <T> Observable<Response<T>>.transform(result : MutableLiveData<T>) {
     this.map {
         it.data!!
     }

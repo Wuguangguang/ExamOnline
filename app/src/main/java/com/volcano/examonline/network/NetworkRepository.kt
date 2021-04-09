@@ -1,14 +1,14 @@
 package com.volcano.examonline.network
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.volcano.examonline.base.ArticleBean
-import com.volcano.examonline.base.ArticleListBean
 import com.volcano.examonline.base.transform
 import com.volcano.examonline.mvvm.exam.model.Banner
 import com.volcano.examonline.mvvm.exam.model.Hotkey
+import com.volcano.examonline.mvvm.exam.model.Question
+import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.mvvm.homepage.model.Chapter
-import com.volcano.examonline.mvvm.homepage.model.Question
 import com.volcano.examonline.mvvm.homepage.model.QuestionList
 import com.volcano.examonline.mvvm.homepage.model.Subject
 import retrofit2.Retrofit
@@ -21,7 +21,7 @@ class NetworkRepository {
 
     private val api : API by lazy {
         Retrofit.Builder()
-            .baseUrl("https://www.wanandroid.com/")
+            .baseUrl("http://192.168.1.107:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
@@ -38,8 +38,8 @@ class NetworkRepository {
         }
     }
 
-    fun getArticleList(page : Int, id : Int, flag : Int) : MutableLiveData<ArticleListBean> {
-        val result = MutableLiveData<ArticleListBean>()
+    fun getArticleList(page : Int, id : Int, flag : Int) : MutableLiveData<Article> {
+        val result = MutableLiveData<Article>()
         when (flag) {
             ARTICLE_HOMEPAGE -> {
                 api.getArticleList(page).transform(result)
@@ -54,11 +54,6 @@ class NetworkRepository {
         return result
     }
 
-    fun getTopArticles() : MutableLiveData<List<ArticleBean>> {
-        val result = MutableLiveData<List<ArticleBean>>()
-        api.getTopArticles().transform(result)
-        return result
-    }
 
     fun getBannerList() : MutableLiveData<List<Banner>> {
         val result = MutableLiveData<List<Banner>>()
@@ -72,58 +67,40 @@ class NetworkRepository {
         return result
     }
 
-//    fun getProjectTrees() : MutableLiveData<List<ProjectTree>> {
-//        var result = MutableLiveData<List<ProjectTree>>()
-//        api.getProjectTrees().transform(result)
-//        return result
-//    }
-
     fun getSearchWords() : LiveData<List<Hotkey>> {
         var result = MutableLiveData<List<Hotkey>>()
         api.getSearchWords().transform(result)
         return result
     }
 
-    fun getSearchResult(page: Int, key: String) : LiveData<ArticleListBean> {
-        var result = MutableLiveData<ArticleListBean>()
+    fun getSearchResult(page: Int, key: String) : LiveData<Article> {
+        var result = MutableLiveData<Article>()
         api.getSearchResult(page,key).transform(result)
         return result
     }
 
     fun getSubjectList(): LiveData<List<Subject>> {
         var result = MutableLiveData<List<Subject>>()
-//        api.getSubjectList().trans(result)
-        result.value = subjects
+        api.getSubjectList().transform(result)
         return result
     }
 
     fun getQuestionList(page: Int, subjectId: Int): LiveData<QuestionList> {
         var result = MutableLiveData<QuestionList>()
-//        api.getQuestionList(page, subjectId)
-        result.value = QuestionList(questions, 1, 3, 10)
+        api.getQuestionList().transform(result)
         return result
     }
 
-    private val subjects = arrayListOf(
-        Subject(1,"计算机网络"),
-        Subject(2,"数据结构"),
-        Subject(3,"算法"),
-        Subject(4,"Java"),
-        Subject(5,"Android"),
-        Subject(6,"软件工程"),
-        Subject(7,"数据库系统概论")
-    )
+    fun getRandomQuestions(num: Int): LiveData<List<Question>> {
+        var result = MutableLiveData<List<Question>>()
+        api.getRandomQuestions(num).transform(result)
+        return result
+    }
 
-    private val questions = arrayListOf(
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null),
-        Question(1,"寻找两个正序数组的中位数","单选题","请选择正确答案",null,null,"困难","《计算机网络》2015-16春)",null)
-    )
+    //获取全部文章
+    fun getArticles(page: Int, id: Int): LiveData<List<Article>> {
+        var result = MutableLiveData<List<Article>>()
+        api.getArticles().transform(result)
+        return result
+    }
 }

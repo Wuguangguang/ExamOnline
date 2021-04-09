@@ -1,17 +1,15 @@
 package com.volcano.examonline.mvvm.forum.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.volcano.examonline.WebviewActivity
-import com.volcano.examonline.base.ArticleBean
 import com.volcano.examonline.databinding.AdapterArticleFooterBinding
 import com.volcano.examonline.databinding.AdapterArticleListBinding
+import com.volcano.examonline.mvvm.forum.model.Article
 import java.text.SimpleDateFormat
 
-class ArticleListAdapter(val context : Context, private val articles : ArrayList<ArticleBean>)
+class ArticleListAdapter(val context : Context, private val articles : ArrayList<Article>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val FOOTER_ITEM = 0x1
@@ -19,11 +17,10 @@ class ArticleListAdapter(val context : Context, private val articles : ArrayList
 
 
     class DataViewHolder(private val binding : AdapterArticleListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(article : ArticleBean) {
-            binding.tvHomepageArticleAuthor.text = article.author
-            binding.tvHomepageArticleDate.text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(article.publishTime)
-            binding.tvHomepageArticleTitle.text = article.title
-            binding.tvHomepageArticleType.text = article.superChapterName
+        fun bind(article : Article) {
+            binding.tvArticleAuthor.text = article.username
+//            binding.tvArticleDate.text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(article.createat)
+            binding.tvArticleTitle.text = article.title
         }
     }
 
@@ -40,12 +37,12 @@ class ArticleListAdapter(val context : Context, private val articles : ArrayList
                 val binding = AdapterArticleListBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 holder = DataViewHolder(binding)
                 holder.itemView.setOnClickListener {
-                    val pos = holder.adapterPosition
-                    val intent = Intent(this.context, WebviewActivity::class.java).apply {
-                        putExtra("link",articles[pos].link)
-                        putExtra("title",articles[pos].title)
-                    }
-                    this.context.startActivity(intent)
+//                    val pos = holder.adapterPosition
+//                    val intent = Intent(this.context, WebviewActivity::class.java).apply {
+//                        putExtra("link",articles[pos].link)
+//                        putExtra("title",articles[pos].title)
+//                    }
+//                    this.context.startActivity(intent)
                 }
             }
         }

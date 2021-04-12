@@ -14,9 +14,11 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="search_tips">请输入要搜索的内容...</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_account">请输入账号</string>
+    <string name="prompt_username">请输入用户名/昵称</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in">点击登录</string>
+    <string name="action_register">-> 注册账号</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>

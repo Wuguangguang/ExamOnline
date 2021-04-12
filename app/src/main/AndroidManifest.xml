@@ -14,10 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamOnline">
-        <activity android:name=".mvvm.login.LoginActivity"></activity>
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+        <activity android:name=".mvvm.login.view.LoginActivity"></activity>
+        <activity android:name=".mvvm.login.view.RegisterActivity"></activity>
         <activity android:name=".mvvm.homepage.view.QuestionActivity" />
         <activity android:name=".mvvm.forum.ForumEditActivity" />
         <activity android:name=".mvvm.exam.ExamDetailActivity" />

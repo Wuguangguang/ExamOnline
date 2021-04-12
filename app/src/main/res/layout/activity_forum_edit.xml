@@ -1,129 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context=".mvvm.forum.ForumEditActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/forum_edit_gl_top"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="44dp"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/forum_edit_gl_left"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/forum_edit_gl_right"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp"/>
+    <include layout="@layout/white_toolbar_layout"
+        android:id="@+id/toolbar_article_edit"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        app:layout_constraintTop_toTopOf="@id/forum_edit_gl_top"
-        app:layout_constraintBottom_toBottomOf="@id/forum_edit_gl_top"
-        android:background="@color/black"/>
-
-    <ImageView
-        android:id="@+id/forum_edit_back_img"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/grey_left_triangle"
-        android:scaleType="fitXY"
-        app:layout_constraintStart_toEndOf="@id/forum_edit_gl_left"
-        app:layout_constraintBottom_toTopOf="@id/forum_edit_gl_top"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/forum_edit_title"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:text="发起讨论"
-        android:textSize="18dp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toEndOf="@id/forum_edit_gl_left"
-        app:layout_constraintEnd_toStartOf="@id/forum_edit_gl_right"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/forum_edit_gl_top"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="预览"
-        app:layout_constraintEnd_toStartOf="@id/forum_edit_gl_right"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/forum_edit_gl_top"/>
+        android:layout_height="1dp"
+        android:background="@color/COLOR_GREY"
+        android:layout_below="@id/toolbar_article_edit"/>
 
     <EditText
-        android:id="@+id/forum_edit_article_title"
-        android:layout_width="0dp"
+        android:id="@+id/et_article_title"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="此处输入标题"
+        android:inputType="text"
+        android:background="@null"
         android:singleLine="true"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@id/forum_edit_gl_left"
-        app:layout_constraintEnd_toStartOf="@id/forum_edit_gl_right"
-        app:layout_constraintTop_toBottomOf="@id/forum_edit_gl_top"/>
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_below="@id/toolbar_article_edit"/>
 
     <View
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:background="@color/COLOR_GREY"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/forum_edit_article_title"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/et_article_title"/>
 
     <EditText
-        android:id="@+id/forum_edit_article_content"
-        android:layout_width="0dp"
+        android:id="@+id/et_article_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="输入正文"
-        android:textSize="14dp"
+        android:layout_weight="1"
+        android:paddingStart="20dp"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="20dp"
+        android:hint="此处输入正文"
+        android:inputType="text"
+        android:textSize="16dp"
+        android:background="@null"
+        android:layout_below="@id/et_article_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@id/forum_edit_gl_left"
-        app:layout_constraintEnd_toStartOf="@id/forum_edit_gl_right"
-        app:layout_constraintTop_toBottomOf="@id/forum_edit_article_title" />
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_above="@id/btn_article_edit">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_article_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="求职面试"
+            android:textSize="18dp"/>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/forum_edit_article_publish"
-        android:layout_width="0dp"
+        android:id="@+id/btn_article_edit"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
         android:text="发布讨论"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/forum_edit_gl_left"
-        app:layout_constraintEnd_toStartOf="@id/forum_edit_gl_right"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_white_rect"/>
+        android:background="@drawable/shape_green_rect"
+        android:layout_alignParentBottom="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="#"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@id/forum_edit_article_type"
-        app:layout_constraintStart_toEndOf="@id/forum_edit_gl_left"/>
-
-    <TextView
-        android:id="@+id/forum_edit_article_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="求职面试"
-        android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@id/forum_edit_gl_left"
-        app:layout_constraintBottom_toTopOf="@id/forum_edit_article_publish"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="20dp"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -8,6 +8,8 @@ import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.mvvm.homepage.model.Chapter
 import com.volcano.examonline.mvvm.homepage.model.QuestionList
 import com.volcano.examonline.mvvm.homepage.model.Subject
+import com.volcano.examonline.mvvm.login.model.TokenBean
+import com.volcano.examonline.mvvm.mine.model.UserInfo
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -64,4 +66,25 @@ interface API {
 
     @GET("articles")
     fun getArticles(): Observable<Response<List<Article>>>
+
+
+    // 注册
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("userinfo/register")
+    fun register(@Body userinfo: UserInfo): Observable<Response<Any>>
+
+    // 登录
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("userinfo/login")
+    fun login(@Body userinfo: UserInfo): Observable<Response<TokenBean>>
+
+    // 根据phone获取用户信息
+    @GET("userinfo/{phone}")
+    fun getUserInfo(@Path("phone") phone: String): Observable<Response<UserInfo>>
+
+    // 上传文章
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("articles/edit")
+    fun uploadArticle(@Header("Authorization") token: String,@Body obj: Article): Observable<Response<Any>>
 }

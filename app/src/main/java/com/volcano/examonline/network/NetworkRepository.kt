@@ -1,8 +1,8 @@
 package com.volcano.examonline.network
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.volcano.examonline.base.getCode
 import com.volcano.examonline.base.transform
 import com.volcano.examonline.mvvm.exam.model.Banner
 import com.volcano.examonline.mvvm.exam.model.Hotkey
@@ -11,6 +11,9 @@ import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.mvvm.homepage.model.Chapter
 import com.volcano.examonline.mvvm.homepage.model.QuestionList
 import com.volcano.examonline.mvvm.homepage.model.Subject
+import com.volcano.examonline.mvvm.login.model.TokenBean
+import com.volcano.examonline.mvvm.mine.model.UserInfo
+import com.volcano.examonline.util.ConstantData
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -101,6 +104,30 @@ class NetworkRepository {
     fun getArticles(page: Int, id: Int): LiveData<List<Article>> {
         var result = MutableLiveData<List<Article>>()
         api.getArticles().transform(result)
+        return result
+    }
+
+    fun register(userInfo: UserInfo): LiveData<Int> {
+        var result = MutableLiveData<Int>()
+        api.register(userInfo).getCode(result)
+        return result
+    }
+
+    fun login(userInfo: UserInfo): LiveData<TokenBean> {
+        val result = MutableLiveData<TokenBean>()
+        api.login(userInfo).transform(result)
+        return result
+    }
+
+    fun getUserInfo(phone: String): LiveData<UserInfo>? {
+        val result = MutableLiveData<UserInfo>()
+        api.getUserInfo(phone).transform(result)
+        return result
+    }
+
+    fun uploadArticle(obj: Article): LiveData<Int> {
+        val result = MutableLiveData<Int>()
+        api.uploadArticle(ConstantData.TOKEN!! ,obj).getCode(result)
         return result
     }
 }

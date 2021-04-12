@@ -1,12 +1,16 @@
 package com.volcano.examonline.mvvm.mine
 
+import android.app.Activity
 import android.content.Intent
+import android.util.Log
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.MineFragmentBinding
-import com.volcano.examonline.mvvm.login.LoginActivity
+import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.mvvm.mine.adapter.FooterAdapter
 import com.volcano.examonline.mvvm.mine.viewmodel.MineViewModel
+import com.volcano.examonline.util.ConstantData
 
 class MineFragment : BaseMvvmFragment<MineFragmentBinding, MineViewModel>() {
 
@@ -24,13 +28,38 @@ class MineFragment : BaseMvvmFragment<MineFragmentBinding, MineViewModel>() {
         }
         mBinding.llUserInfo.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 1)
+        }
+        mBinding.ivUserAvatar.setOnClickListener {
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivityForResult(intent, 1)
+        }
+    }
+
+    override fun initData() {
+        mViewModel.phone.observe(activity!!) {
+            if(it != null) {
+                mBinding.tvUserName.text = it.username
+                mBinding.tvUserPhone.text = it.phone
+            }
         }
 
     }
 
-    override fun initData() {
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            1 -> if(resultCode == Activity.RESULT_OK) {
+                val token = data?.getStringExtra("token")
+                val phone = data?.getStringExtra("phone")
+                Log.d("Test", "onActivityResult: $token , $phone")
+                ConstantData.TOKEN = token
+                ConstantData.PHONE = phone
+                if(ConstantData.PHONE != null && ConstantData.TOKEN != null) {
+                    mViewModel.getUserInfo(phone!!)
+                }
+            }
+        }
     }
 
 

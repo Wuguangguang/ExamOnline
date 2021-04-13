@@ -4,12 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.volcano.examonline.base.getCode
 import com.volcano.examonline.base.transform
-import com.volcano.examonline.mvvm.exam.model.Banner
-import com.volcano.examonline.mvvm.exam.model.Hotkey
 import com.volcano.examonline.mvvm.exam.model.Question
 import com.volcano.examonline.mvvm.forum.model.Article
-import com.volcano.examonline.mvvm.homepage.model.Chapter
-import com.volcano.examonline.mvvm.homepage.model.QuestionList
+import com.volcano.examonline.mvvm.homepage.model.Comment
 import com.volcano.examonline.mvvm.homepage.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
@@ -33,79 +30,94 @@ class NetworkRepository {
 
     companion object {
         private val repository = NetworkRepository()
-        const val ARTICLE_HOMEPAGE = 0x1
-        const val ARTICLE_WEXIN = 0x2
-        const val ARTICLE_PROJECT = 0x4
         fun getInstance() : NetworkRepository {
             return repository
         }
     }
 
-    fun getArticleList(page : Int, id : Int, flag : Int) : MutableLiveData<Article> {
-        val result = MutableLiveData<Article>()
-        when (flag) {
-            ARTICLE_HOMEPAGE -> {
-                api.getArticleList(page).transform(result)
-            }
-            ARTICLE_WEXIN -> {
-                api.getWxArticles(id, page).transform(result)
-            }
-            ARTICLE_PROJECT -> {
-                api.getProjectArticles(page, id).transform(result)
-            }
-        }
-        return result
-    }
+    /**
+     * 题库页
+     */
 
-
-    fun getBannerList() : MutableLiveData<List<Banner>> {
-        val result = MutableLiveData<List<Banner>>()
-        api.getBannerList().transform(result)
-        return result
-    }
-
-    fun getWxChapters() : MutableLiveData<List<Chapter>> {
-        var result = MutableLiveData<List<Chapter>>()
-        api.getWxChapters().transform(result)
-        return result
-    }
-
-    fun getSearchWords() : LiveData<List<Hotkey>> {
-        var result = MutableLiveData<List<Hotkey>>()
-        api.getSearchWords().transform(result)
-        return result
-    }
-
-    fun getSearchResult(page: Int, key: String) : LiveData<Article> {
-        var result = MutableLiveData<Article>()
-        api.getSearchResult(page,key).transform(result)
-        return result
-    }
-
-    fun getSubjectList(): LiveData<List<Subject>> {
-        var result = MutableLiveData<List<Subject>>()
-        api.getSubjectList().transform(result)
-        return result
-    }
-
-    fun getQuestionList(page: Int, subjectId: Int): LiveData<QuestionList> {
-        var result = MutableLiveData<QuestionList>()
-        api.getQuestionList().transform(result)
-        return result
-    }
-
-    fun getRandomQuestions(num: Int): LiveData<List<Question>> {
+    fun getQuestions(id: Int): LiveData<List<Question>> {
         var result = MutableLiveData<List<Question>>()
-        api.getRandomQuestions(num).transform(result)
+        api.getQuestions(id).transform(result)
         return result
     }
 
-    //获取全部文章
-    fun getArticles(page: Int, id: Int): LiveData<List<Article>> {
+    fun searchQuestion(content: String): LiveData<List<Question>> {
+        var result = MutableLiveData<List<Question>>()
+        api.searchQuestion(content).transform(result)
+        return result
+    }
+
+    fun getQuestionComments(questionId: Int): LiveData<List<Comment>> {
+        var result = MutableLiveData<List<Comment>>()
+        api.getQuestionComments(questionId).transform(result)
+        return result
+    }
+
+    fun getQuestionHotKey(): LiveData<List<Any>> {
+        var result = MutableLiveData<List<Any>>()
+        api.getQuestionHotKey().transform(result)
+        return result
+    }
+
+    fun getSubjects(): LiveData<List<Subject>> {
+        val result = MutableLiveData<List<Subject>>()
+        api.getSubjects().transform(result)
+        return result
+    }
+
+
+    /**
+     * 论坛页
+     */
+
+    fun getArticles(): LiveData<List<Article>> {
         var result = MutableLiveData<List<Article>>()
         api.getArticles().transform(result)
         return result
     }
+
+    fun getHotArticles(): LiveData<List<Article>> {
+        var result = MutableLiveData<List<Article>>()
+        api.getHotArticles().transform(result)
+        return result
+    }
+
+    fun getArticleComments(id: Int): LiveData<Comment> {
+        var result = MutableLiveData<Comment>()
+        api.getArticleComments(id).transform(result)
+        return result
+    }
+
+    fun uploadArticle(obj: Article): LiveData<Int> {
+        val result = MutableLiveData<Int>()
+        api.uploadArticle(ConstantData.TOKEN!! ,obj).getCode(result)
+        return result
+    }
+
+    fun getArticleHotKey(): LiveData<List<Any>> {
+        var result = MutableLiveData<List<Any>>()
+        api.getArticleHotKey().transform(result)
+        return result
+    }
+
+    /**
+     * 考试页
+     */
+
+
+    fun getRandomQuestions(id:Int, num: Int): LiveData<List<Question>> {
+        var result = MutableLiveData<List<Question>>()
+        api.getRandomQuestions(id, num).transform(result)
+        return result
+    }
+
+    /**
+     * 我的页
+     */
 
     fun register(userInfo: UserInfo): LiveData<Int> {
         var result = MutableLiveData<Int>()
@@ -119,15 +131,10 @@ class NetworkRepository {
         return result
     }
 
-    fun getUserInfo(phone: String): LiveData<UserInfo>? {
+    fun getUserInfo(phone: String): LiveData<UserInfo> {
         val result = MutableLiveData<UserInfo>()
         api.getUserInfo(phone).transform(result)
         return result
     }
 
-    fun uploadArticle(obj: Article): LiveData<Int> {
-        val result = MutableLiveData<Int>()
-        api.uploadArticle(ConstantData.TOKEN!! ,obj).getCode(result)
-        return result
-    }
 }

@@ -1,13 +1,15 @@
 package com.volcano.examonline.mvvm.forum.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.volcano.examonline.databinding.AdapterArticleFooterBinding
 import com.volcano.examonline.databinding.AdapterArticleListBinding
+import com.volcano.examonline.mvvm.detail.view.DetailActivity
 import com.volcano.examonline.mvvm.forum.model.Article
-import java.text.SimpleDateFormat
+import com.volcano.examonline.util.ConstantData
 
 class ArticleListAdapter(val context : Context, private val articles : ArrayList<Article>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -37,12 +39,13 @@ class ArticleListAdapter(val context : Context, private val articles : ArrayList
                 val binding = AdapterArticleListBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 holder = DataViewHolder(binding)
                 holder.itemView.setOnClickListener {
-//                    val pos = holder.adapterPosition
-//                    val intent = Intent(this.context, WebviewActivity::class.java).apply {
-//                        putExtra("link",articles[pos].link)
-//                        putExtra("title",articles[pos].title)
-//                    }
-//                    this.context.startActivity(intent)
+                    val article = articles[holder.adapterPosition]
+                    val intent = Intent(this.context, DetailActivity::class.java)
+                    intent.apply {
+                        putExtra("detailType", ConstantData.ARTICLE_DETAIL)
+                        putExtra("article", article)
+                    }
+                    this.context.startActivity(intent)
                 }
             }
         }

@@ -9,18 +9,16 @@ import com.volcano.examonline.network.NetworkRepository
 
 class ForumDetailViewModel : ViewModel() {
 
-    inner class Entity(val page : Int, val id : Int)
 
     var articles = arrayListOf<Article>()
 
-    private val mutableArticlePage = MutableLiveData<Entity>()
+    private val mutableArticlePage = MutableLiveData<Boolean>()
 
-    val articlePage : LiveData<List<Article>> = Transformations.switchMap(mutableArticlePage) { obj ->
-        NetworkRepository.getInstance().getArticles(obj.page, obj.id)
+    val articlePage : LiveData<List<Article>> = Transformations.switchMap(mutableArticlePage) {
+        NetworkRepository.getInstance().getArticles()
     }
 
-    fun getArticles(page: Int, id: Int) {
-        val entity = Entity(page, id)
-        mutableArticlePage.value = entity
+    fun getArticles() {
+        mutableArticlePage.value = true
     }
 }

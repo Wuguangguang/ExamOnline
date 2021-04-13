@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.forum
+package com.volcano.examonline.mvvm.forum.view
 
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,36 +15,16 @@ class ForumDetailFragment(val mId : Int) : BaseMvvmFragment<ForumDetailFragmentB
         fun newInstance(id : Int) = ForumDetailFragment(id)
     }
 
-    private val FIRST_PAGE = 1
-    private var currentPage = FIRST_PAGE
-    private var total = 0
-    private var lastItemPosition = 0
     private val articleAdapter : ArticleListAdapter by lazy { ArticleListAdapter(activity!!,mViewModel.articles) }
 
     override fun initView() {
         mBinding.projectDetailSwipeRefreshL.setOnRefreshListener {
-            mViewModel.getArticles(FIRST_PAGE, mId)
+            mViewModel.getArticles()
         }
         mBinding.projectDetailRcv.apply {
             layoutManager = LinearLayoutManager(activity)
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             adapter = articleAdapter
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    if(newState == RecyclerView.SCROLL_STATE_IDLE && lastItemPosition == articleAdapter.itemCount){
-                        if(mViewModel.articles.size < total) {
-                            mViewModel.getArticles(++currentPage, mId)
-                        }
-                    }
-                }
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val layoutManager = recyclerView.layoutManager
-                    if(layoutManager is LinearLayoutManager) {
-                        val last = layoutManager.findLastCompletelyVisibleItemPosition()
-                        lastItemPosition = last + 1
-                    }
-                }
-            })
         }
     }
 
@@ -59,13 +39,10 @@ class ForumDetailFragment(val mId : Int) : BaseMvvmFragment<ForumDetailFragmentB
         }
         when(mId) {
             1 -> {
-                //关注
+                //推荐
+                mViewModel.getArticles()
             }
             2 -> {
-                //推荐
-                mViewModel.getArticles(0 ,mId)
-            }
-            3 -> {
                 //热榜
             }
         }

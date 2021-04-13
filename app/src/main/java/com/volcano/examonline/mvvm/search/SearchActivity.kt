@@ -13,13 +13,13 @@ import com.volcano.examonline.widget.SpaceItemDecoration
 
 class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>() {
 
-    private val searchAdapter : SearchAdapter by lazy { SearchAdapter(mViewModel.hotkeys, onItemClickListener) }
+//    private val searchAdapter : SearchAdapter by lazy { SearchAdapter(mViewModel.hotkeys, onItemClickListener) }
     private val articleAdapter : ArticleListAdapter by lazy{ ArticleListAdapter(this, mViewModel.results) }
     private val onItemClickListener = object : SearchAdapter.OnItemClickListener {
         override fun onClick(position: Int) {
-            val name = mViewModel.hotkeys[position].name
-            mBinding.searchEditText.setText(name)
-            mBinding.searchEditText.setSelection(name!!.length)
+//            val name = mViewModel.hotkeys[position].name
+//            mBinding.searchEditText.text = name
+//            mBinding.searchEditText.setSelection(name!!.length)
         }
     }
 
@@ -44,7 +44,7 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
                 SpaceItemDecoration(8)
             )
             layoutManager = FlowLayoutManager()
-            adapter = searchAdapter
+//            adapter = searchAdapter
         }
         mBinding.searchRcv.apply {
             layoutManager = LinearLayoutManager(context)
@@ -54,20 +54,20 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
     }
 
     override fun initData() {
-        mViewModel.hotkeyFlag.observe(this){
-            if(!it.isNullOrEmpty()) {
-                mViewModel.hotkeys.addAll(it)
-                searchAdapter.notifyDataSetChanged()
-            }
-        }
-        mViewModel.searchKey.observe(this) {
-            if(it != null) {
-                mBinding.hotkeyRcv.visibility = View.GONE
-                mBinding.searchRcv.visibility = View.VISIBLE
-                mViewModel.results.add(it)
-                articleAdapter.notifyDataSetChanged()
-            }
-        }
+//        mViewModel.hotkeyFlag.observe(this){
+//            if(!it.isNullOrEmpty()) {
+//                mViewModel.hotkeys.addAll(it)
+//                searchAdapter.notifyDataSetChanged()
+//            }
+//        }
+//        mViewModel.searchKey.observe(this) {
+//            if(it != null) {
+//                mBinding.hotkeyRcv.visibility = View.GONE
+//                mBinding.searchRcv.visibility = View.VISIBLE
+//                mViewModel.results.add(it)
+//                articleAdapter.notifyDataSetChanged()
+//            }
+//        }
         mViewModel.getSearchWords()
     }
 

@@ -7,7 +7,7 @@
     android:paddingTop="10dp"
     android:paddingStart="5dp"
     android:paddingEnd="5dp"
-    tools:context=".mvvm.exam.ExamDetailFragment">
+    tools:context=".mvvm.exam.view.ExamDetailFragment">
 
     <TextView
         android:id="@+id/tv_question_type"

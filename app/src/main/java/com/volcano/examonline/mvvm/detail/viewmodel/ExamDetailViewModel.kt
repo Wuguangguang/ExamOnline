@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.exam.viewmodel
+package com.volcano.examonline.mvvm.detail.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,7 +25,7 @@ class ExamDetailViewModel : ViewModel() {
     }
 
     val question : LiveData<List<Question>> = Transformations.switchMap(mutableQuestionNum) { num ->
-        NetworkRepository.getInstance().getRandomQuestions(num)
+        NetworkRepository.getInstance().getRandomQuestions(1, num)
     }
 
 

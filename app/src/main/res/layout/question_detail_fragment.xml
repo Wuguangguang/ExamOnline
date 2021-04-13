@@ -6,10 +6,6 @@
     android:orientation="vertical"
     tools:context=".mvvm.homepage.view.QuestionActivity">
 
-
-    <include layout="@layout/toolbar_layout"
-        android:id="@+id/toolbar"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

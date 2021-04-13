@@ -1,5 +1,7 @@
 package com.volcano.examonline.mvvm.forum.model
 
+import java.io.Serializable
+
 data class Forum(
     var forumId: Int? = null,
     var name: String? = null
@@ -16,12 +18,12 @@ data class Forum(
  * createat : 2021-04-09T15:18:40.000+00:00
  */
 
-data class Article(
-    var id: Int? = null,
-    var userphone: String? = null,
-    var username: String? = null,
-    var title: String? = null,
-    var description: String? = null,
-    var img: String? = null,
+class Article : Serializable {
+    var id: Int? = null
+    var userphone: String? = null
+    var username: String? = null
+    var title: String? = null
+    var description: String? = null
+    var img: String? = null
     var createat: String? = null
-)
+}

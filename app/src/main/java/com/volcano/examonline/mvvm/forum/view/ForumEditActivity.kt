@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.forum
+package com.volcano.examonline.mvvm.forum.view
 
 import android.graphics.Color
 import android.os.Build

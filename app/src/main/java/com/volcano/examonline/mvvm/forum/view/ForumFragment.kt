@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.forum
+package com.volcano.examonline.mvvm.forum.view
 
 import android.content.Intent
 import androidx.viewpager2.widget.ViewPager2
@@ -8,7 +8,9 @@ import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.ForumFragmentBinding
 import com.volcano.examonline.mvvm.forum.adapter.ForumAdapter
 import com.volcano.examonline.mvvm.forum.viewmodel.ForumViewModel
+import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.mvvm.search.SearchActivity
+import com.volcano.examonline.util.ConstantData
 
 class ForumFragment : BaseMvvmFragment<ForumFragmentBinding, ForumViewModel>() {
 
@@ -31,8 +33,13 @@ class ForumFragment : BaseMvvmFragment<ForumFragmentBinding, ForumViewModel>() {
             adapter = forumAdapter
         }
         mBinding.tvArticleEdit.setOnClickListener {
-            val intent = Intent(activity, ForumEditActivity::class.java)
-            activity!!.startActivity(intent)
+            if(ConstantData.TOKEN != null && ConstantData.TOKEN != "") {
+                val intent = Intent(activity, ForumEditActivity::class.java)
+                activity!!.startActivity(intent)
+            }else {
+                val intent = Intent(activity, LoginActivity::class.java)
+                activity!!.startActivity(intent)
+            }
         }
         mBinding.llSearchArea.setOnClickListener {
             val intent = Intent(activity, SearchActivity::class.java)

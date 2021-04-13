@@ -1,18 +1,15 @@
-package com.volcano.examonline.mvvm.exam
+package com.volcano.examonline.mvvm.detail.view
 
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityExamDetailBinding
-import com.volcano.examonline.mvvm.exam.adapter.ExamPagerAdapter
-import com.volcano.examonline.mvvm.exam.viewmodel.ExamDetailViewModel
+import com.volcano.examonline.mvvm.detail.adapter.ExamPagerAdapter
+import com.volcano.examonline.mvvm.detail.viewmodel.ExamDetailViewModel
 import com.volcano.examonline.mvvm.exam.widget.ExamDetailRecordDialog
 import java.text.SimpleDateFormat
 import java.util.*

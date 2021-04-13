@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".mvvm.forum.ForumEditActivity">
+    tools:context=".mvvm.forum.view.ForumEditActivity">
 
 
     <include layout="@layout/white_toolbar_layout"

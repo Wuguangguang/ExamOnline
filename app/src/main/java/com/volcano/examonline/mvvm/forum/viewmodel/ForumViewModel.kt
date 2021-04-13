@@ -5,10 +5,9 @@ import com.volcano.examonline.mvvm.forum.model.Forum
 
 class ForumViewModel : ViewModel() {
 
-    var forums = arrayListOf<Forum>(
-            Forum(1, "关注"),
-            Forum(2, "推荐"),
-            Forum(3, "热榜"),
+    var forums = arrayListOf(
+            Forum(1, "推荐"),
+            Forum(2, "热榜"),
     )
 
 }

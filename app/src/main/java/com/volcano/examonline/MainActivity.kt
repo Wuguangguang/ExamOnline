@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityMainBinding
-import com.volcano.examonline.mvvm.exam.ExamFragment
-import com.volcano.examonline.mvvm.forum.ForumFragment
+import com.volcano.examonline.mvvm.exam.view.ExamFragment
+import com.volcano.examonline.mvvm.forum.view.ForumFragment
 import com.volcano.examonline.mvvm.homepage.view.HomepageFragment
 import com.volcano.examonline.mvvm.mine.MineFragment
 

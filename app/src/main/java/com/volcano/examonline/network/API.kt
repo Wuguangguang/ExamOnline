@@ -1,12 +1,9 @@
 package com.volcano.examonline.network
 
 import com.volcano.examonline.base.Response
-import com.volcano.examonline.mvvm.exam.model.Banner
-import com.volcano.examonline.mvvm.exam.model.Hotkey
 import com.volcano.examonline.mvvm.exam.model.Question
 import com.volcano.examonline.mvvm.forum.model.Article
-import com.volcano.examonline.mvvm.homepage.model.Chapter
-import com.volcano.examonline.mvvm.homepage.model.QuestionList
+import com.volcano.examonline.mvvm.homepage.model.Comment
 import com.volcano.examonline.mvvm.homepage.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
@@ -15,76 +12,78 @@ import retrofit2.http.*
 
 interface API {
 
-    @GET("subject.json")
-    fun getSubjectList() : Observable<Response<List<Subject>>>
+    /**
+     * 题库页 考试页 相关API
+     */
+    // 获取学科列表
+    @GET("api/v1/subjects")
+    fun getSubjects(): Observable<Response<List<Subject>>>
 
-    @GET("questionList.json")
-    fun getQuestionList() : Observable<Response<QuestionList>>
+    // 获取试题列表
+    @GET("api/v1/questions")
+    fun getQuestions(@Query("subjectId") id: Int): Observable<Response<List<Question>>>
 
-    // 首页文章列表
-    @GET("article/list/{page}/json")
-    fun getArticleList(@Path("page") page : Int) : Observable<Response<Article>>
+    // 搜索试题
+    @GET("api/v1/question")
+    fun searchQuestion(@Query("content") content: String): Observable<Response<List<Question>>>
 
-    // 首页banner
-    @GET("banner/json")
-    fun getBannerList() : Observable<Response<List<Banner>>>
+    // 根据试题id搜索评论
+    @GET("api/v1/question/comment")
+    fun getQuestionComments(@Query("id") id: Int): Observable<Response<List<Comment>>>
 
-    // 常用网站
-    @GET("friend/json")
-    fun getCommonSites()
+    // 搜索框热词
+    @GET("api/v1/question/hotkey")
+    fun getQuestionHotKey() : Observable<Response<List<Any>>>
 
-    //搜索热词
-    @GET("hotkey/json")
-    fun getSearchWords() : Observable<Response<List<Hotkey>>>
+    // 上传试题
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/question/edit")
+    fun uploadQuestion(@Header("Authorization") token: String,@Body obj: Question): Observable<Response<Any>>
 
-    //置顶文章
-    @GET("article/top/json")
-    fun getTopArticles() : Observable<Response<List<Article>>>
+    @GET("api/v1/question/random")
+    fun getRandomQuestions(@Query("subjectId") id: Int, @Query("num") num: Int): Observable<Response<List<Question>>>
 
-    //公众号列表
-    @GET("wxarticle/chapters/json")
-    fun getWxChapters() : Observable<Response<List<Chapter>>>
+    /**
+     * 论坛页 相关API
+     */
 
-    //获取某公众号文章列表
-    @GET("wxarticle/list/{id}/{page}/json")
-    fun getWxArticles(@Path("id") id : Int, @Path("page") page : Int) : Observable<Response<Article>>
-
-//    //项目分类列表
-//    @GET("project/tree/json")
-//    fun getProjectTrees() : Observable<BaseResponse<List<ProjectTree>>>
-
-    //项目列表数据
-    @GET("project/list/{page}/json")
-    fun getProjectArticles(@Path("page") page: Int, @Query("cid") id: Int) : Observable<Response<Article>>
-
-    @POST("article/query/{page}/json")
-    @FormUrlEncoded
-    fun getSearchResult(@Path("page") page: Int, @Field("k") key: String) : Observable<Response<Article>>
-
-    @GET("questions/random")
-    fun getRandomQuestions(@Query("num") num: Int): Observable<Response<List<Question>>>
-
-    @GET("articles")
+    // 获取文章列表
+    @GET("api/v1/articles")
     fun getArticles(): Observable<Response<List<Article>>>
 
+    // 获取热榜文章列表
+    @GET("api/v1/articles/hot")
+    fun getHotArticles(): Observable<Response<List<Article>>>
+
+    // 根据文章id获取评论列表
+    @GET("api/v1/article")
+    fun getArticleComments(@Query("id") id: Int): Observable<Response<Comment>>
+
+    // 上传文章
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/article/edit")
+    fun uploadArticle(@Header("Authorization") token: String,@Body obj: Article): Observable<Response<Any>>
+
+    // 搜索框热词
+    @GET("api/v1/article/hotkey")
+    fun getArticleHotKey() : Observable<Response<List<Any>>>
+
+    /**
+     * 我的页 相关API
+     */
 
     // 注册
     @Headers("Content-Type: application/json;charset=UTF-8")
-    @POST("userinfo/register")
+    @POST("api/v1/userinfo/register")
     fun register(@Body userinfo: UserInfo): Observable<Response<Any>>
 
     // 登录
     @Headers("Content-Type: application/json;charset=UTF-8")
-    @POST("userinfo/login")
+    @POST("api/v1/userinfo/login")
     fun login(@Body userinfo: UserInfo): Observable<Response<TokenBean>>
 
     // 根据phone获取用户信息
-    @GET("userinfo/{phone}")
-    fun getUserInfo(@Path("phone") phone: String): Observable<Response<UserInfo>>
+    @GET("api/v1/userinfo")
+    fun getUserInfo(@Query("phone") phone: String): Observable<Response<UserInfo>>
 
-    // 上传文章
-
-    @Headers("Content-Type: application/json;charset=UTF-8")
-    @POST("articles/edit")
-    fun uploadArticle(@Header("Authorization") token: String,@Body obj: Article): Observable<Response<Any>>
 }

@@ -5,16 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvvm.exam.ExamFragment">
+    tools:context=".mvvm.exam.view.ExamFragment">
 
     <include layout="@layout/toolbar_layout"
         android:id="@+id/toolbar"/>
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner_exam"
+    <ImageView
+        android:id="@+id/iv_exam_top_area"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_height="300dp"
+        android:src="@drawable/ic_banner_placeholder"
+        android:scaleType="fitXY"
+        android:layout_below="@id/toolbar"/>
 
 
     <com.google.android.material.tabs.TabLayout
@@ -24,7 +26,7 @@
         style="@style/WhiteTabStyle"
         app:tabGravity="fill"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:layout_below="@id/banner_exam"/>
+        android:layout_below="@id/iv_exam_top_area"/>
 
     <View
         android:layout_width="match_parent"

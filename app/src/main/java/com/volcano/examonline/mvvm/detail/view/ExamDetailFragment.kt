@@ -1,11 +1,11 @@
 package com.volcano.examonline.mvvm.detail.view
 
 import com.volcano.examonline.base.BaseMvvmFragment
-import com.volcano.examonline.databinding.ExamDetailFragmentBinding
+import com.volcano.examonline.databinding.FragmentExamDetailBinding
 import com.volcano.examonline.mvvm.detail.viewmodel.ExamDetailViewModel
-import com.volcano.examonline.mvvm.exam.model.Question
+import com.volcano.examonline.mvvm.study.model.Question
 
-class ExamDetailFragment(private val question: Question) : BaseMvvmFragment<ExamDetailFragmentBinding, ExamDetailViewModel>() {
+class ExamDetailFragment(private val question: Question) : BaseMvvmFragment<FragmentExamDetailBinding, ExamDetailViewModel>() {
 
 
     companion object {

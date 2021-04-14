@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginTop="5dp">
+    android:layout_marginTop="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,51 +16,80 @@
         android:paddingRight="10dp">
 
         <TextView
-            android:id="@+id/tv_homepage_question_level"
+            android:id="@+id/tv_question_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:layout_alignParentStart="true"
-            android:background="@drawable/shape_green_border_rect"
-            android:textColor="?colorAccent"
-            android:visibility="visible"
-            android:layout_marginEnd="10dp"
-            android:text="置顶"/>
+            android:background="@drawable/shape_green_rect"
+            android:textColor="@color/white"
+            android:text="中等"/>
 
         <TextView
-            android:id="@+id/tv_homepage_question_source"
+            android:id="@+id/tv_question_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_toEndOf="@id/tv_question_level"
+            android:layout_alignBaseline="@id/tv_question_level"
+            android:layout_marginStart="5dp"
+            android:text="单选题"/>
+
+        <TextView
+            android:id="@+id/tv_question_source"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/tv_question_level"
             android:text="扔物线"/>
 
         <TextView
-            android:id="@+id/tv_homepage_question_title"
+            android:id="@+id/tv_question_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_homepage_question_source"
+            android:layout_below="@+id/tv_question_source"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textSize="16dp"
             android:textColor="@color/black"
             android:text="Android面试黑洞————当我按下Home键再切回来，会发生什么？" />
 
-        <TextView
-            android:id="@+id/tv_homepage_question_type"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_homepage_question_title"
-            android:layout_alignParentStart="true"
-            android:text="干货资源 - 干活资源"/>
+            android:layout_below="@id/tv_question_title"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_homepage_article_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/tv_homepage_question_title"
-            android:text="收藏"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_comment"
+                android:scaleType="fitXY"/>
+            <TextView
+                android:id="@+id/tv_question_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="0"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_zan"
+                android:scaleType="fitXY"/>
+            <TextView
+                android:id="@+id/tv_question_zan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:text="0"/>
 
+        </LinearLayout>
     </RelativeLayout>
-
-
 </com.google.android.material.card.MaterialCardView>

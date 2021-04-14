@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.volcano.examonline.mvvm.homepage.model.Comment
+import com.volcano.examonline.mvvm.study.model.Comment
 import com.volcano.examonline.network.NetworkRepository
 
 class DetailViewModel : ViewModel() {

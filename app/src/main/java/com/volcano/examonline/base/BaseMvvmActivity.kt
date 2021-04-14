@@ -1,6 +1,10 @@
 package com.volcano.examonline.base
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -21,8 +25,18 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
     private fun initEventAndData() {
         initViewBinding()
         mViewModel = createViewModel()
+        setStatusBarStyle()
         initView()
         initData()
+    }
+
+     private fun setStatusBarStyle() {
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+             window.statusBarColor = Color.TRANSPARENT
+         }
+         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 
     private fun initViewBinding() {

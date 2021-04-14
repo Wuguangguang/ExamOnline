@@ -1,12 +1,12 @@
 package com.volcano.examonline.network
 
 import com.volcano.examonline.base.Response
-import com.volcano.examonline.mvvm.exam.model.Question
 import com.volcano.examonline.mvvm.forum.model.Article
-import com.volcano.examonline.mvvm.homepage.model.Comment
-import com.volcano.examonline.mvvm.homepage.model.Subject
+import com.volcano.examonline.mvvm.study.model.Comment
+import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
+import com.volcano.examonline.mvvm.study.model.Question
 import io.reactivex.Observable
 import retrofit2.http.*
 

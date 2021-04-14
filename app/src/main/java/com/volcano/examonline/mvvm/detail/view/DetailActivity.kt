@@ -6,6 +6,7 @@ import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityDetailBinding
 import com.volcano.examonline.mvvm.detail.viewmodel.DetailViewModel
 import com.volcano.examonline.mvvm.forum.model.Article
+import com.volcano.examonline.mvvm.study.model.Question
 
 class DetailActivity : BaseMvvmActivity<ActivityDetailBinding, DetailViewModel>() {
 
@@ -26,8 +27,9 @@ class DetailActivity : BaseMvvmActivity<ActivityDetailBinding, DetailViewModel>(
                     .commit()
             }
             0x2 -> {
+                val question = intent.getSerializableExtra("question") as Question
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.fl_detail_frag, QuestionDetailFragment.newInstance())
+                    .add(R.id.fl_detail_frag, QuestionDetailFragment.newInstance(question))
                     .commit()
             }
         }
@@ -35,7 +37,7 @@ class DetailActivity : BaseMvvmActivity<ActivityDetailBinding, DetailViewModel>(
 
     private fun initToolbar() {
         mBinding.toolbarDetail.toolbarLeftImageBack.apply {
-            setImageResource(R.drawable.left_triangle)
+            setImageResource(R.drawable.ic_black_back)
             setOnClickListener { finish() }
         }
         when(type) {

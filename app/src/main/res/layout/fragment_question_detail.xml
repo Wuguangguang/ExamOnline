@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_question_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="困难"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_green_rect"/>
+
+    <TextView
+        android:id="@+id/tv_question_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_question_level"
+        android:layout_marginStart="10dp"
+        android:text="单选题"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_green_rect"/>
+
+    <TextView
+        android:id="@+id/tv_question_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《计算机网络》2015-16春"
+        android:layout_below="@id/tv_question_type"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_question_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tv_question_source"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="给定两个大小分别为m和n的正序（从小到大）数组nums1和nums2。请你找出并返回这两个正序数组的中位数。"/>
+
+    <ImageView
+        android:id="@+id/tv_question_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_question_desc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitXY"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_question_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_question_img"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btn_analysis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rv_question_options"
+        android:background="@drawable/shape_green_rect"
+        android:text="查看解析及评论"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_question_analysis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rv_question_options"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_practice_test_analyze" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_practice_test_explaindetail"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_question_analysis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="提示：C。物理治疗分成运动疗法和物理因子疗法，其中物理因子疗法包括力、电、光、声、水及温度等物理因子。"
+                android:textColor="#AB8B28" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_question_analysis"
+        android:layout_marginTop="20dp"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:text="评论列表"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:layout_below="@id/tv_comment_list"/>
+</RelativeLayout>

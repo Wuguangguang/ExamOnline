@@ -13,12 +13,7 @@
 
     <item
         android:id="@+id/navigation_third"
-        android:icon="@drawable/ic_bottom_nav_exam"
-        android:title="@string/title_third" />
-
-    <item
-        android:id="@+id/navigation_fourth"
         android:icon="@drawable/ic_bottom_nav_mine"
-        android:title="@string/title_fourth"/>
+        android:title="@string/title_third"/>
 
 </menu>

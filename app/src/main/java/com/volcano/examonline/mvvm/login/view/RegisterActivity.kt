@@ -27,7 +27,7 @@ class RegisterActivity : BaseMvvmActivity<ActivityRegisterBinding, LoginViewMode
 
     private fun initToolbar() {
         mBinding.toolbarRegister.toolbarLeftImageBack.apply{
-            setImageResource(R.drawable.left_triangle)
+            setImageResource(R.drawable.ic_black_back)
             setOnClickListener {
                 finish()
             }

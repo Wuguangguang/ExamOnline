@@ -22,7 +22,7 @@
     </style>
 
     <style name="MyTabTextAppearance">
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">16dp</item>
         <item name="textAllCaps">false</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>

@@ -32,7 +32,7 @@ class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
 
     private fun initToolbar() {
         mBinding.toolbarLogin.toolbarLeftImageBack.apply {
-            setImageResource(R.drawable.left_triangle)
+            setImageResource(R.drawable.ic_black_back)
             setOnClickListener {
                 finish()
             }

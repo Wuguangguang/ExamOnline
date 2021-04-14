@@ -5,8 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.volcano.examonline.databinding.AdapterArticleFooterBinding
 import com.volcano.examonline.databinding.AdapterArticleListBinding
+import com.volcano.examonline.databinding.AdapterFooterBinding
 import com.volcano.examonline.mvvm.detail.view.DetailActivity
 import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.util.ConstantData
@@ -21,18 +21,17 @@ class ArticleListAdapter(val context : Context, private val articles : ArrayList
     class DataViewHolder(private val binding : AdapterArticleListBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(article : Article) {
             binding.tvArticleAuthor.text = article.username
-//            binding.tvArticleDate.text = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(article.createat)
             binding.tvArticleTitle.text = article.title
         }
     }
 
-    class FooterViewHolder(binding: AdapterArticleFooterBinding) : RecyclerView.ViewHolder(binding.root)
+    class FooterViewHolder(binding: AdapterFooterBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : RecyclerView.ViewHolder {
         lateinit var holder : RecyclerView.ViewHolder
         when(viewType) {
             FOOTER_ITEM -> {
-                val binding = AdapterArticleFooterBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                val binding = AdapterFooterBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 holder = FooterViewHolder(binding)
             }
             DATA_ITEM -> {

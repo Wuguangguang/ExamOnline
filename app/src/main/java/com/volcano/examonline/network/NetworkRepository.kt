@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.volcano.examonline.base.getCode
 import com.volcano.examonline.base.transform
-import com.volcano.examonline.mvvm.exam.model.Question
 import com.volcano.examonline.mvvm.forum.model.Article
-import com.volcano.examonline.mvvm.homepage.model.Comment
-import com.volcano.examonline.mvvm.homepage.model.Subject
+import com.volcano.examonline.mvvm.study.model.Comment
+import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
+import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

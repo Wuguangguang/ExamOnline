@@ -1,11 +1,11 @@
 package com.volcano.examonline.mvvm.detail.view
 
 import com.volcano.examonline.base.BaseMvvmFragment
-import com.volcano.examonline.databinding.ArticleDetailFragmentBinding
+import com.volcano.examonline.databinding.FragmentArticleDetailBinding
 import com.volcano.examonline.mvvm.detail.viewmodel.DetailViewModel
 import com.volcano.examonline.mvvm.forum.model.Article
 
-class ArticleDetailFragment(private val article: Article) : BaseMvvmFragment<ArticleDetailFragmentBinding, DetailViewModel>() {
+class ArticleDetailFragment(private val article: Article) : BaseMvvmFragment<FragmentArticleDetailBinding, DetailViewModel>() {
 
     companion object {
         fun newInstance(article: Article) = ArticleDetailFragment(article)

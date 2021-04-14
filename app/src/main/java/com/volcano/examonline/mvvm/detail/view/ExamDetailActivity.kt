@@ -10,7 +10,6 @@ import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityExamDetailBinding
 import com.volcano.examonline.mvvm.detail.adapter.ExamPagerAdapter
 import com.volcano.examonline.mvvm.detail.viewmodel.ExamDetailViewModel
-import com.volcano.examonline.mvvm.exam.widget.ExamDetailRecordDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,7 +17,6 @@ import java.util.*
 class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetailViewModel>() {
 
     private var currentPos = 0
-    private var recordDialog : ExamDetailRecordDialog? = null
     private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions) }
 
     override fun initView() {
@@ -39,10 +37,6 @@ class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetai
             finish()
         }
         mBinding.examDetailRecord.setOnClickListener {
-            if(recordDialog == null) {
-                recordDialog = ExamDetailRecordDialog(this)
-            }
-            recordDialog!!.show();
         }
         mBinding.examDetailViewpager2.adapter = examAdapter
         mBinding.examDetailViewpager2.isUserInputEnabled = false

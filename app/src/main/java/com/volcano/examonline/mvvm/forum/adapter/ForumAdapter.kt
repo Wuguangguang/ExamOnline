@@ -5,7 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.volcano.examonline.mvvm.forum.view.ForumDetailFragment
 import com.volcano.examonline.mvvm.forum.model.Forum
 
-class ForumAdapter(val mContext: Fragment, val forums : ArrayList<Forum>) : FragmentStateAdapter(mContext) {
+class ForumAdapter(private val mContext: Fragment, private val forums : ArrayList<Forum>) : FragmentStateAdapter(mContext) {
     private val fragments = mutableListOf<Fragment>()
 
     override fun getItemCount(): Int = forums.size

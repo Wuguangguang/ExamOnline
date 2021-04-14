@@ -1,87 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="10dp">
 
-    <TextView
-        android:id="@+id/tv_article_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="扔物线"/>
-
-    <TextView
-        android:id="@+id/tv_article_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/tv_article_author"
-        android:layout_alignParentTop="true"
-        android:text="2小时前" />
-
-    <TextView
-        android:id="@+id/tv_article_title"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_article_author"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textSize="16dp"
-        android:textColor="@color/black"
-        android:text="Android面试黑洞————当我按下Home键再切回来，会发生什么？" />
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
-    <ImageView
-    android:id="@+id/iv_article_comment"
-    android:layout_width="16dp"
-    android:layout_height="16dp"
-    android:scaleType="centerCrop"
-    android:src="@drawable/ic_comment"
-    android:layout_alignParentStart="true"
-    android:layout_alignTop="@id/tv_article_comment"
-    android:layout_alignBottom="@id/tv_article_comment"/>
 
-    <TextView
-        android:id="@+id/tv_article_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="89"
-        android:layout_toEndOf="@id/iv_article_comment"
-        android:layout_marginStart="2dp"
-        android:layout_below="@id/tv_article_title"/>
+        <TextView
+            android:id="@+id/tv_article_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/shape_green_rect"
+            android:textColor="@color/white"
+            android:text="面试求职"/>
 
-    <ImageView
-        android:id="@+id/iv_article_zan"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_zan"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/tv_article_comment"
-        android:layout_alignTop="@id/tv_article_comment"
-        android:layout_alignBottom="@id/tv_article_comment"/>
+        <TextView
+            android:id="@+id/tv_article_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:layout_toEndOf="@id/tv_article_source"
+            android:layout_alignBaseline="@id/tv_article_source"
+            android:text="中等"/>
 
-    <TextView
-        android:id="@+id/tv_article_zan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10"
-        android:layout_toEndOf="@id/iv_article_zan"
-        android:layout_marginStart="2dp"
-        android:layout_below="@id/tv_article_title"/>
 
-    <TextView
-        android:id="@+id/tv_homepage_article_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_article_title"
-        android:layout_alignParentEnd="true"
-        android:text="干货资源"
-        android:layout_marginEnd="5dp"/>
+        <TextView
+            android:id="@+id/tv_article_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_article_source"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:text="Android面试黑洞————当我按下Home键再切回来，会发生什么？" />
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_article_title"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_comment"
+                android:scaleType="fitXY"/>
+            <TextView
+                android:id="@+id/tv_article_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="0"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_zan"
+                android:scaleType="fitXY"/>
+            <TextView
+                android:id="@+id/tv_article_zan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:text="0"/>
+        </LinearLayout>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,5 +1,6 @@
 package com.volcano.examonline.mvvm.study.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
@@ -8,9 +9,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentStudyBinding
+import com.volcano.examonline.mvvm.detail.view.ExamActivity
 import com.volcano.examonline.mvvm.search.view.SearchActivity
 import com.volcano.examonline.mvvm.study.adapter.SubjectAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
+import com.volcano.examonline.util.ConstantData
 
 class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
 
@@ -20,6 +23,7 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
 
     private val subjectAdapter : SubjectAdapter by lazy { SubjectAdapter(this , mViewModel.subjectData) }
     private var tabLayoutMediator: TabLayoutMediator? = null
+    private var subjectNames = arrayListOf<String>()
 
     override fun initView() {
         initToolbar()
@@ -52,10 +56,10 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
 
     private fun initListener() {
         mBinding.llOrderlyPractice.setOnClickListener {
-
+            goToExamActivity(ConstantData.ORDERLY_MODE)
         }
         mBinding.llSimulationExam.setOnClickListener {
-
+            goToExamActivity(ConstantData.SIMULATION_MODE)
         }
         mBinding.llRanking.setOnClickListener {
             val intent = Intent(activity, RankingActivity::class.java)
@@ -67,6 +71,18 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
         }
     }
 
+    private fun goToExamActivity(simulationMode: Int) {
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("请选择学科~")
+        builder.setItems(subjectNames.toTypedArray<CharSequence>()) { _, which ->
+            val intent = Intent(activity, ExamActivity::class.java)
+            intent.putExtra("mode", simulationMode)
+            intent.putExtra("subject", mViewModel.subjectData[which].id)
+            startActivity(intent)
+        }
+        builder.show()
+    }
+
     override fun initData() {
         mViewModel.subjects.observe(activity!!) {
             if(!it.isNullOrEmpty()) {
@@ -75,6 +91,9 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
                 mViewModel.subjectData.addAll(it)
                 subjectAdapter.notifyDataSetChanged()
                 subjectAdapter.initFragments()
+                it.forEach{
+                    subjectNames.add(it.subjectname!!)
+                }
             }
         }
         mViewModel.getSubjects()
@@ -89,3 +108,4 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
     }
 
 }
+

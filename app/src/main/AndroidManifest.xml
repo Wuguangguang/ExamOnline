@@ -20,6 +20,7 @@
         <activity android:name=".mvvm.login.view.LoginActivity" />
         <activity android:name=".mvvm.login.view.RegisterActivity" />
         <activity android:name=".mvvm.forum.view.ArticleUploadActivity" />
+        <activity android:name=".mvvm.detail.view.ExamActivity"/>
         <activity
             android:name=".mvvm.search.view.SearchActivity"
             android:screenOrientation="portrait"

@@ -7,6 +7,7 @@ import com.volcano.examonline.databinding.ActivityDetailBinding
 import com.volcano.examonline.mvvm.detail.viewmodel.DetailViewModel
 import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.mvvm.study.model.Question
+import com.volcano.examonline.util.ConstantData
 
 class DetailActivity : BaseMvvmActivity<ActivityDetailBinding, DetailViewModel>() {
 
@@ -29,7 +30,7 @@ class DetailActivity : BaseMvvmActivity<ActivityDetailBinding, DetailViewModel>(
             0x2 -> {
                 val question = intent.getSerializableExtra("question") as Question
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.fl_detail_frag, QuestionDetailFragment.newInstance(question))
+                    .add(R.id.fl_detail_frag, QuestionDetailFragment.newInstance(question, ConstantData.SINGLE_MODE))
                     .commit()
             }
         }

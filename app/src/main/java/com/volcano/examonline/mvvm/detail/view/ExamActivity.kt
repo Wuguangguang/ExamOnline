@@ -1,26 +1,32 @@
 package com.volcano.examonline.mvvm.detail.view
 
 import android.graphics.Color
-import android.os.Build
-import android.view.View
-import android.view.WindowManager
+import android.os.Bundle
 import androidx.lifecycle.observe
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityExamDetailBinding
 import com.volcano.examonline.mvvm.detail.adapter.ExamPagerAdapter
 import com.volcano.examonline.mvvm.detail.viewmodel.ExamDetailViewModel
+import com.volcano.examonline.util.ConstantData
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetailViewModel>() {
+class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetailViewModel>() {
 
     private var currentPos = 0
     private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions) }
+    private var mode : Int? = null
+    private var subject: Int? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mode = intent.getIntExtra("mode", ConstantData.ORDERLY_MODE)
+        subject = intent.getIntExtra("subject", 1)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initView() {
-        setStatusBarStyle()
         /// 初始化计时器
         mBinding.examDetailTimer.apply {
             setOnChronometerTickListener {
@@ -40,7 +46,6 @@ class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetai
         }
         mBinding.examDetailViewpager2.adapter = examAdapter
         mBinding.examDetailViewpager2.isUserInputEnabled = false
-
         mBinding.examDetailNextQuest.setOnClickListener {
             if(currentPos < mViewModel.questions.size - 1) {
                 mViewModel.setCurrentPos(++currentPos)
@@ -69,17 +74,15 @@ class ExamDetailActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamDetai
                 mBinding.examDetailRecord.text = "0/${mViewModel.questions.size}"
             }
         }
-        mViewModel.getRandomQuestions(3)
-        mViewModel.setCurrentPos(currentPos)
-    }
-
-    private fun setStatusBarStyle() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
+        when(mode) {
+            ConstantData.ORDERLY_MODE -> {
+                mViewModel.getQuestions(subject!!)
+            }
+            ConstantData.SIMULATION_MODE -> {
+                mViewModel.getRandomQuestions(subject!!, 5)
+            }
         }
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        mViewModel.setCurrentPos(currentPos)
     }
 
     override fun onDestroy() {

@@ -9,6 +9,11 @@ import com.volcano.examonline.network.NetworkRepository
 
 class ExamDetailViewModel : ViewModel() {
 
+    data class Entity(
+        var id:Int? = null,
+        var nums: Int? = null
+    )
+
     var currentPos = MutableLiveData<Int>()
 
     fun setCurrentPos(pos : Int) {
@@ -18,14 +23,21 @@ class ExamDetailViewModel : ViewModel() {
     // 试题列表
     var questions = arrayListOf<Question>()
 
-    private var mutableQuestionNum : MutableLiveData<Int> = MutableLiveData()
+    private var mutableQuestionNum : MutableLiveData<Entity> = MutableLiveData()
 
-    fun getRandomQuestions(num: Int) {
-        mutableQuestionNum.value = num
+    fun getRandomQuestions(subjectId: Int, num: Int) {
+        mutableQuestionNum.value = Entity(subjectId, num)
     }
 
-    val question : LiveData<List<Question>> = Transformations.switchMap(mutableQuestionNum) { num ->
-        NetworkRepository.getInstance().getRandomQuestions(1, num)
+    fun getQuestions(subject: Int) {
+        mutableQuestionNum.value = Entity(subject, -1)
+    }
+
+    val question : LiveData<List<Question>> = Transformations.switchMap(mutableQuestionNum) { obj ->
+        when(obj.nums) {
+            -1 -> NetworkRepository.getInstance().getQuestions(obj.id!!)
+            else -> NetworkRepository.getInstance().getRandomQuestions(obj.id!!, obj.nums!!)
+        }
     }
 
 

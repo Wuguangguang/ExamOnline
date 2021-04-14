@@ -8,12 +8,14 @@ import com.volcano.examonline.databinding.FragmentQuestionDetailBinding
 import com.volcano.examonline.mvvm.detail.adapter.OptionsAdapter
 import com.volcano.examonline.mvvm.detail.viewmodel.DetailViewModel
 import com.volcano.examonline.mvvm.study.model.Question
+import com.volcano.examonline.util.ConstantData
 
-class QuestionDetailFragment(private val question: Question) : BaseMvvmFragment<FragmentQuestionDetailBinding, DetailViewModel>() {
+class QuestionDetailFragment(private val question: Question, private val mode: Int)
+    : BaseMvvmFragment<FragmentQuestionDetailBinding, DetailViewModel>() {
 
 
     companion object {
-        fun newInstance(question: Question) = QuestionDetailFragment(question)
+        fun newInstance(question: Question, mode: Int) = QuestionDetailFragment(question, mode)
     }
 
     private var options = arrayListOf<String>()
@@ -21,6 +23,9 @@ class QuestionDetailFragment(private val question: Question) : BaseMvvmFragment<
     private val optionsAdapter by lazy { OptionsAdapter(activity!!, options, type!!) }
 
     override fun initView() {
+        if(mode == ConstantData.EXAM_MODE) {
+            mBinding.btnAnalysis.visibility = View.GONE
+        }
         mBinding.tvQuestionLevel.text = question.level
         mBinding.tvQuestionType.text = question.type
         mBinding.tvQuestionSource.text = question.source

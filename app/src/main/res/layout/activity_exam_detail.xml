@@ -63,7 +63,16 @@
         android:id="@+id/exam_detail_record"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:text=""
+        android:text="0"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toStartOf="@id/exam_detail_record_total"
+        app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>
+
+    <TextView
+        android:id="@+id/exam_detail_record_total"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="/10"
         android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toStartOf="@id/exam_detail_gl_right"
         app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>

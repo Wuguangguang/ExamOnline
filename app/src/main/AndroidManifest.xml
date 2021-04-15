@@ -14,13 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamOnline">
-        <activity android:name=".mvvm.study.view.RankingActivity"></activity>
+        <activity android:name=".mvvm.detail.view.CommitResultActivity"></activity>
+        <activity android:name=".mvvm.study.view.RankingActivity" />
         <activity android:name=".mvvm.study.view.QuestionUploadActivity" />
         <activity android:name=".mvvm.detail.view.DetailActivity" />
         <activity android:name=".mvvm.login.view.LoginActivity" />
         <activity android:name=".mvvm.login.view.RegisterActivity" />
         <activity android:name=".mvvm.forum.view.ArticleUploadActivity" />
-        <activity android:name=".mvvm.detail.view.ExamActivity"/>
+        <activity android:name=".mvvm.detail.view.ExamActivity" />
         <activity
             android:name=".mvvm.search.view.SearchActivity"
             android:screenOrientation="portrait"

@@ -16,8 +16,9 @@ class ExamPagerAdapter(private val mContext: FragmentActivity, val questions: Li
 
     fun initFragments(){
         fragments.clear()
+        var i:Int = 0
         questions.forEach{
-            fragments.add(QuestionDetailFragment.newInstance(it!!, ConstantData.EXAM_MODE))
+            fragments.add(QuestionDetailFragment.newInstance(it!!, ConstantData.EXAM_MODE, i++))
         }
     }
 }

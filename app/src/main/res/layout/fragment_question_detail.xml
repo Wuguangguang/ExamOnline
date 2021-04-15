@@ -53,17 +53,17 @@
         android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_question_options"
+        android:id="@+id/rv_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_question_img"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="30dp"/>
 
     <Button
         android:id="@+id/btn_analysis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rv_question_options"
+        android:layout_below="@id/rv_options"
         android:background="@drawable/shape_green_rect"
         android:text="查看解析及评论"
         android:visibility="visible"
@@ -74,7 +74,7 @@
         android:id="@+id/ll_question_analysis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rv_question_options"
+        android:layout_below="@id/rv_options"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:padding="10dp"

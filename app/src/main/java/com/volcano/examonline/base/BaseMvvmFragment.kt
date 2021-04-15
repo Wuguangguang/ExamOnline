@@ -33,7 +33,7 @@ abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel> : Fragment() {
     }
 
     private fun createViewModel() : VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
+        return ViewModelProvider(activity!!).get(getVmClazz(this))
     }
 
     abstract fun initView()

@@ -42,4 +42,9 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
 </resources>

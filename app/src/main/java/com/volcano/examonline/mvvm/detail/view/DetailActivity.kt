@@ -30,7 +30,7 @@ class DetailActivity : BaseMvvmActivity<ActivityDetailBinding, DetailViewModel>(
             0x2 -> {
                 val question = intent.getSerializableExtra("question") as Question
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.fl_detail_frag, QuestionDetailFragment.newInstance(question, ConstantData.SINGLE_MODE))
+                    .add(R.id.fl_detail_frag, QuestionDetailFragment.newInstance(question, ConstantData.SINGLE_MODE, -1))
                     .commit()
             }
         }

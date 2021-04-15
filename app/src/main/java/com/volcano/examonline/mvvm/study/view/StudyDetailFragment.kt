@@ -19,6 +19,11 @@ class StudyDetailFragment(private val subjectId : Int) : BaseMvvmFragment<Fragme
     override fun initView() {
         mBinding.srlQuestionDetail.apply{
             setColorSchemeResources(R.color.colorAccent)
+            setOnRefreshListener {
+                mViewModel.getQuestions(subjectId)
+                mBinding.srlQuestionDetail.isRefreshing = true
+            }
+
         }
         mBinding.rcvQuestionDetail.apply {
             layoutManager = LinearLayoutManager(activity!!)
@@ -29,8 +34,10 @@ class StudyDetailFragment(private val subjectId : Int) : BaseMvvmFragment<Fragme
     override fun initData() {
         mViewModel.questions.observe(activity!!) {
             if(!it.isNullOrEmpty()) {
+                mViewModel.questionData.clear()
                 mViewModel.questionData.addAll(it)
                 questionAdapter.notifyDataSetChanged()
+                mBinding.srlQuestionDetail.isRefreshing = false
             }
         }
         mViewModel.getQuestions(subjectId)

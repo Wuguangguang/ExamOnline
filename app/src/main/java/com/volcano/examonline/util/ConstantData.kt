@@ -11,9 +11,5 @@ object ConstantData {
     const val SIMULATION_MODE:Int = 0x1
     const val ORDERLY_MODE: Int = 0x2
 
-    const val EXAM_MODE: Int = 0x1
-    const val SINGLE_MODE: Int = 0x2
-
-
 
 }

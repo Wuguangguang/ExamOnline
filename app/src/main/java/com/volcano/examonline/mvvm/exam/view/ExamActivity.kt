@@ -1,17 +1,18 @@
-package com.volcano.examonline.mvvm.detail.view
+package com.volcano.examonline.mvvm.exam.view
 
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.observe
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityExamDetailBinding
-import com.volcano.examonline.mvvm.detail.adapter.ExamPagerAdapter
-import com.volcano.examonline.mvvm.detail.viewmodel.ExamViewModel
+import com.volcano.examonline.mvvm.exam.adapter.ExamPagerAdapter
+import com.volcano.examonline.mvvm.exam.viewmodel.ExamViewModel
 import com.volcano.examonline.util.ConstantData
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,7 +21,7 @@ import java.util.*
 class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>() {
 
     private var currentPos = 0
-    private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions) }
+    private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions, mode) }
     private var mode : Int? = null
     private var subject: Int? = null
 
@@ -31,32 +32,41 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
     }
 
     override fun initView() {
-        /// 初始化计时器
-        mBinding.examDetailTimer.apply {
-            setOnChronometerTickListener {
-                val time = System.currentTimeMillis() - it.base
-                val date = Date(time)
-                val sdf = SimpleDateFormat("HH:mm:ss", Locale.US)
-                sdf.timeZone = TimeZone.getTimeZone("UTC")
-                text = sdf.format(date)
+        when(mode) {
+            ConstantData.SIMULATION_MODE -> {
+                mBinding.examDetailTimer.apply {
+                    visibility = View.VISIBLE
+                    setOnChronometerTickListener {
+                        val time = System.currentTimeMillis() - it.base
+                        val date = Date(time)
+                        val sdf = SimpleDateFormat("HH:mm:ss", Locale.US)
+                        sdf.timeZone = TimeZone.getTimeZone("UTC")
+                        text = sdf.format(date)
+                    }
+                    base = System.currentTimeMillis()
+                    start()
+                }
+                mBinding.tvExamTitle.visibility = View.GONE
             }
-            base = System.currentTimeMillis()
-            start()
+            else -> {
+                mBinding.examDetailTimer.visibility = View.GONE
+                mBinding.tvExamTitle.visibility = View.VISIBLE
+            }
         }
         mBinding.examDetailBackImg.setOnClickListener {
             showExitDialog()
         }
-        mBinding.examDetailRecord.setOnClickListener {
-        }
+//        mBinding.examDetailRecord.setOnClickListener {
+//        }
         mBinding.examDetailViewpager2.adapter = examAdapter
         mBinding.examDetailViewpager2.isUserInputEnabled = false
-
         mBinding.examDetailNextQuest.setOnClickListener {
             if(currentPos < mViewModel.questions.size - 1) {
                 mViewModel.setCurrentPos(++currentPos)
             }else {
-                //提交
-                showCommitDialog()
+                if(mode == ConstantData.SIMULATION_MODE) {
+                    showCommitDialog()
+                }
             }
         }
         mBinding.examDetailLastQuest.setOnClickListener {
@@ -101,7 +111,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
         val builder = Dialog(this, R.style.dialog)
         builder.setContentView(R.layout.dialog_common)
         val content = builder.findViewById<TextView>(R.id.dialog_content)
-        content.text = "您要结束本次模拟考试吗？"
+        content.text = if(mode == ConstantData.SIMULATION_MODE) "您要结束本次模拟考试吗？" else "您要结束本次顺序练习吗？"
         builder.findViewById<Button>(R.id.dialog_sure).setOnClickListener {
             builder.dismiss()
             finish()
@@ -117,10 +127,10 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
     override fun initData() {
         mViewModel.currentPos.observe(this){
             mBinding.examDetailLastQuest.setTextColor(if(currentPos == 0) Color.GRAY else resources.getColor(R.color.colorAccent))
-            if(currentPos == mViewModel.questions.size - 1) {
-                mBinding.examDetailNextQuest.text = "提交"
+            if(mode == ConstantData.ORDERLY_MODE) {
+                mBinding.examDetailNextQuest.setTextColor(if(currentPos == mViewModel.questions.size - 1) Color.GRAY else resources.getColor(R.color.colorAccent))
             }else {
-                mBinding.examDetailNextQuest.text = "下一题"
+                mBinding.examDetailNextQuest.text = if(currentPos == mViewModel.questions.size - 1) "提交" else "下一题"
             }
             mBinding.examDetailViewpager2.currentItem = currentPos
         }

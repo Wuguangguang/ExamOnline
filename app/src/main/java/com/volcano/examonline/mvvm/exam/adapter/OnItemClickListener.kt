@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.detail.adapter
+package com.volcano.examonline.mvvm.exam.adapter
 
 interface OnItemClickListener {
     fun onClick(myAnswer: ArrayList<String>)

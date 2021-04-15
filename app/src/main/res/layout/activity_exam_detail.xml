@@ -42,7 +42,24 @@
         android:background="@drawable/shape_green_rect"
         android:textColor="@color/white"
         android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:visibility="visible"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>
 
+    <TextView
+        android:id="@+id/tv_exam_title"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看题目"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:layout_marginBottom="10dp"
@@ -90,8 +107,8 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/exam_detail_gl_top"
         app:layout_constraintBottom_toTopOf="@id/exam_detail_bottom_cuttingline"
-        app:layout_constraintStart_toEndOf="@id/exam_detail_gl_left"
-        app:layout_constraintEnd_toStartOf="@id/exam_detail_gl_right"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <View
         android:id="@+id/exam_detail_bottom_cuttingline"

@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.volcano.examonline.databinding.AdapterArticleListBinding
 import com.volcano.examonline.databinding.AdapterFooterBinding
-import com.volcano.examonline.mvvm.detail.view.DetailActivity
+import com.volcano.examonline.mvvm.forum.view.ArticleActivity
 import com.volcano.examonline.mvvm.forum.model.Article
-import com.volcano.examonline.util.ConstantData
 
 class ArticleListAdapter(val context : Context, private val articles : ArrayList<Article>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -39,9 +38,8 @@ class ArticleListAdapter(val context : Context, private val articles : ArrayList
                 holder = DataViewHolder(binding)
                 holder.itemView.setOnClickListener {
                     val article = articles[holder.adapterPosition]
-                    val intent = Intent(this.context, DetailActivity::class.java)
+                    val intent = Intent(this.context, ArticleActivity::class.java)
                     intent.apply {
-                        putExtra("detailType", ConstantData.ARTICLE_DETAIL)
                         putExtra("article", article)
                     }
                     this.context.startActivity(intent)

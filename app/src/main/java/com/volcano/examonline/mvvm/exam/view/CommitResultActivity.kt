@@ -1,15 +1,15 @@
-package com.volcano.examonline.mvvm.detail.view
+package com.volcano.examonline.mvvm.exam.view
 
 import android.content.Intent
-import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityCommitResultBinding
-import com.volcano.examonline.mvvm.detail.adapter.CommitResultAdapter
-import com.volcano.examonline.mvvm.detail.viewmodel.CommitResultViewModel
+import com.volcano.examonline.mvvm.exam.adapter.CommitResultAdapter
+import com.volcano.examonline.mvvm.detail.view.QuestionActivity
+import com.volcano.examonline.mvvm.exam.viewmodel.CommitResultViewModel
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
 import java.math.BigDecimal
@@ -17,7 +17,11 @@ import java.math.BigDecimal
 class CommitResultActivity : BaseMvvmActivity<ActivityCommitResultBinding, CommitResultViewModel>() {
 
 
-    private val commitResultAdapter by lazy { CommitResultAdapter(this) }
+    private val commitResultAdapter by lazy {
+        CommitResultAdapter(
+            this
+        )
+    }
 
     override fun initView() {
         initToolbar()
@@ -26,8 +30,8 @@ class CommitResultActivity : BaseMvvmActivity<ActivityCommitResultBinding, Commi
             adapter = commitResultAdapter
         }
         commitResultAdapter.setOnClickListener(AdapterView.OnItemClickListener { _, _, position, _ ->
-            val intent = Intent(this, DetailActivity::class.java).apply {
-                putExtra("detailType", ConstantData.SINGLE_MODE)
+            val intent = Intent(this, QuestionActivity::class.java).apply {
+                putExtra("detailType", ConstantData.QUESTION_DETAIL)
                 putExtra("question", mViewModel.questions[position])
             }
             startActivity(intent)

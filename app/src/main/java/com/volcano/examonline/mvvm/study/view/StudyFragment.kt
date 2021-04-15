@@ -9,7 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentStudyBinding
-import com.volcano.examonline.mvvm.detail.view.ExamActivity
+import com.volcano.examonline.mvvm.exam.view.ExamActivity
 import com.volcano.examonline.mvvm.search.view.SearchActivity
 import com.volcano.examonline.mvvm.study.adapter.SubjectAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
@@ -71,12 +71,12 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
         }
     }
 
-    private fun goToExamActivity(simulationMode: Int) {
+    private fun goToExamActivity(mode: Int) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("请选择学科~")
         builder.setItems(subjectNames.toTypedArray<CharSequence>()) { _, which ->
             val intent = Intent(activity, ExamActivity::class.java)
-            intent.putExtra("mode", simulationMode)
+            intent.putExtra("mode", mode)
             intent.putExtra("subject", mViewModel.subjectData[which].id)
             startActivity(intent)
         }

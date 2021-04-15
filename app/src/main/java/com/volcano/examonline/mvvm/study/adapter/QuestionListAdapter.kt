@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.volcano.examonline.databinding.AdapterFooterBinding
 import com.volcano.examonline.databinding.AdapterQuestionListBinding
-import com.volcano.examonline.mvvm.detail.view.DetailActivity
+import com.volcano.examonline.mvvm.detail.view.QuestionActivity
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
 
@@ -41,7 +41,7 @@ class QuestionListAdapter(val context : Context, private val questions : ArrayLi
                 holder = DataViewHolder(binding)
                 holder.itemView.setOnClickListener {
                     val question = questions[holder.adapterPosition]
-                    val intent = Intent(this.context, DetailActivity::class.java)
+                    val intent = Intent(this.context, QuestionActivity::class.java)
                     intent.apply {
                         putExtra("detailType", ConstantData.QUESTION_DETAIL)
                         putExtra("question", question)

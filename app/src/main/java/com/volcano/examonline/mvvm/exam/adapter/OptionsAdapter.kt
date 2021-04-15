@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.detail.adapter
+package com.volcano.examonline.mvvm.exam.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -45,7 +45,9 @@ class OptionsAdapter(private val mContext: Context, private val options: ArrayLi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = AdapterOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(
+            binding
+        )
     }
 
     override fun getItemCount(): Int = options.size

@@ -27,37 +27,35 @@ data class Comment(
 )
 
 
-/**
- * id : 6
- * subjectid : 1
- * description : 运动的潜在危险有：（  ）
- * type : 多选题
- * img : null
- * level : 简单
- * source : 医学2021-2022春
- * analysis : null
- * correctanswer : ABD
- * optiona : 运动损伤
- * optionb : 诱发心血管事件
- * optionc : 促进内分泌
- * optiond : 脏器功能过负荷或者衰竭
- * optione : 导致挫折感
- * isselect : 1
- */
 class Question : Serializable {
+    /**
+     * id : 7
+     * subjectid : 1
+     * description : 步态分析是利用力学概念和已经掌握的人体解剖、生理学知识对人体行走功能的状况进行客观的定性分析和定量分析，并为临床及康复治疗提供有益的指导和疗效评价。（）
+     * type : 判断题
+     * img : null
+     * level : 简单
+     * source : 医学
+     * analysis : null
+     * correctanswer : A
+     * optiona : 对
+     * optionb : 错
+     * optionc : null
+     * optiond : null
+     * optione : null
+     */
     var id: Int? = null
     var subjectid: Int? = null
     var description: String? = null
     var type: String? = null
-    var img: Any? = null
+    var img: String? = null
     var level: String? = null
     var source: String? = null
-    var analysis: Any? = null
+    var analysis: String? = null
     var correctanswer: String? = null
     var optiona: String? = null
     var optionb: String? = null
     var optionc: String? = null
     var optiond: String? = null
     var optione: String? = null
-    var isselect: Int? = null
 }

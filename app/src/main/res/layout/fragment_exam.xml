@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_question_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="困难"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_green_rect"/>
+
+    <TextView
+        android:id="@+id/tv_question_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_question_level"
+        android:layout_alignTop="@id/tv_question_source"
+        android:layout_marginStart="10dp"
+        android:text="单选题"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_green_rect"/>
+
+    <TextView
+        android:id="@+id/tv_question_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《计算机网络》2015-16春"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/shape_grey_rect"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_question_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/tv_question_type"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="给定两个大小分别为m和n的正序（从小到大）数组nums1和nums2。请你找出并返回这两个正序数组的中位数。"/>
+
+    <ImageView
+        android:id="@+id/tv_question_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_question_desc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_banner_placeholder"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_question_img"
+        android:layout_marginTop="30dp"/>
+</RelativeLayout>

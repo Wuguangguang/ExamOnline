@@ -1,6 +1,5 @@
-package com.volcano.examonline.mvvm.detail.viewmodel
+package com.volcano.examonline.mvvm.exam.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations

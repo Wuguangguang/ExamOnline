@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.detail.adapter
+package com.volcano.examonline.mvvm.exam.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -19,7 +19,9 @@ class CommitResultAdapter(private val mContext: Context): RecyclerView.Adapter<C
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = AdapterCommitResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(
+            binding
+        )
     }
 
     override fun getItemCount(): Int = if(results != null) results!!.size else 0

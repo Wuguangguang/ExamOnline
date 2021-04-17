@@ -1,9 +1,9 @@
-package com.volcano.examonline.mvvm.detail.adapter
+package com.volcano.examonline.mvvm.question.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.volcano.examonline.mvvm.detail.view.QuestionDetailFragment
+import com.volcano.examonline.mvvm.question.view.QuestionDetailFragment
 import com.volcano.examonline.mvvm.study.model.Question
 
 class QuestionAdapter(private val mContext: FragmentActivity, private val questions: ArrayList<Question>) : FragmentStateAdapter(mContext) {

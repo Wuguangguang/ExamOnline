@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.volcano.examonline.databinding.AdapterFooterBinding
 import com.volcano.examonline.databinding.AdapterQuestionListBinding
-import com.volcano.examonline.mvvm.detail.view.QuestionActivity
+import com.volcano.examonline.mvvm.question.view.QuestionActivity
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
 

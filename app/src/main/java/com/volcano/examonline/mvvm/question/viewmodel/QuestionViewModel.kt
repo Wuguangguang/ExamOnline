@@ -1,4 +1,4 @@
-package com.volcano.examonline.mvvm.detail.viewmodel
+package com.volcano.examonline.mvvm.question.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,22 +8,16 @@ import com.volcano.examonline.mvvm.study.model.Comment
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.network.NetworkRepository
 
-class DetailViewModel : ViewModel() {
+class QuestionViewModel : ViewModel() {
 
     var questions = arrayListOf<Question>()
-
-    var mutableQuestions = MutableLiveData<ArrayList<Question>>()
-
     var myAnswers = arrayListOf<String>()
 
-    var mutableId = MutableLiveData<Int>()
 
-//    val observeId: LiveData<Comment> = Transformations.switchMap(mutableId){ id ->
-//        NetworkRepository.getInstance().getArticleComments(id)
-//    }
+    private var mutableLiveComments = MutableLiveData<Int>()
 
-    fun getComments(id: Int) {
-        mutableId.value = id
+    fun getQuestionComments(id: Int) {
+        mutableLiveComments.value = id
     }
 
 

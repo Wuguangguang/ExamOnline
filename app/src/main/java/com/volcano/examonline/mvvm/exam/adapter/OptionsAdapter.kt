@@ -8,8 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.volcano.examonline.R
 import com.volcano.examonline.databinding.AdapterOptionBinding
+import com.volcano.examonline.util.ConstantData
 
-class OptionsAdapter(private val mContext: Context, private val options: ArrayList<String>, private val type: String)
+class OptionsAdapter(private val mContext: Context,
+                     private val options: ArrayList<String>,
+                     private val type: String,
+                     private val mode: Int,
+                     private val mySelect: ArrayList<Int>?,
+                     private val correctSelect: ArrayList<Int>?)
     : RecyclerView.Adapter<OptionsAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
@@ -17,70 +23,71 @@ class OptionsAdapter(private val mContext: Context, private val options: ArrayLi
     private var tvCurrentSelected: TextView? = null
     private var currentSelectedPos: Int? = null
     private var myAnswer = arrayListOf<String>()
-
-    companion object {
-        val images = arrayListOf(
-            R.drawable.ic_option_a_normal,
-            R.drawable.ic_option_a_selected,
-            R.drawable.ic_option_b_normal,
-            R.drawable.ic_option_b_selected,
-            R.drawable.ic_option_c_normal,
-            R.drawable.ic_option_c_selected,
-            R.drawable.ic_option_d_normal,
-            R.drawable.ic_option_d_selected,
-            R.drawable.ic_option_e_normal,
-            R.drawable.ic_option_e_selected
-        )
-        val answers = arrayListOf(
-            "A","B","C","D","E"
-        )
-    }
+    private var isHasSelected: Boolean = false
 
     class ViewHolder(val binding: AdapterOptionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(option: String, pos:Int) {
             binding.tvOption.text = option
-            binding.ivOption.setImageResource(images[2*pos])
+            binding.ivOption.setImageResource(ConstantData.normalImages[pos])
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = AdapterOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(
-            binding
-        )
+        return ViewHolder(AdapterOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int = options.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(options[position], position)
-        holder.itemView.setOnClickListener {
-            //控制单选
-            if(type == "单选题" || type == "判断题") {
-                if(ivCurrentSelected != null) {
-                    ivCurrentSelected!!.setImageResource(images[currentSelectedPos!! * 2])
-                    tvCurrentSelected!!.setTextColor(mContext.resources.getColor(R.color.black))
-                    myAnswer.clear()  //清空答案
-                }
-                ivCurrentSelected = holder.itemView.findViewById(R.id.iv_option)
-                tvCurrentSelected = holder.itemView.findViewById(R.id.tv_option)
-                currentSelectedPos = position
-            }
-            //多选题取消选择
-            if(myAnswer.contains(answers[position]) && type == "多选题") {
-                holder.binding.ivOption.setImageResource(images[position * 2])
-                holder.binding.tvOption.setTextColor(mContext.resources.getColor(R.color.black))
-                myAnswer.remove(answers[position])
-            }else {
-                holder.binding.ivOption.setImageResource(images[position * 2 + 1])
+        if(mode == ConstantData.MODE_ANALYSIS) {
+            if(correctSelect!!.contains(position)) {
+                holder.binding.ivOption.setImageResource(ConstantData.correctImages[position])
                 holder.binding.tvOption.setTextColor(mContext.resources.getColor(R.color.colorAccent))
-                myAnswer.add(answers[position])
+            }else if(mySelect!!.contains(position)) {
+                holder.binding.ivOption.setImageResource(ConstantData.incorrectImages[position])
+                holder.binding.tvOption.setTextColor(mContext.resources.getColor(R.color.COLOR_RED))
             }
-            this.onItemClickListener!!.onClick(myAnswer)
+        }else {
+            holder.itemView.setOnClickListener {
+                // 单题详情、顺序练习    点击一次后就不可以再点击
+                if(mode == ConstantData.MODE_IMMEDIATELY && (type == ConstantData.TYPE_SINGLE_SELECT || type == ConstantData.TYPE_JUDGE)) {
+                    if(!isHasSelected) {
+                        this.onItemClickListener!!.onClick(arrayListOf(ConstantData.answers[position]))
+                    }
+                }else {
+                    // 1.单题详情、顺序练习 多选题  2.模拟考试
+                    if(type == ConstantData.TYPE_SINGLE_SELECT || type == ConstantData.TYPE_JUDGE) {
+                        if(ivCurrentSelected != null) {
+                            ivCurrentSelected!!.setImageResource(ConstantData.normalImages[currentSelectedPos!!])
+                            tvCurrentSelected!!.setTextColor(mContext.resources.getColor(R.color.black))
+                            myAnswer.clear()  //清空答案
+                        }
+                        ivCurrentSelected = holder.itemView.findViewById(R.id.iv_option)
+                        tvCurrentSelected = holder.itemView.findViewById(R.id.tv_option)
+                        currentSelectedPos = position
+                    }
+                    //多选题取消选择
+                    if(myAnswer.contains(ConstantData.answers[position]) && type == ConstantData.TYPE_MULTI_SELECT) {
+                        holder.binding.ivOption.setImageResource(ConstantData.normalImages[position])
+                        holder.binding.tvOption.setTextColor(mContext.resources.getColor(R.color.black))
+                        myAnswer.remove(ConstantData.answers[position])
+                    }else {
+                        holder.binding.ivOption.setImageResource(ConstantData.correctImages[position])
+                        holder.binding.tvOption.setTextColor(mContext.resources.getColor(R.color.colorAccent))
+                        myAnswer.add(ConstantData.answers[position])
+                    }
+                    this.onItemClickListener!!.onClick(myAnswer)
+                }
+            }
         }
     }
 
     fun setOnClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
+    }
+
+    fun setSelected() {
+        isHasSelected = true
     }
 }

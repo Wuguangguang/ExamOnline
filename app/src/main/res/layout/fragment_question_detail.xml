@@ -155,20 +155,62 @@
                     android:textColor="#AB8B28" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="30dp">
+
+                <TextView
+                    android:id="@+id/tv_question_comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="0"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:text="条回帖"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_question_comment_order"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_grey_search"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="2dp"/>
+
+                <TextView
+                    android:id="@+id/tv_question_comment_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="默认排序"
+                    android:textSize="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"/>
+            </LinearLayout>
+
             <View
-                android:id="@+id/v_comment_list"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/ll_question_analysis"
-                android:background="@color/COLOR_GREY"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="10dp"
+                android:background="@color/COLOR_GREY"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_comment_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/v_comment_list"/>
+                android:layout_below="@id/tv_article_comment_order"/>
         </LinearLayout>
 
 </RelativeLayout>

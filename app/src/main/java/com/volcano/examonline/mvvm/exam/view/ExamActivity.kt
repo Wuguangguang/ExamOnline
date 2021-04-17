@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.observe
+import androidx.viewpager2.widget.ViewPager2
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityExamDetailBinding
@@ -61,6 +62,12 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
 
                         }
                     }
+                    examDetailViewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            mBinding.examDetailRecord.text = "${position+1}/${mViewModel.questions.size}"
+                        }
+                    })
                 }
             }
         }

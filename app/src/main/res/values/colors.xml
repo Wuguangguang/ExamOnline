@@ -12,4 +12,8 @@
     <color name="colorAccent">#FF03DAC5</color>
     <color name="COLOR_GREY">#FFE6E6E6</color>
     <color name="COLOR_RED">#FFd81e06</color>
+    <color name="COLOR_FFBE5043">#FFBE5043</color>
+    <color name="COLOR_FF57B769">#FF57B769</color>
+    <color name="COLOR_FFE4A264">#FFE4A264</color>
+    <color name="COLOR_FFF5F5F5">#FFF5F5F5</color>
 </resources>

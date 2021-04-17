@@ -11,8 +11,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="困难"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_green_rect"/>
+        android:textColor="@color/COLOR_FFBE5043"
+        android:background="@drawable/shape_white_rect"/>
 
     <TextView
         android:id="@+id/tv_question_type"
@@ -22,8 +22,7 @@
         android:layout_alignTop="@id/tv_question_source"
         android:layout_marginStart="10dp"
         android:text="单选题"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_green_rect"/>
+        android:background="@drawable/shape_white_rect"/>
 
     <TextView
         android:id="@+id/tv_question_source"
@@ -32,8 +31,7 @@
         android:text="《计算机网络》2015-16春"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/shape_grey_rect"
-        android:textColor="@color/black"/>
+        android:background="@drawable/shape_white_rect"/>
 
     <TextView
         android:id="@+id/tv_question_desc"

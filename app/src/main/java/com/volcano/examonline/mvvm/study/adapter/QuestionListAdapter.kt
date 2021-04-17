@@ -43,8 +43,9 @@ class QuestionListAdapter(val context : Context, private val questions : ArrayLi
                     val question = questions[holder.adapterPosition]
                     val intent = Intent(this.context, QuestionActivity::class.java)
                     intent.apply {
-                        putExtra("detailType", ConstantData.QUESTION_DETAIL)
-                        putExtra("question", question)
+                        putExtra("type", ConstantData.SINGLE_QUESTION)
+                        putExtra("question", arrayListOf(question))
+                        putExtra("myAnswers", arrayListOf<String>())
                     }
                     this.context.startActivity(intent)
                 }

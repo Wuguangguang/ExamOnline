@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginTop="10dp">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,31 +13,27 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-
         <TextView
-            android:id="@+id/tv_article_source"
+            android:id="@+id/tv_article_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/shape_green_rect"
-            android:textColor="@color/white"
-            android:text="面试求职"/>
+            android:layout_alignParentEnd="true"
+            android:text="2020-03-23 16:36"/>
 
         <TextView
             android:id="@+id/tv_article_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:layout_toEndOf="@id/tv_article_source"
-            android:layout_alignBaseline="@id/tv_article_source"
-            android:text="中等"/>
+            android:layout_alignParentStart="true"
+            android:layout_alignBaseline="@id/tv_article_date"
+            android:text="谁火山"/>
 
 
         <TextView
             android:id="@+id/tv_article_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_article_source"
+            android:layout_below="@+id/tv_article_date"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textSize="16dp"
@@ -79,6 +73,18 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
                 android:text="0"/>
+
+            <TextView
+                android:id="@+id/tv_article_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:text="面试求职"/>
         </LinearLayout>
     </RelativeLayout>
-</com.google.android.material.card.MaterialCardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/COLOR_GREY"/>
+</LinearLayout>

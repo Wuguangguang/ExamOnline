@@ -12,6 +12,7 @@ import com.volcano.examonline.mvvm.detail.view.QuestionActivity
 import com.volcano.examonline.mvvm.exam.viewmodel.CommitResultViewModel
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
+import java.lang.StringBuilder
 import java.math.BigDecimal
 
 class CommitResultActivity : BaseMvvmActivity<ActivityCommitResultBinding, CommitResultViewModel>() {
@@ -31,11 +32,56 @@ class CommitResultActivity : BaseMvvmActivity<ActivityCommitResultBinding, Commi
         }
         commitResultAdapter.setOnClickListener(AdapterView.OnItemClickListener { _, _, position, _ ->
             val intent = Intent(this, QuestionActivity::class.java).apply {
-                putExtra("detailType", ConstantData.QUESTION_DETAIL)
-                putExtra("question", mViewModel.questions[position])
+                putExtra("type", ConstantData.SINGLE_QUESTION)
+                putExtra("question", arrayListOf(mViewModel.questions[position]))
             }
             startActivity(intent)
         })
+        mBinding.tvWrongAnalysis.setOnClickListener {
+            val intent = Intent(this, QuestionActivity::class.java).apply {
+                putExtra("type", ConstantData.MULTI_QUESTION)
+                val questions = arrayListOf<Question>()
+                val myAnswers = arrayListOf<String>()
+                for(i in mViewModel.results.value!!.indices) {
+                    //错题及其答案加入questions
+                    if(mViewModel.results.value!![i] == 0) {
+                        val sb = StringBuilder("")
+                        questions.add(mViewModel.questions[i])
+                        if(mViewModel.myAnswers[i].isNullOrEmpty()) {
+                            myAnswers.add(sb.toString())
+                        }else {
+                            mViewModel.myAnswers[i]!!.forEach {
+                                sb.append(it)
+                            }
+                            myAnswers.add(sb.toString())
+                        }
+                    }
+                }
+                putExtra("question", questions)
+                putExtra("myAnswers", myAnswers)
+            }
+            startActivity(intent)
+        }
+        mBinding.tvAllAnalysis.setOnClickListener {
+            val intent = Intent(this, QuestionActivity::class.java).apply {
+                putExtra("type", ConstantData.MULTI_QUESTION)
+                putExtra("question", mViewModel.questions)
+                val myAnswers = arrayListOf<String>()
+                mViewModel.myAnswers.forEach {
+                    val sb = StringBuilder("")
+                    if(it.value.isNullOrEmpty()) {
+                      myAnswers.add(sb.toString())
+                    }else {
+                        it.value.forEach {
+                            sb.append(it)
+                        }
+                        myAnswers.add(sb.toString())
+                    }
+                }
+                putExtra("myAnswers", myAnswers)
+            }
+            startActivity(intent)
+        }
     }
 
     private fun initToolbar() {

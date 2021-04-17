@@ -1,5 +1,6 @@
 package com.volcano.examonline.mvvm.forum.viewmodel
 
+import android.net.Network
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -20,5 +21,9 @@ class ForumDetailViewModel : ViewModel() {
 
     fun getArticles() {
         mutableArticlePage.value = true
+    }
+
+    fun getHotArticles() {
+
     }
 }

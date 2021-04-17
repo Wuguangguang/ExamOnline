@@ -32,41 +32,54 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
     }
 
     override fun initView() {
-        when(mode) {
-            ConstantData.SIMULATION_MODE -> {
-                mBinding.examDetailTimer.apply {
-                    visibility = View.VISIBLE
-                    setOnChronometerTickListener {
-                        val time = System.currentTimeMillis() - it.base
-                        val date = Date(time)
-                        val sdf = SimpleDateFormat("HH:mm:ss", Locale.US)
-                        sdf.timeZone = TimeZone.getTimeZone("UTC")
-                        text = sdf.format(date)
+        mBinding.apply {
+            when(mode) {
+                ConstantData.SIMULATION_MODE -> {
+                    rlExamSimulation.visibility = View.VISIBLE
+                    tvExamTitle.visibility = View.GONE
+                    fabEditComment.visibility = View.GONE
+                    examDetailTimer.apply {
+                        visibility = View.VISIBLE
+                        setOnChronometerTickListener {
+                            val time = System.currentTimeMillis() - it.base
+                            val date = Date(time)
+                            val sdf = SimpleDateFormat("HH:mm:ss", Locale.US)
+                            sdf.timeZone = TimeZone.getTimeZone("UTC")
+                            text = sdf.format(date)
+                        }
+                        base = System.currentTimeMillis()
+                        start()
                     }
-                    base = System.currentTimeMillis()
-                    start()
                 }
-                mBinding.tvExamTitle.visibility = View.GONE
-            }
-            else -> {
-                mBinding.examDetailTimer.visibility = View.GONE
-                mBinding.tvExamTitle.visibility = View.VISIBLE
+                else -> {
+                    tvExamTitle.visibility = View.VISIBLE
+                    examDetailTimer.visibility = View.GONE
+                    rlExamSimulation.visibility = View.GONE
+                    fabEditComment.apply {
+                        visibility = View.VISIBLE
+                        setOnClickListener {
+
+                        }
+                    }
+                }
             }
         }
+        mBinding.examDetailViewpager2.adapter = examAdapter
+        mBinding.examDetailViewpager2.isUserInputEnabled = mode != ConstantData.SIMULATION_MODE
+        initListener()
+    }
+
+    private fun initListener() {
         mBinding.examDetailBackImg.setOnClickListener {
             showExitDialog()
         }
-//        mBinding.examDetailRecord.setOnClickListener {
-//        }
-        mBinding.examDetailViewpager2.adapter = examAdapter
-        mBinding.examDetailViewpager2.isUserInputEnabled = false
+        mBinding.examDetailRecord.setOnClickListener {
+        }
         mBinding.examDetailNextQuest.setOnClickListener {
             if(currentPos < mViewModel.questions.size - 1) {
                 mViewModel.setCurrentPos(++currentPos)
             }else {
-                if(mode == ConstantData.SIMULATION_MODE) {
-                    showCommitDialog()
-                }
+                showCommitDialog()
             }
         }
         mBinding.examDetailLastQuest.setOnClickListener {
@@ -127,11 +140,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
     override fun initData() {
         mViewModel.currentPos.observe(this){
             mBinding.examDetailLastQuest.setTextColor(if(currentPos == 0) Color.GRAY else resources.getColor(R.color.colorAccent))
-            if(mode == ConstantData.ORDERLY_MODE) {
-                mBinding.examDetailNextQuest.setTextColor(if(currentPos == mViewModel.questions.size - 1) Color.GRAY else resources.getColor(R.color.colorAccent))
-            }else {
-                mBinding.examDetailNextQuest.text = if(currentPos == mViewModel.questions.size - 1) "提交" else "下一题"
-            }
+            mBinding.examDetailNextQuest.text = if(currentPos == mViewModel.questions.size - 1) "提交" else "下一题"
             mBinding.examDetailViewpager2.currentItem = currentPos
         }
         mViewModel.question.observe(this) {
@@ -141,12 +150,11 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
                 examAdapter.notifyDataSetChanged()
                 examAdapter.initFragments()
                 mBinding.examDetailViewpager2.currentItem = 0
-                mBinding.examDetailRecordTotal.text = "/${mViewModel.questions.size}"
+                mBinding.examDetailRecord.text = "0/${mViewModel.questions.size}"
             }
         }
         mViewModel.myAnswers.observe(this) {
-            mBinding.examDetailRecord.text = "${it.size}"
-
+            mBinding.examDetailRecord.text = "${it.size}/${mViewModel.questions.size}"
         }
         when(mode) {
             ConstantData.ORDERLY_MODE -> {

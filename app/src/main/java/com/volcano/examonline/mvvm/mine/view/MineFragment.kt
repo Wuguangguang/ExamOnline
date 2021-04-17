@@ -1,14 +1,14 @@
 package com.volcano.examonline.mvvm.mine.view
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentMineBinding
 import com.volcano.examonline.mvvm.login.view.LoginActivity
-import com.volcano.examonline.mvvm.mine.adapter.FooterAdapter
 import com.volcano.examonline.mvvm.mine.viewmodel.MineViewModel
 import com.volcano.examonline.util.ConstantData
 
@@ -18,14 +18,7 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>() {
         fun newInstance() = MineFragment()
     }
 
-    private val footerAdapter : FooterAdapter by lazy { FooterAdapter(activity!!,mViewModel.footers) }
-
-
     override fun initView() {
-        mBinding.mineFooterRcv.apply {
-            layoutManager = LinearLayoutManager(activity!!)
-            adapter = footerAdapter
-        }
         mBinding.llUserInfo.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
             startActivityForResult(intent, 1)
@@ -33,6 +26,44 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>() {
         mBinding.ivUserAvatar.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
             startActivityForResult(intent, 1)
+        }
+        mBinding.llMyArticles.setOnClickListener {
+            if(ConstantData.isLogin()) {
+                val intent = Intent(context, MyArticlesActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivityForResult(intent, 1)
+            }
+        }
+        mBinding.llMyInfo.setOnClickListener {
+            if(ConstantData.isLogin()) {
+                val intent = Intent(context, MyInfoActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivityForResult(intent, 1)
+            }
+        }
+        mBinding.llExitLogin.setOnClickListener {
+            AlertDialog.Builder(context).apply {
+                setTitle("退出登录")
+                setMessage("确定要退出登录吗？")
+                setCancelable(false)
+                setPositiveButton("确定") { dialog, which ->
+                    ConstantData.exitLogin()
+                    mBinding.tvUserName.text = "点击登录"
+                    mBinding.tvUserPhone.text = "请点击进行登录"
+                    mBinding.llExitLogin.visibility = View.GONE
+                }
+                setNegativeButton("取消") { dialog, which ->
+                }
+                show()
+            }
+        }
+        mBinding.llAboutMe.setOnClickListener {
+            val intent = Intent(context, AboutMeActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -50,17 +81,9 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>() {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode) {
             1 -> if(resultCode == Activity.RESULT_OK) {
-                val token = data?.getStringExtra("token")
-                val phone = data?.getStringExtra("phone")
-                Log.d("Test", "onActivityResult: $token , $phone")
-                ConstantData.TOKEN = token
-                ConstantData.PHONE = phone
-                if(ConstantData.PHONE != null && ConstantData.TOKEN != null) {
-                    mViewModel.getUserInfo(phone!!)
-                }
+                mBinding.llExitLogin.visibility = View.VISIBLE
+                mViewModel.getUserInfo(ConstantData.PHONE!!)
             }
         }
     }
-
-
 }

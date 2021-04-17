@@ -17,7 +17,7 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
 
     override fun initView() {
         mBinding.projectDetailSwipeRefreshL.setOnRefreshListener {
-            mViewModel.getArticles()
+//            mViewModel.getArticles()
         }
         mBinding.projectDetailRcv.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -40,6 +40,7 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
             }
             2 -> {
                 //热榜
+                mViewModel.getHotArticles()
             }
         }
     }

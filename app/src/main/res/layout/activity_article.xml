@@ -85,7 +85,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="提示：C。物理治疗分成运动疗法和物理因子疗法，其中物理因子疗法包括力、电、光、声、水及温度等物理因子。"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <ImageView
                 android:id="@+id/iv_article_img"
@@ -99,7 +99,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="8dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/COLOR_GREY"/>
 
@@ -111,14 +111,22 @@
 
                 <TextView
                     android:id="@+id/tv_article_comment_num"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
                     android:textColor="@color/black"
                     android:layout_marginStart="10dp"
                     android:layout_gravity="center_vertical"
-                    android:text="0条回帖"/>
+                    android:text="0"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:text="条回帖"/>
+
 
                 <ImageView
                     android:id="@+id/iv_article_comment_order"
@@ -149,9 +157,9 @@
                 android:id="@+id/rv_article_comment_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -221,6 +229,7 @@
             android:layout_marginStart="20dp"
             android:background="@drawable/shape_grey_rect"
             android:hint="发表评论"
+            android:textSize="14dp"
             android:layout_toStartOf="@id/iv_comment"
             android:layout_centerVertical="true"/>
     </RelativeLayout>

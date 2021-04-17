@@ -86,8 +86,8 @@ class NetworkRepository {
         return result
     }
 
-    fun getArticleComments(id: Int): LiveData<Comment> {
-        var result = MutableLiveData<Comment>()
+    fun getArticleComments(id: Int): LiveData<List<Comment>> {
+        var result = MutableLiveData<List<Comment>>()
         api.getArticleComments(id).transform(result)
         return result
     }

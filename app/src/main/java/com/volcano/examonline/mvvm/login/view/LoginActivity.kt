@@ -8,6 +8,7 @@ import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityLoginBinding
 import com.volcano.examonline.mvvm.login.viewmodel.LoginViewModel
+import com.volcano.examonline.util.ConstantData
 
 class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
 
@@ -46,8 +47,8 @@ class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
                 Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show()
                 val token = it.token!!
                 val intent = Intent()
-                intent.putExtra("token", token)
-                intent.putExtra("phone", mBinding.tvLoginPhone.text.toString())
+                ConstantData.TOKEN = token
+                ConstantData.PHONE = mBinding.tvLoginPhone.text.toString()
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }else {

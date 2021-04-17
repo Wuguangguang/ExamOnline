@@ -25,8 +25,13 @@ class ForumFragment : BaseMvvmFragment<FragmentForumBinding, ForumViewModel>() {
     override fun initView() {
         initToolbar()
         mBinding.fabArticleUpload.setOnClickListener {
-            val intent = Intent(activity, ArticleUploadActivity::class.java)
-            startActivity(intent)
+            if(ConstantData.isLogin()) {
+                val intent = Intent(activity, ArticleUploadActivity::class.java)
+                startActivity(intent)
+            }else {
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
         mBinding.tlForum.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {

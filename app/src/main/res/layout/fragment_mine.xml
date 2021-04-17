@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".mvvm.mine.view.MineFragment">
 
-
     <RelativeLayout
         android:id="@+id/rl_user_info"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:background="@color/colorAccent">
@@ -55,20 +54,111 @@
             </LinearLayout>
     </RelativeLayout>
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
+        android:id="@+id/ll_my_articles"
         android:layout_below="@+id/rl_user_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_my_article"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="我的发布"
+            android:textSize="18dp"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/shape_right_triangle"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_my_info"
+        android:layout_below="@+id/ll_my_articles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_my_info"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="个人信息"
+            android:textSize="18dp"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/shape_right_triangle"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_exit_login"
+        android:layout_below="@+id/ll_my_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_exit_login"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="退出登录"
+            android:textSize="18dp"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/shape_right_triangle"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_about_me"
+        android:layout_below="@+id/ll_exit_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_about_me"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mine_footer_rcv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="关于我"
+            android:textSize="18dp" />
 
-    </com.google.android.material.card.MaterialCardView>
-
-
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/shape_right_triangle"/>
+    </LinearLayout>
 </RelativeLayout>

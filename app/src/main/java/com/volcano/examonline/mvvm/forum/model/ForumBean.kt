@@ -20,10 +20,13 @@ data class Forum(
 
 class Article : Serializable {
     var id: Int? = null
-    var userphone: String? = null
+    var userid: Int? = null
     var username: String? = null
     var title: String? = null
     var description: String? = null
+    var field: String? = null
     var img: String? = null
+    var commentnums: Int? = null
+    var zannums: Int? = null
     var createat: String? = null
 }

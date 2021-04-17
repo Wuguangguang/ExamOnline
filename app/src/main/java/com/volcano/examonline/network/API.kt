@@ -57,7 +57,7 @@ interface API {
 
     // 根据文章id获取评论列表
     @GET("api/v1/article")
-    fun getArticleComments(@Query("id") id: Int): Observable<Response<Comment>>
+    fun getArticleComments(@Query("id") id: Int): Observable<Response<List<Comment>>>
 
     // 上传文章
     @Headers("Content-Type: application/json;charset=UTF-8")

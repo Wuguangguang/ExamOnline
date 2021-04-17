@@ -21,6 +21,12 @@ class ArticleListAdapter(val context : Context, private val articles : ArrayList
         fun bind(article : Article) {
             binding.tvArticleAuthor.text = article.username
             binding.tvArticleTitle.text = article.title
+            binding.tvArticleDate.text = article.createat
+            binding.tvArticleSource.text = article.field
+            val comments = article.commentnums ?: 0
+            val zans = article.zannums ?: 0
+            binding.tvArticleComment.text = "$comments"
+            binding.tvArticleZan.text = "$zans"
         }
     }
 

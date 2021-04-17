@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/iv_commenter_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@color/COLOR_GREY"/>
+
+    <TextView
+        android:id="@+id/tv_commenter_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/iv_commenter_avatar"
+        android:layout_alignTop="@id/iv_commenter_avatar"
+        android:text="谁火山"/>
+
+    <TextView
+        android:id="@+id/tv_commenter_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/iv_commenter_avatar"
+        android:layout_alignBottom="@id/iv_commenter_avatar"
+        android:text="2020-03-23 16:36"/>
+
+    <TextView
+        android:id="@+id/tv_comment_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_commenter_avatar"
+        android:layout_alignStart="@id/tv_commenter_author"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:text="Android面试黑洞————当我按下Home键再切回来，会发生什么？" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tv_comment_desc"
+        android:background="@color/COLOR_GREY"/>
+</RelativeLayout>

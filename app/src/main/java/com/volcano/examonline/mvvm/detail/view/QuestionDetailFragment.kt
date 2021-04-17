@@ -2,15 +2,15 @@ package com.volcano.examonline.mvvm.detail.view
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentQuestionDetailBinding
-import com.volcano.examonline.mvvm.exam.adapter.OnItemClickListener
+import com.volcano.examonline.mvvm.detail.viewmodel.DetailViewModel
 import com.volcano.examonline.mvvm.exam.adapter.OptionsAdapter
-import com.volcano.examonline.mvvm.exam.viewmodel.ExamViewModel
 import com.volcano.examonline.mvvm.study.model.Question
 
 class QuestionDetailFragment(private val question: Question, private val currentPos: Int)
-    : BaseMvvmFragment<FragmentQuestionDetailBinding, ExamViewModel>() {
+    : BaseMvvmFragment<FragmentQuestionDetailBinding, DetailViewModel>() {
 
     private val optionsAdapter by lazy { OptionsAdapter(activity!!, options!!, question.type!!) }
     private var options = arrayListOf<String>()
@@ -20,6 +20,13 @@ class QuestionDetailFragment(private val question: Question, private val current
     }
 
     override fun initView() {
+        if(!mViewModel.myAnswers.isNullOrEmpty()) {
+            mBinding.llCorrectAnswer.visibility = View.VISIBLE
+            mBinding.tvCorrectAnswer.text = question.correctanswer
+            val sign = if(question.correctanswer.equals(mViewModel.myAnswers[currentPos])) " （正确）" else " （错误）"
+            mBinding.tvMyAnswer.text = "${mViewModel.myAnswers[currentPos]}$sign"
+            mBinding.tvMyAnswer.setTextColor(context!!.resources.getColor(if(sign == " （正确）") R.color.colorAccent else R.color.COLOR_RED))
+        }
         mBinding.rvOptions.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = optionsAdapter
@@ -33,12 +40,12 @@ class QuestionDetailFragment(private val question: Question, private val current
             mBinding.tvAnalysis.visibility = View.GONE
             mBinding.llQuestionAnalysis.visibility = View.VISIBLE
         }
-        optionsAdapter.setOnClickListener(object :
-            OnItemClickListener {
-            override fun onClick(myAnswer: ArrayList<String>) {
-                mViewModel.setMyAnswer(currentPos, myAnswer)
-            }
-        })
+//        optionsAdapter.setOnClickListener(object :
+//            OnItemClickListener {
+//            override fun onClick(myAnswer: ArrayList<String>) {
+//                mViewModel.setMyAnswer(currentPos, myAnswer)
+//            }
+//        })
     }
 
     private fun initOptions() {

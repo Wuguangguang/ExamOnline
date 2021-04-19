@@ -2,7 +2,7 @@ package com.volcano.examonline.mvvm.study.view
 
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.lifecycle.observe
+import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,6 +28,7 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
     override fun initView() {
         initToolbar()
         initListener()
+        contentView = mBinding.mslVpQuestions
         mBinding.tlSubjects.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 mBinding.vpQuestions.currentItem = tab!!.position
@@ -41,7 +42,6 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
             adapter = subjectAdapter
         }
     }
-
 
     private fun initToolbar() {
         mBinding.toolbarHomepage.apply {
@@ -84,25 +84,38 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
     }
 
     override fun initData() {
-        mViewModel.subjects.observe(activity!!) {
+        setDataStatus(mViewModel.subjects, {
+
+        }, {
             if(!it.isNullOrEmpty()) {
                 mBinding.vpQuestions.offscreenPageLimit = it.size
-                tabBind(mBinding.vpQuestions)
                 mViewModel.subjectData.addAll(it)
                 subjectAdapter.notifyDataSetChanged()
                 subjectAdapter.initFragments()
+                tabBind(mBinding.vpQuestions)
                 it.forEach{
                     subjectNames.add(it.subjectname!!)
                 }
             }
-        }
+        })
+        refresh()
+    }
+
+    override fun doRetry() {
+        super.doRetry()
+        refresh()
+    }
+
+    private fun refresh() {
+        Log.d("TEST", "refresh: executed")
+        contentView?.showLoading()
         mViewModel.getSubjects()
     }
 
     private fun tabBind(pager: ViewPager2){
         tabLayoutMediator?.detach()
         tabLayoutMediator = TabLayoutMediator(mBinding.tlSubjects,pager){ tab, position ->
-            tab.text = mViewModel.subjects.value!![position].subjectname
+            tab.text = mViewModel.subjectData[position].subjectname
         }
         tabLayoutMediator?.attach()
     }

@@ -1,5 +1,6 @@
 package com.volcano.examonline.mvvm.study.view
 
+import android.view.View
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.R
@@ -32,14 +33,29 @@ class StudyDetailFragment(private val subjectId : Int) : BaseMvvmFragment<Fragme
     }
 
     override fun initData() {
-        mViewModel.questions.observe(activity!!) {
+        setDataStatus(mViewModel.questions, {
+        }, {
             if(!it.isNullOrEmpty()) {
                 mViewModel.questionData.clear()
                 mViewModel.questionData.addAll(it)
                 questionAdapter.notifyDataSetChanged()
-                mBinding.srlQuestionDetail.isRefreshing = false
             }
-        }
+            mBinding.srlQuestionDetail.isRefreshing = false
+        })
+//        mViewModel.questions.observe(activity!!) {
+//            if(!it.isNullOrEmpty()) {
+//                mViewModel.questionData.clear()
+//                mViewModel.questionData.addAll(it)
+//                questionAdapter.notifyDataSetChanged()
+//                mBinding.srlQuestionDetail.isRefreshing = false
+//            }
+//        }
         mViewModel.getQuestions(subjectId)
     }
+
+    private fun refresh() {
+
+    }
+
 }
+

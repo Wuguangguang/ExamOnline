@@ -1,6 +1,7 @@
 package com.volcano.examonline.util
 
 import com.volcano.examonline.R
+import com.volcano.examonline.base.Response
 
 object ConstantData {
 

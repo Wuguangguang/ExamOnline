@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.MutableLiveData
+import com.volcano.examonline.util.ConstantData
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,23 +14,20 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.reflect.ParameterizedType
 
-fun <T> Observable<Response<T>>.transform(result : MutableLiveData<T>) {
-    this.map {
-        it.data!!
-    }
-        .subscribeOn(Schedulers.io())
+fun <T> Observable<Response<T>>.transform(result : MutableLiveData<Response<T>>) {
+    this.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(object : Observer<T> {
+        .subscribe(object : Observer<Response<T>> {
+            override fun onComplete() {
+            }
             override fun onSubscribe(d: Disposable) {
             }
-            override fun onNext(t: T) {
+            override fun onNext(t: Response<T>) {
                 result.value = t
             }
             override fun onError(e: Throwable) {
                 e.printStackTrace()
                 result.value = null
-            }
-            override fun onComplete() {
             }
         })
 }

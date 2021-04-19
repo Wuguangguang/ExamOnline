@@ -150,16 +150,16 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
             mBinding.examDetailNextQuest.text = if(currentPos == mViewModel.questions.size - 1) "提交" else "下一题"
             mBinding.examDetailViewpager2.currentItem = currentPos
         }
-        mViewModel.question.observe(this) {
-            if(!it.isNullOrEmpty()) {
-                mBinding.examDetailViewpager2.offscreenPageLimit = it.size
-                mViewModel.questions.addAll(it)
-                examAdapter.notifyDataSetChanged()
-                examAdapter.initFragments()
-                mBinding.examDetailViewpager2.currentItem = 0
-                mBinding.examDetailRecord.text = "0/${mViewModel.questions.size}"
-            }
-        }
+//        mViewModel.question.observe(this) {
+//            if(!it.isNullOrEmpty()) {
+//                mBinding.examDetailViewpager2.offscreenPageLimit = it.size
+//                mViewModel.questions.addAll(it)
+//                examAdapter.notifyDataSetChanged()
+//                examAdapter.initFragments()
+//                mBinding.examDetailViewpager2.currentItem = 0
+//                mBinding.examDetailRecord.text = "0/${mViewModel.questions.size}"
+//            }
+//        }
         mViewModel.myAnswers.observe(this) {
             mBinding.examDetailRecord.text = "${it.size}/${mViewModel.questions.size}"
         }

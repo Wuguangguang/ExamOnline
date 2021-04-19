@@ -52,6 +52,8 @@
         android:layout_height="0.5dp"
         android:background="@color/COLOR_GREY"/>
 
+    <include layout="@layout/layout_lce"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_hotkey"
         android:layout_width="match_parent"

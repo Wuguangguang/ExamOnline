@@ -2,6 +2,7 @@ package com.volcano.examonline.network
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.volcano.examonline.base.Response
 import com.volcano.examonline.base.getCode
 import com.volcano.examonline.base.transform
 import com.volcano.examonline.mvvm.forum.model.Article
@@ -10,6 +11,7 @@ import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.study.model.Question
+import com.volcano.examonline.mvvm.study.model.Ranking
 import com.volcano.examonline.util.ConstantData
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -39,32 +41,32 @@ class NetworkRepository {
      * 题库页
      */
 
-    fun getQuestions(id: Int): LiveData<List<Question>> {
-        var result = MutableLiveData<List<Question>>()
+    fun getQuestions(id: Int): LiveData<Response<List<Question>>> {
+        var result = MutableLiveData<Response<List<Question>>>()
         api.getQuestions(id).transform(result)
         return result
     }
 
     fun searchQuestion(content: String): LiveData<List<Question>> {
         var result = MutableLiveData<List<Question>>()
-        api.searchQuestion(content).transform(result)
+//        api.searchQuestion(content).transform(result)
         return result
     }
 
     fun getQuestionComments(questionId: Int): LiveData<List<Comment>> {
         var result = MutableLiveData<List<Comment>>()
-        api.getQuestionComments(questionId).transform(result)
+//        api.getQuestionComments(questionId).transform(result)
         return result
     }
 
     fun getQuestionHotKey(): LiveData<List<Any>> {
         var result = MutableLiveData<List<Any>>()
-        api.getQuestionHotKey().transform(result)
+//        api.getQuestionHotKey().transform(result)
         return result
     }
 
-    fun getSubjects(): LiveData<List<Subject>> {
-        val result = MutableLiveData<List<Subject>>()
+    fun getSubjects(): LiveData<Response<List<Subject>>> {
+        val result = MutableLiveData<Response<List<Subject>>>()
         api.getSubjects().transform(result)
         return result
     }
@@ -76,19 +78,19 @@ class NetworkRepository {
 
     fun getArticles(): LiveData<List<Article>> {
         var result = MutableLiveData<List<Article>>()
-        api.getArticles().transform(result)
+//        api.getArticles().transform(result)
         return result
     }
 
     fun getHotArticles(): LiveData<List<Article>> {
         var result = MutableLiveData<List<Article>>()
-        api.getHotArticles().transform(result)
+//        api.getHotArticles().transform(result)
         return result
     }
 
     fun getArticleComments(id: Int): LiveData<List<Comment>> {
         var result = MutableLiveData<List<Comment>>()
-        api.getArticleComments(id).transform(result)
+//        api.getArticleComments(id).transform(result)
         return result
     }
 
@@ -100,7 +102,7 @@ class NetworkRepository {
 
     fun getArticleHotKey(): LiveData<List<Any>> {
         var result = MutableLiveData<List<Any>>()
-        api.getArticleHotKey().transform(result)
+//        api.getArticleHotKey().transform(result)
         return result
     }
 
@@ -111,7 +113,7 @@ class NetworkRepository {
 
     fun getRandomQuestions(id:Int, num: Int): LiveData<List<Question>> {
         var result = MutableLiveData<List<Question>>()
-        api.getRandomQuestions(id, num).transform(result)
+//        api.getRandomQuestions(id, num).transform(result)
         return result
     }
 
@@ -127,13 +129,19 @@ class NetworkRepository {
 
     fun login(userInfo: UserInfo): LiveData<TokenBean> {
         val result = MutableLiveData<TokenBean>()
-        api.login(userInfo).transform(result)
+//        api.login(userInfo).transform(result)
         return result
     }
 
     fun getUserInfo(phone: String): LiveData<UserInfo> {
         val result = MutableLiveData<UserInfo>()
-        api.getUserInfo(phone).transform(result)
+//        api.getUserInfo(phone).transform(result)
+        return result
+    }
+
+    fun getRanking(): LiveData<Response<List<Ranking>>> {
+        var result = MutableLiveData<Response<List<Ranking>>>()
+        api.getRanking().transform(result)
         return result
     }
 

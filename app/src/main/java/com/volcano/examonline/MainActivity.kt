@@ -66,4 +66,8 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    override fun initData() {
+
+    }
+
 }

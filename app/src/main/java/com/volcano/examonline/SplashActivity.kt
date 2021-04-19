@@ -55,4 +55,7 @@ class SplashActivity : BaseMvvmActivity<ActivitySplashBinding, MainViewModel>() 
         mBinding.rlWelcomeBg.setOnClickListener{ jumpToMainActivity() }
     }
 
+    override fun initData() {
+    }
+
 }

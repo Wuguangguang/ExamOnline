@@ -12,97 +12,105 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/COLOR_GREY"/>
+        android:background="@color/COLOR_GREY"
+        android:layout_below="@id/toolbar_ranking"/>
 
-    <RelativeLayout
+    <com.volcano.examonline.widget.MultipleStatusLayout
+        android:id="@+id/msl_ranking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_ranking"
-        android:layout_marginTop="30dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:layout_marginTop="20dp">
 
-        <ImageView
-            android:id="@+id/iv_no1_avatar"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_avatar"
-            android:layout_centerHorizontal="true"/>
-        <TextView
-            android:id="@+id/tv_no1_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="谁火山"
-            android:textColor="@color/black"
-            android:layout_below="@id/iv_no1_avatar"
-            android:layout_centerHorizontal="true"/>
-        <TextView
-            android:id="@+id/tv_no1_accu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="刷题501道"
-            android:layout_below="@id/tv_no1_name"
-            android:layout_centerHorizontal="true"/>
-
-        <ImageView
-            android:id="@+id/iv_no2_avatar"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:src="@drawable/ic_avatar"
-            android:layout_above="@id/tv_no2_name"
-            android:layout_alignStart="@id/tv_no2_name"
-            android:layout_alignEnd="@id/tv_no2_name"/>
-        <TextView
-            android:id="@+id/tv_no2_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:text="John Sally"
-            android:textColor="@color/black"
-            android:layout_alignBaseline="@id/tv_no1_name"
-            android:layout_alignParentStart="true"/>
-        <TextView
-            android:id="@+id/tv_no2_accu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="刷题501道"
-            android:layout_below="@id/tv_no2_name"
-            android:layout_alignParentStart="true"/>
-
-        <ImageView
-            android:id="@+id/iv_no3_avatar"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:src="@drawable/ic_avatar"
-            android:layout_above="@id/tv_no3_name"
-            android:layout_alignStart="@id/tv_no3_name"
-            android:layout_alignEnd="@id/tv_no3_name"/>
-        <TextView
-            android:id="@+id/tv_no3_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:text="volcano"
-            android:textColor="@color/black"
-            android:layout_alignBaseline="@id/tv_no1_name"
-            android:layout_alignParentEnd="true"/>
-        <TextView
-            android:id="@+id/tv_no3_accu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="刷题501道"
-            android:layout_below="@id/tv_no3_name"
-            android:layout_alignStart="@id/tv_no3_name"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_ranking"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_no1_accu"
-            android:layout_marginTop="20dp"/>
-    </RelativeLayout>
+            android:layout_marginTop="30dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <ImageView
+                android:id="@+id/iv_no1_avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_avatar"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/tv_no1_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="谁火山"
+                android:textColor="@color/black"
+                android:layout_below="@id/iv_no1_avatar"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/tv_no1_accu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="刷题501道"
+                android:layout_below="@id/tv_no1_name"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/iv_no2_avatar"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_avatar"
+                android:layout_above="@id/tv_no2_name"
+                android:layout_alignStart="@id/tv_no2_name"
+                android:layout_alignEnd="@id/tv_no2_name"/>
+            <TextView
+                android:id="@+id/tv_no2_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:text="John Sally"
+                android:textColor="@color/black"
+                android:layout_alignBaseline="@id/tv_no1_name"
+                android:layout_alignParentStart="true"/>
+            <TextView
+                android:id="@+id/tv_no2_accu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="刷题501道"
+                android:layout_below="@id/tv_no2_name"
+                android:layout_alignParentStart="true"/>
+
+            <ImageView
+                android:id="@+id/iv_no3_avatar"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_avatar"
+                android:layout_above="@id/tv_no3_name"
+                android:layout_alignStart="@id/tv_no3_name"
+                android:layout_alignEnd="@id/tv_no3_name"/>
+            <TextView
+                android:id="@+id/tv_no3_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:text="volcano"
+                android:textColor="@color/black"
+                android:layout_alignBaseline="@id/tv_no1_name"
+                android:layout_alignParentEnd="true"/>
+            <TextView
+                android:id="@+id/tv_no3_accu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="刷题501道"
+                android:layout_below="@id/tv_no3_name"
+                android:layout_alignStart="@id/tv_no3_name"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ranking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_no1_accu"
+                android:layout_marginTop="20dp"/>
+        </RelativeLayout>
+    </com.volcano.examonline.widget.MultipleStatusLayout>
 </RelativeLayout>

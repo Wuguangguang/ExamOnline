@@ -59,3 +59,10 @@ class Question : Serializable {
     var optiond: String? = null
     var optione: String? = null
 }
+
+data class Ranking(
+    var id: Int? = null,
+    var username: String? = null,
+    var avatar: String? = null,
+    var accumulate: Int? = null
+)

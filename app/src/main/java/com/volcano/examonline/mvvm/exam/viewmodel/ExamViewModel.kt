@@ -1,6 +1,5 @@
 package com.volcano.examonline.mvvm.exam.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -23,7 +22,7 @@ class ExamViewModel : ViewModel() {
     // 试题列表
     var questions = arrayListOf<Question>()
 
-    private var mutableQuestionNum : MutableLiveData<Entity> = MutableLiveData()
+    private var mutableQuestionNum = MutableLiveData<Entity>()
 
     fun getRandomQuestions(subjectId: Int, num: Int) {
         mutableQuestionNum.value = Entity(subjectId, num)
@@ -46,12 +45,13 @@ class ExamViewModel : ViewModel() {
         myAnswers.value = map
     }
 
-    val question : LiveData<List<Question>> = Transformations.switchMap(mutableQuestionNum) { obj ->
-        when(obj.nums) {
-            -1 -> NetworkRepository.getInstance().getQuestions(obj.id!!)
-            else -> NetworkRepository.getInstance().getRandomQuestions(obj.id!!, obj.nums!!)
-        }
-    }
+
+//    val question = Transformations.switchMap(mutableQuestionNum) { obj ->
+//        when(obj.nums) {
+//            -1 -> NetworkRepository.getInstance().getQuestions(obj.id!!)
+//            else -> NetworkRepository.getInstance().getRandomQuestions(obj.id!!, obj.nums!!)
+//        }
+//    }
 
     val myAnswers = MutableLiveData<HashMap<Int, List<String>>>()
 

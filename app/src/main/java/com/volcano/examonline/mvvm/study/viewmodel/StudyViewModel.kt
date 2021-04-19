@@ -14,7 +14,7 @@ class StudyViewModel : ViewModel() {
 
     private var mutableSubjects = MutableLiveData<Boolean>()
 
-    val subjects : LiveData<List<Subject>> = Transformations.switchMap(mutableSubjects){
+    val subjects = Transformations.switchMap(mutableSubjects){
         NetworkRepository.getInstance().getSubjects()
     }
 
@@ -26,7 +26,7 @@ class StudyViewModel : ViewModel() {
 
     private var mutableQuestions = MutableLiveData<Int>()
 
-    val questions: LiveData<List<Question>> = Transformations.switchMap(mutableQuestions) { id ->
+    val questions = Transformations.switchMap(mutableQuestions) { id ->
         NetworkRepository.getInstance().getQuestions(id)
     }
 

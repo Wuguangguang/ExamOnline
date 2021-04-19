@@ -7,6 +7,7 @@ import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.study.model.Question
+import com.volcano.examonline.mvvm.study.model.Ranking
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -42,6 +43,9 @@ interface API {
 
     @GET("api/v1/question/random")
     fun getRandomQuestions(@Query("subjectId") id: Int, @Query("num") num: Int): Observable<Response<List<Question>>>
+
+    @GET("api/v1/question/ranking")
+    fun getRanking(): Observable<Response<List<Ranking>>>
 
     /**
      * 论坛页 相关API
@@ -85,5 +89,4 @@ interface API {
     // 根据phone获取用户信息
     @GET("api/v1/userinfo")
     fun getUserInfo(@Query("phone") phone: String): Observable<Response<UserInfo>>
-
 }

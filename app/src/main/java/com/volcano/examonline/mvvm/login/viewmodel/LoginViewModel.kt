@@ -13,8 +13,8 @@ class LoginViewModel : ViewModel() {
 
     private var mutableRegisterFlag = MutableLiveData<UserInfo>()
 
-    val registerFlag : LiveData<Int> = Transformations.switchMap(mutableRegisterFlag) { obj ->
-        NetworkRepository.getInstance().register(obj)
+    val registerFlag = Transformations.switchMap(mutableRegisterFlag) { obj ->
+        NetworkRepository.register(obj)
     }
 
     fun register(phone: String, username: String, pwd: String) {
@@ -23,8 +23,8 @@ class LoginViewModel : ViewModel() {
 
     private var mutableLoginFlag = MutableLiveData<UserInfo>()
 
-    val loginFlag:LiveData<TokenBean> = Transformations.switchMap(mutableLoginFlag) { obj ->
-        NetworkRepository.getInstance().login(obj)
+    val loginFlag = Transformations.switchMap(mutableLoginFlag) { obj ->
+        NetworkRepository.login(obj)
     }
 
     fun login(phone: String, pwd: String) {

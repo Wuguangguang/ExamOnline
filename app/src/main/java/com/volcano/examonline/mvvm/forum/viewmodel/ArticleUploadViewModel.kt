@@ -11,8 +11,8 @@ class ArticleUploadViewModel : ViewModel() {
 
     var mutableUploadArticle = MutableLiveData<Article>()
 
-    val uploadArticle: LiveData<Int> = Transformations.switchMap(mutableUploadArticle) {obj ->
-        NetworkRepository.getInstance().uploadArticle(obj)
+    val uploadArticle = Transformations.switchMap(mutableUploadArticle) {obj ->
+        NetworkRepository.uploadArticle(obj)
     }
 
     // 发布讨论文章

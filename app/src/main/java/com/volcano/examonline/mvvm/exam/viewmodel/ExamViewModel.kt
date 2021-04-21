@@ -32,6 +32,8 @@ class ExamViewModel : ViewModel() {
         mutableQuestionNum.value = Entity(subject, -1)
     }
 
+    val myAnswers = MutableLiveData<HashMap<Int, List<String>>>()
+
     fun setMyAnswer(currentPos: Int, myAnswer: List<String>) {
         var map = myAnswers.value
         if(map == null) {
@@ -46,14 +48,13 @@ class ExamViewModel : ViewModel() {
     }
 
 
-//    val question = Transformations.switchMap(mutableQuestionNum) { obj ->
-//        when(obj.nums) {
-//            -1 -> NetworkRepository.getInstance().getQuestions(obj.id!!)
-//            else -> NetworkRepository.getInstance().getRandomQuestions(obj.id!!, obj.nums!!)
-//        }
-//    }
+    val question = Transformations.switchMap(mutableQuestionNum) { obj ->
+        when(obj.nums) {
+            -1 -> NetworkRepository.getQuestions(obj.id!!)
+            else -> NetworkRepository.getRandomQuestions(obj.id!!, obj.nums!!)
+        }
+    }
 
-    val myAnswers = MutableLiveData<HashMap<Int, List<String>>>()
 
 
 

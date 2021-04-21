@@ -13,8 +13,8 @@ class MineViewModel : ViewModel() {
 
     var mutablePhone = MutableLiveData<String>()
 
-    val phone: LiveData<UserInfo> = Transformations.switchMap(mutablePhone) {phone ->
-        NetworkRepository.getInstance().getUserInfo(phone)
+    val phone = Transformations.switchMap(mutablePhone) {phone ->
+        NetworkRepository.getUserInfo(phone)
     }
 
     // 获取用户信息

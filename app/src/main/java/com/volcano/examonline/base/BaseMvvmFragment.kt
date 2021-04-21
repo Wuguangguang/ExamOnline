@@ -14,7 +14,7 @@ import androidx.viewbinding.ViewBinding
 import com.volcano.examonline.widget.MultipleStatusLayout
 import java.lang.Exception
 
-abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel> : Fragment(){
+abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel>(private val isActivitySharedVM: Int?) : Fragment(){
     lateinit var mBinding: VB
     lateinit var mViewModel: VM
 
@@ -42,7 +42,12 @@ abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel> : Fragment(){
     }
 
     private fun createViewModel() : VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
+        return if(isActivitySharedVM == 0x1) {
+            ViewModelProvider(activity!!).get(getVmClazz(this))
+        }
+        else {
+            ViewModelProvider(this).get(getVmClazz(this))
+        }
     }
 
     /**

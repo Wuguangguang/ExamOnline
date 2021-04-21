@@ -12,7 +12,7 @@ import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.mvvm.mine.viewmodel.MineViewModel
 import com.volcano.examonline.util.ConstantData
 
-class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>() {
+class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
     companion object {
         fun newInstance() = MineFragment()
@@ -68,13 +68,14 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>() {
     }
 
     override fun initData() {
-        mViewModel.phone.observe(activity!!) {
+        setDataStatus(mViewModel.phone, {
+
+        }, {
             if(it != null) {
                 mBinding.tvUserName.text = it.username
                 mBinding.tvUserPhone.text = it.phone
             }
-        }
-
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -13,7 +13,7 @@ import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.mvvm.search.view.SearchActivity
 import com.volcano.examonline.util.ConstantData
 
-class ForumFragment : BaseMvvmFragment<FragmentForumBinding, ForumViewModel>() {
+class ForumFragment : BaseMvvmFragment<FragmentForumBinding, ForumViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
     companion object {
         fun newInstance() = ForumFragment()

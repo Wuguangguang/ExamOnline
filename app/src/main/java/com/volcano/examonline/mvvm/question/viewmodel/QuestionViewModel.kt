@@ -12,6 +12,7 @@ class QuestionViewModel : ViewModel() {
 
     var questions = arrayListOf<Question>()
     var myAnswers = arrayListOf<String>()
+    var comments = arrayListOf<Comment>()
 
 
     private var mutableLiveComments = MutableLiveData<Int>()
@@ -20,5 +21,8 @@ class QuestionViewModel : ViewModel() {
         mutableLiveComments.value = id
     }
 
+    val liveComments = Transformations.switchMap(mutableLiveComments) { id ->
+        NetworkRepository.getQuestionComments(id)
+    }
 
 }

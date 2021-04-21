@@ -48,7 +48,7 @@ class ArticleUploadActivity : BaseMvvmActivity<ActivityArticleUploadBinding, Art
     }
 
     override fun initData() {
-        mViewModel.uploadArticle.observe(this) {
+        setDataStatus(mViewModel.uploadArticle) {
             when(it) {
                 1 -> {
                     Toast.makeText(this, "发布成功！", Toast.LENGTH_LONG).show()

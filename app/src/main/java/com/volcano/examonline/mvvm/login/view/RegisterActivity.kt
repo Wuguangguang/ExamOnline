@@ -36,8 +36,7 @@ class RegisterActivity : BaseMvvmActivity<ActivityRegisterBinding, LoginViewMode
     }
 
     override fun initData() {
-        mViewModel.registerFlag.observe(this) {
-            Log.d("test", "initData: ${it}")
+        setDataStatus(mViewModel.registerFlag) {
             when(it) {
                 1 -> {
                     Toast.makeText(this, "注册成功！", Toast.LENGTH_SHORT).show()

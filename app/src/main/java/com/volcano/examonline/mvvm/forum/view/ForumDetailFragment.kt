@@ -6,8 +6,9 @@ import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentForumDetailBinding
 import com.volcano.examonline.mvvm.forum.adapter.ArticleListAdapter
 import com.volcano.examonline.mvvm.forum.viewmodel.ForumDetailViewModel
+import com.volcano.examonline.util.ConstantData
 
-class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForumDetailBinding, ForumDetailViewModel>() {
+class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForumDetailBinding, ForumDetailViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
     companion object {
         fun newInstance(id : Int) = ForumDetailFragment(id)
@@ -26,13 +27,15 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
     }
 
     override fun initData() {
-        mViewModel.articlePage.observe(this) {
+        setDataStatus(mViewModel.articlePage, {
+
+        }, {
             if(!it.isNullOrEmpty()) {
                 mViewModel.articles.addAll(it)
                 articleAdapter.notifyDataSetChanged()
                 mBinding.projectDetailSwipeRefreshL.isRefreshing = false
             }
-        }
+        })
         when(mId) {
             1 -> {
                 //推荐

@@ -20,7 +20,7 @@ import java.lang.StringBuilder
  * 解析 -> 不可点击   mViewModel.myAnswers不空
  */
 class QuestionDetailFragment(private val question: Question, private val currentPos: Int)
-    : BaseMvvmFragment<FragmentQuestionDetailBinding, QuestionViewModel>() {
+    : BaseMvvmFragment<FragmentQuestionDetailBinding, QuestionViewModel>(ConstantData.VIEWMODEL_SHARED) {
 
     private val optionsAdapter by lazy { OptionsAdapter(activity!!, options!!, question.type!!, mode!!, mySelect, correctSelect) }
     private var mySelect = arrayListOf<Int>()

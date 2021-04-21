@@ -1,15 +1,15 @@
 package com.volcano.examonline.mvvm.study.view
 
-import android.view.View
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentStudyDetailBinding
 import com.volcano.examonline.mvvm.study.adapter.QuestionListAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
+import com.volcano.examonline.util.ConstantData
 
-class StudyDetailFragment(private val subjectId : Int) : BaseMvvmFragment<FragmentStudyDetailBinding, StudyViewModel>() {
+class StudyDetailFragment(private val subjectId : Int)
+    : BaseMvvmFragment<FragmentStudyDetailBinding, StudyViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
     companion object {
         fun newInstance(id : Int) = StudyDetailFragment(id)
@@ -24,7 +24,6 @@ class StudyDetailFragment(private val subjectId : Int) : BaseMvvmFragment<Fragme
                 mViewModel.getQuestions(subjectId)
                 mBinding.srlQuestionDetail.isRefreshing = true
             }
-
         }
         mBinding.rcvQuestionDetail.apply {
             layoutManager = LinearLayoutManager(activity!!)
@@ -34,6 +33,7 @@ class StudyDetailFragment(private val subjectId : Int) : BaseMvvmFragment<Fragme
 
     override fun initData() {
         setDataStatus(mViewModel.questions, {
+            mBinding.srlQuestionDetail.isRefreshing = false
         }, {
             if(!it.isNullOrEmpty()) {
                 mViewModel.questionData.clear()
@@ -42,19 +42,12 @@ class StudyDetailFragment(private val subjectId : Int) : BaseMvvmFragment<Fragme
             }
             mBinding.srlQuestionDetail.isRefreshing = false
         })
-//        mViewModel.questions.observe(activity!!) {
-//            if(!it.isNullOrEmpty()) {
-//                mViewModel.questionData.clear()
-//                mViewModel.questionData.addAll(it)
-//                questionAdapter.notifyDataSetChanged()
-//                mBinding.srlQuestionDetail.isRefreshing = false
-//            }
-//        }
         mViewModel.getQuestions(subjectId)
     }
 
-    private fun refresh() {
-
+    override fun doRetry() {
+        super.doRetry()
+        mViewModel.getQuestions(subjectId)
     }
 
 }

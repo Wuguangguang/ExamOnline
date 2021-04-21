@@ -45,7 +45,7 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
     }
 
     override fun initData() {
-        mViewModel.liveComments.observe(this) {
+        setDataStatus(mViewModel.liveComments) {
             if(!it.isNullOrEmpty()) {
                 mViewModel.comments.addAll(it)
                 commentsAdapter.notifyDataSetChanged()

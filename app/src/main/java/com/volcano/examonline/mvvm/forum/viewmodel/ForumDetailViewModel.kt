@@ -15,8 +15,8 @@ class ForumDetailViewModel : ViewModel() {
 
     private val mutableArticlePage = MutableLiveData<Boolean>()
 
-    val articlePage : LiveData<List<Article>> = Transformations.switchMap(mutableArticlePage) {
-        NetworkRepository.getInstance().getArticles()
+    val articlePage = Transformations.switchMap(mutableArticlePage) {
+        NetworkRepository.getArticles()
     }
 
     fun getArticles() {

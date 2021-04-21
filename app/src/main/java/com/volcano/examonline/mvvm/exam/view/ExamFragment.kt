@@ -11,7 +11,7 @@ import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
 
 class ExamFragment(private val question: Question, private val currentPos: Int)
-    : BaseMvvmFragment<FragmentExamBinding, ExamViewModel>() {
+    : BaseMvvmFragment<FragmentExamBinding, ExamViewModel>(ConstantData.VIEWMODEL_SHARED) {
 
     companion object {
         fun newInstance(question: Question, i: Int) = ExamFragment(question, i)

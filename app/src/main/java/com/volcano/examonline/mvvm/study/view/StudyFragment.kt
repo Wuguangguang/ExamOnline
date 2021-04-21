@@ -15,7 +15,7 @@ import com.volcano.examonline.mvvm.study.adapter.SubjectAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
 import com.volcano.examonline.util.ConstantData
 
-class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
+class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
     companion object {
         fun newInstance() = StudyFragment()
@@ -71,6 +71,7 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
         }
     }
 
+    //对话框需要加入LCE布局
     private fun goToExamActivity(mode: Int) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("请选择学科~")
@@ -85,7 +86,6 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
 
     override fun initData() {
         setDataStatus(mViewModel.subjects, {
-
         }, {
             if(!it.isNullOrEmpty()) {
                 mBinding.vpQuestions.offscreenPageLimit = it.size
@@ -107,7 +107,6 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>() {
     }
 
     private fun refresh() {
-        Log.d("TEST", "refresh: executed")
         contentView?.showLoading()
         mViewModel.getSubjects()
     }

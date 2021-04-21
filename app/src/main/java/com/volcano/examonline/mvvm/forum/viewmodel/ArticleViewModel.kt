@@ -17,7 +17,7 @@ class ArticleViewModel: ViewModel() {
         mutableComments.value = id
     }
 
-    val liveComments: LiveData<List<Comment>> = Transformations.switchMap(mutableComments) {id ->
-        NetworkRepository.getInstance().getArticleComments(id)
+    val liveComments = Transformations.switchMap(mutableComments) {id ->
+        NetworkRepository.getArticleComments(id)
     }
 }

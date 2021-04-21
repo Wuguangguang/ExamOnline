@@ -42,7 +42,7 @@ class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     override fun initData() {
-        mViewModel.loginFlag.observe(this) {
+        setDataStatus(mViewModel.loginFlag) {
             if(it != null) {
                 Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show()
                 val token = it.token!!

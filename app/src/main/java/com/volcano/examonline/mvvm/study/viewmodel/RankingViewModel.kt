@@ -13,7 +13,7 @@ class RankingViewModel: ViewModel() {
     private var mutableRanking = MutableLiveData<Boolean>()
 
     val liveRanking = Transformations.switchMap(mutableRanking){ _ ->
-        NetworkRepository.getInstance().getRanking()
+        NetworkRepository.getRanking()
     }
 
     fun getRankings() {

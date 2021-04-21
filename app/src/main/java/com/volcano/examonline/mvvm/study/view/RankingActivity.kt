@@ -46,7 +46,6 @@ class RankingActivity : BaseMvvmActivity<ActivityRankingBinding, RankingViewMode
     }
 
     private fun refresh() {
-        Log.d("TEST", "refresh: executed")
         contentView?.showLoading()
         mViewModel.getRankings()
     }

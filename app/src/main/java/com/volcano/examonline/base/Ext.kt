@@ -32,26 +32,6 @@ fun <T> Observable<Response<T>>.transform(result : MutableLiveData<Response<T>>)
         })
 }
 
-fun <T> Observable<Response<T>>.getCode(result: MutableLiveData<Int>) {
-    this.map {
-        it.code!!
-    }
-    .subscribeOn(Schedulers.io())
-    .observeOn(AndroidSchedulers.mainThread())
-    .subscribe(object : Observer<Int> {
-        override fun onSubscribe(d: Disposable) {
-        }
-        override fun onNext(t: Int) {
-            result.value = t
-        }
-        override fun onError(e: Throwable) {
-            e.printStackTrace()
-        }
-        override fun onComplete() {
-        }
-    })
-}
-
 /**
  * 隐藏软键盘
  */

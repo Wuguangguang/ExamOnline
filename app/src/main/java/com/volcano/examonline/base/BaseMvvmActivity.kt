@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.viewbinding.ViewBinding
+import com.volcano.examonline.util.ActivityCollector
 import com.volcano.examonline.widget.MultipleStatusLayout
 
 abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatActivity() {
@@ -27,8 +28,14 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ActivityCollector.addActivity(this)
         setStatusBarStyle()
         initEventAndData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ActivityCollector.removeActivity(this)
     }
 
     private fun setStatusBarStyle() {
@@ -66,7 +73,7 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
         return ViewModelProvider(this).get(getVmClazz(this))
     }
 
-    fun <T> setDataStatus(dataLiveData: LiveData<Response<T>>, onDataStatus: (T) -> Unit) {
+    fun <T> setDataStatus(dataLiveData: LiveData<Response<T>>,onDataError: () -> Unit = {}, onDataStatus: (T) -> Unit) {
         dataLiveData.observe(this) {
             when {
                 it == null -> {
@@ -79,7 +86,7 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
                     onDataStatus(dataList)
                 }
                 else -> {
-                    contentView?.showEmpty()
+                    onDataError.invoke()
                 }
             }
         }

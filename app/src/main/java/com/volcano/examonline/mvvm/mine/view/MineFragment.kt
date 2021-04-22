@@ -1,16 +1,14 @@
 package com.volcano.examonline.mvvm.mine.view
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.observe
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentMineBinding
 import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.mvvm.mine.viewmodel.MineViewModel
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.util.ImageLoader
 
 class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
@@ -19,13 +17,14 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
     }
 
     override fun initView() {
-        mBinding.llUserInfo.setOnClickListener {
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivityForResult(intent, 1)
-        }
-        mBinding.ivUserAvatar.setOnClickListener {
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivityForResult(intent, 1)
+        mBinding.rlUserInfo.setOnClickListener {
+            if(ConstantData.isLogin()) {
+                val intent = Intent(activity, MyInfoActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
         mBinding.llMyArticles.setOnClickListener {
             if(ConstantData.isLogin()) {
@@ -33,16 +32,16 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
                 startActivity(intent)
             } else {
                 val intent = Intent(context, LoginActivity::class.java)
-                startActivityForResult(intent, 1)
+                startActivity(intent)
             }
         }
         mBinding.llMyInfo.setOnClickListener {
             if(ConstantData.isLogin()) {
-                val intent = Intent(context, MyInfoActivity::class.java)
+                val intent = Intent(activity, MyInfoActivity::class.java)
                 startActivity(intent)
             } else {
                 val intent = Intent(context, LoginActivity::class.java)
-                startActivityForResult(intent, 1)
+                startActivity(intent)
             }
         }
         mBinding.llExitLogin.setOnClickListener {
@@ -68,23 +67,20 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
     }
 
     override fun initData() {
-        setDataStatus(mViewModel.phone, {
+        if(ConstantData.isLogin()) {
+            mBinding.llExitLogin.visibility = View.VISIBLE
+            mViewModel.getUserInfo(ConstantData.ID!!)
+        }
+        setDataStatus(mViewModel.liveId, {
 
         }, {
             if(it != null) {
                 mBinding.tvUserName.text = it.username
                 mBinding.tvUserPhone.text = it.phone
+                if(it.avatar != null) {
+                    mBinding.ivUserAvatar.setImageBitmap(ImageLoader.byteArray2Bitmap(it.avatar!!))
+                }
             }
         })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode) {
-            1 -> if(resultCode == Activity.RESULT_OK) {
-                mBinding.llExitLogin.visibility = View.VISIBLE
-                mViewModel.getUserInfo(ConstantData.PHONE!!)
-            }
-        }
     }
 }

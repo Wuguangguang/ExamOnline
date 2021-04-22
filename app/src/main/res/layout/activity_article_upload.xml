@@ -54,6 +54,7 @@
         android:layout_below="@id/et_article_title"/>
 
     <LinearLayout
+        android:id="@+id/ll_article_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -74,7 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="求职面试"
+            android:textColor="@color/COLOR_SECOND_TEXT"
+            android:text="生活日常"
             android:textSize="18dp"/>
     </LinearLayout>
 

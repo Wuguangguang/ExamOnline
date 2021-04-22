@@ -1,6 +1,5 @@
 package com.volcano.examonline.mvvm.forum.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -16,10 +15,11 @@ class ArticleUploadViewModel : ViewModel() {
     }
 
     // 发布讨论文章
-    fun uploadArticle(title: String, desc: String) {
+    fun uploadArticle(title: String, desc: String, field: String) {
         var article = Article()
         article.description = desc
         article.title = title
+        article.field = field
         mutableUploadArticle.value = article
     }
 }

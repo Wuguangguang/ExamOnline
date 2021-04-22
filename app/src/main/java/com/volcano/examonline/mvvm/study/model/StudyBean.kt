@@ -62,6 +62,7 @@ class Question : Serializable {
 
 data class Ranking(
     var id: Int? = null,
+    var userphone: String? = null,
     var username: String? = null,
     var avatar: String? = null,
     var accumulate: Int? = null

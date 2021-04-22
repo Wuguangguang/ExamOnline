@@ -1,18 +1,18 @@
 package com.volcano.examonline.util
 
 import com.volcano.examonline.R
-import com.volcano.examonline.base.Response
 
 object ConstantData {
 
     var TOKEN: String? = null
-    var PHONE: String? = null
+    var ID: Int? = null
 
     const val VIEWMODEL_SHARED = 0x1
     const val VIEWMODEL_EXCLUSIVE = 0x2
 
     const val SINGLE_QUESTION:Int = 0x1 //单题解析、查看单题
     const val MULTI_QUESTION:Int = 0x2  //全部解析、错题解析
+
     const val SIMULATION_MODE:Int = 0x1 //模拟考试 : 载入ExamFragment
     const val ORDERLY_MODE: Int = 0x2   //顺序联系 : 载入QuestionFragment
 
@@ -23,7 +23,6 @@ object ConstantData {
     const val TYPE_SINGLE_SELECT = "单选题"
     const val TYPE_MULTI_SELECT = "多选题"
     const val TYPE_JUDGE = "判断题"
-
 
     val normalImages = arrayListOf(
         R.drawable.ic_option_a_normal,
@@ -57,6 +56,6 @@ object ConstantData {
 
     fun exitLogin() {
         TOKEN = null
-        PHONE = null
+        ID = null
     }
 }

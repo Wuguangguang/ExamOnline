@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".mvvm.mine.view.MyArticlesActivity">
 
     <include android:id="@+id/toolbar_my_article"
@@ -24,8 +25,6 @@
             android:id="@+id/rv_my_articles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:layout_marginTop="40dp"/>
     </com.volcano.examonline.widget.MultipleStatusLayout>
 

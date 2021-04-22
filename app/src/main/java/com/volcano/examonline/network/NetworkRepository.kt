@@ -9,6 +9,7 @@ import com.volcano.examonline.mvvm.study.model.Comment
 import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
+import com.volcano.examonline.mvvm.mine.model.UserPwd
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.mvvm.study.model.Ranking
 import com.volcano.examonline.util.ConstantData
@@ -108,8 +109,25 @@ object NetworkRepository {
     }
 
     /**
-     * 我的页
+     * 用户相关
      */
+    fun getUserInfoById(id: Int): LiveData<Response<UserInfo>> {
+        val result = MutableLiveData<Response<UserInfo>>()
+        api.getUserInfoById(id).transform(result)
+        return result
+    }
+
+    fun editUserInfo(obj: UserInfo): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        api.editUserInfo(ConstantData.TOKEN!!, obj).transform(result)
+        return result
+    }
+
+    fun editUserPwd(obj: UserPwd): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        api.editUserPwd(ConstantData.TOKEN!!, obj).transform(result)
+        return result
+    }
 
     fun register(userInfo: UserInfo): LiveData<Response<Any>> {
         var result = MutableLiveData<Response<Any>>()
@@ -123,9 +141,9 @@ object NetworkRepository {
         return result
     }
 
-    fun getUserInfo(phone: String): LiveData<Response<UserInfo>> {
-        val result = MutableLiveData<Response<UserInfo>>()
-        api.getUserInfo(phone).transform(result)
+    fun getMyArticles(): LiveData<Response<List<Article>>> {
+        var result = MutableLiveData<Response<List<Article>>>()
+        api.getMyArticles(ConstantData.TOKEN!!).transform(result)
         return result
     }
 
@@ -134,5 +152,4 @@ object NetworkRepository {
         api.getRanking().transform(result)
         return result
     }
-
 }

@@ -6,6 +6,7 @@ import com.volcano.examonline.mvvm.study.model.Comment
 import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
+import com.volcano.examonline.mvvm.mine.model.UserPwd
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.mvvm.study.model.Ranking
 import io.reactivex.Observable
@@ -44,8 +45,6 @@ interface API {
     @GET("api/v1/question/random")
     fun getRandomQuestions(@Query("subjectId") id: Int, @Query("num") num: Int): Observable<Response<List<Question>>>
 
-    @GET("api/v1/question/ranking")
-    fun getRanking(): Observable<Response<List<Ranking>>>
 
     /**
      * 论坛页 相关API
@@ -73,20 +72,31 @@ interface API {
     fun getArticleHotKey() : Observable<Response<List<Any>>>
 
     /**
-     * 我的页 相关API
+     * 用户 相关API
      */
+    @GET("api/v1/userinfo/id")
+    fun getUserInfoById(@Query("param") id: Int): Observable<Response<UserInfo>>
 
-    // 注册
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/userinfo/edit")
+    fun editUserInfo(@Header("Authorization") token: String, @Body obj: UserInfo): Observable<Response<Any>>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/userinfo/pwd")
+    fun editUserPwd(@Header("Authorization") token: String, @Body obj: UserPwd): Observable<Response<Any>>
+
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("api/v1/userinfo/register")
     fun register(@Body userinfo: UserInfo): Observable<Response<Any>>
 
-    // 登录
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("api/v1/userinfo/login")
     fun login(@Body userinfo: UserInfo): Observable<Response<TokenBean>>
 
-    // 根据phone获取用户信息
-    @GET("api/v1/userinfo")
-    fun getUserInfo(@Query("phone") phone: String): Observable<Response<UserInfo>>
+    @GET("api/v1/userinfo/articles")
+    fun getMyArticles(@Header("Authorization") token: String): Observable<Response<List<Article>>>
+
+    @GET("api/v1/userinfo/ranking")
+    fun getRanking(): Observable<Response<List<Ranking>>>
+
 }

@@ -1,13 +1,13 @@
 package com.volcano.examonline.mvvm.login.view
 
-import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
-import androidx.lifecycle.observe
+import com.volcano.examonline.MainActivity
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityLoginBinding
 import com.volcano.examonline.mvvm.login.viewmodel.LoginViewModel
+import com.volcano.examonline.util.ActivityCollector
 import com.volcano.examonline.util.ConstantData
 
 class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
@@ -42,19 +42,18 @@ class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     override fun initData() {
-        setDataStatus(mViewModel.loginFlag) {
+        setDataStatus(mViewModel.loginFlag, {
+            Toast.makeText(this, "密码错误或用户不存在！", Toast.LENGTH_SHORT).show()
+        }, {
             if(it != null) {
                 Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show()
-                val token = it.token!!
-                val intent = Intent()
-                ConstantData.TOKEN = token
-                ConstantData.PHONE = mBinding.tvLoginPhone.text.toString()
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            }else {
-                Toast.makeText(this, "密码错误或用户不存在！", Toast.LENGTH_SHORT).show()
+                ConstantData.TOKEN = it.token!!
+                ConstantData.ID = it.id!!.toInt()
+                ActivityCollector.finishAll()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
-        }
+        })
     }
 
 }

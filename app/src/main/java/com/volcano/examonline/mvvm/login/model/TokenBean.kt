@@ -5,5 +5,6 @@ package com.volcano.examonline.mvvm.login.model
  */
 
 data class TokenBean(
-    var token: String? = null
+    var token: String? = null,
+    var id: String? = null
 )

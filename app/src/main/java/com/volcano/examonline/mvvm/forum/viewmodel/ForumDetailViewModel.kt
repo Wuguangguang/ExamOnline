@@ -13,17 +13,14 @@ class ForumDetailViewModel : ViewModel() {
 
     var articles = arrayListOf<Article>()
 
-    private val mutableArticlePage = MutableLiveData<Boolean>()
+    private val mutableArticlePage = MutableLiveData<Int>()
 
-    val articlePage = Transformations.switchMap(mutableArticlePage) {
-        NetworkRepository.getArticles()
+    val articlePage = Transformations.switchMap(mutableArticlePage) {id ->
+        if(id == 1) NetworkRepository.getArticles() else NetworkRepository.getHotArticles()
     }
 
-    fun getArticles() {
-        mutableArticlePage.value = true
+    fun getArticles(mId: Int) {
+        mutableArticlePage.value = mId
     }
 
-    fun getHotArticles() {
-
-    }
 }

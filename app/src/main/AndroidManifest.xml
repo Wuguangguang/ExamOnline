@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamOnline">
-        <activity android:name=".mvvm.mine.view.MyInfoActivity"></activity>
+        <activity android:name=".mvvm.mine.view.OthersInfoActivity"></activity>
+        <activity android:name=".mvvm.mine.view.MyInfoActivity" />
         <activity android:name=".mvvm.mine.view.AboutMeActivity" />
         <activity android:name=".mvvm.mine.view.MyArticlesActivity" />
         <activity
@@ -41,6 +42,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".MainActivity" />
+
+        <provider
+            android:authorities="com.volcano.examonline.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>

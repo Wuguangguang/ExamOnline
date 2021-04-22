@@ -2,6 +2,7 @@ package com.volcano.examonline.mvvm.forum.view
 
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentForumDetailBinding
 import com.volcano.examonline.mvvm.forum.adapter.ArticleListAdapter
@@ -17,8 +18,10 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
     private val articleAdapter : ArticleListAdapter by lazy { ArticleListAdapter(activity!!,mViewModel.articles) }
 
     override fun initView() {
+        mBinding.projectDetailSwipeRefreshL.setColorSchemeResources(R.color.colorAccent)
         mBinding.projectDetailSwipeRefreshL.setOnRefreshListener {
-//            mViewModel.getArticles()
+            mBinding.projectDetailSwipeRefreshL.isRefreshing = true
+            mViewModel.getArticles(mId)
         }
         mBinding.projectDetailRcv.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -28,23 +31,19 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
 
     override fun initData() {
         setDataStatus(mViewModel.articlePage, {
-
+            mBinding.projectDetailSwipeRefreshL.isRefreshing = false
         }, {
             if(!it.isNullOrEmpty()) {
+                mViewModel.articles.clear()
                 mViewModel.articles.addAll(it)
                 articleAdapter.notifyDataSetChanged()
                 mBinding.projectDetailSwipeRefreshL.isRefreshing = false
             }
         })
-        when(mId) {
-            1 -> {
-                //推荐
-                mViewModel.getArticles()
-            }
-            2 -> {
-                //热榜
-                mViewModel.getHotArticles()
-            }
-        }
+        refresh()
+    }
+
+    private fun refresh() {
+        mViewModel.getArticles(mId)
     }
 }

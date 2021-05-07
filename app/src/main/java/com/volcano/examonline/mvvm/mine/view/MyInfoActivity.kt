@@ -109,7 +109,7 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                     visibility = View.VISIBLE
                     setOnClickListener {
                         val userinfo = UserInfo()
-                        userinfo.avatar = ImageLoader.bitmap2ByteArray(avatar!!)
+                        userinfo.avatar = ImageLoader.bitmap2String(avatar!!)
                         userinfo.username = mBinding.tvUsername.text.toString()
                         userinfo.phone = mBinding.tvUserphone.text.toString()
                         mViewModel.editUserInfo(userinfo)

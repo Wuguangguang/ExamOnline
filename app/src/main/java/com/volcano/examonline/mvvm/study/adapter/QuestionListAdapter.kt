@@ -24,6 +24,7 @@ class QuestionListAdapter(val context : Context, private val questions : ArrayLi
             binding.tvQuestionType.text = question.type
             binding.tvQuestionSource.text = question.source
             binding.tvQuestionTitle.text = question.description
+            binding.tvQuestionComment.text = if(question.commentnums != null) "${question.commentnums}" else "0"
         }
     }
 

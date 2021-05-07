@@ -10,6 +10,8 @@ import com.volcano.examonline.databinding.FragmentQuestionDetailBinding
 import com.volcano.examonline.mvvm.exam.adapter.OnItemClickListener
 import com.volcano.examonline.mvvm.question.viewmodel.QuestionViewModel
 import com.volcano.examonline.mvvm.exam.adapter.OptionsAdapter
+import com.volcano.examonline.mvvm.forum.adapter.CommentsAdapter
+import com.volcano.examonline.mvvm.study.adapter.QuestionListAdapter
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
 import java.lang.StringBuilder
@@ -23,6 +25,8 @@ class QuestionDetailFragment(private val question: Question, private val current
     : BaseMvvmFragment<FragmentQuestionDetailBinding, QuestionViewModel>(ConstantData.VIEWMODEL_SHARED) {
 
     private val optionsAdapter by lazy { OptionsAdapter(activity!!, options!!, question.type!!, mode!!, mySelect, correctSelect) }
+    private val commentsAdapter by lazy { CommentsAdapter(activity!!, mViewModel.comments) }
+    private val commendQuestionsAdapter by lazy { QuestionListAdapter(activity!!, mViewModel.commendQuestions) }
     private var mySelect = arrayListOf<Int>()
     private var correctSelect = arrayListOf<Int>()
     private var options = arrayListOf<String>()
@@ -59,6 +63,14 @@ class QuestionDetailFragment(private val question: Question, private val current
             layoutManager = LinearLayoutManager(activity)
             adapter = optionsAdapter
         }
+        mBinding.rvCommentList.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = commentsAdapter
+        }
+        mBinding.rvCommendList.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = commendQuestionsAdapter
+        }
     }
 
     private fun initOptions() {
@@ -76,6 +88,7 @@ class QuestionDetailFragment(private val question: Question, private val current
             mBinding.tvAnalysis.visibility = View.GONE
             mBinding.llQuestionAnalysis.visibility = View.VISIBLE
             mViewModel.getQuestionComments(question.id!!)
+            mViewModel.getCommendQuestions(question.subjectid!!, question.keywords!!)
             if(question.type == ConstantData.TYPE_MULTI_SELECT && mode == ConstantData.MODE_IMMEDIATELY) {
                 mBinding.llCorrectAnswer.visibility = View.VISIBLE
                 mBinding.tvCorrectAnswer.text = question.correctanswer
@@ -139,6 +152,26 @@ class QuestionDetailFragment(private val question: Question, private val current
         mBinding.tvQuestionDesc.text = question.description
         val analysis = if(question.analysis == null || question.analysis == "") "暂无解析" else question.analysis as String
         mBinding.tvQuestionAnalysis.text = analysis
+        setDataStatus(mViewModel.liveComments, {
+
+        }, {
+            if(!it.isNullOrEmpty()) {
+                mBinding.tvQuestionCommentNum.text = "${it.size}"
+                mViewModel.comments.clear()
+                mViewModel.comments.addAll(it)
+                commentsAdapter.notifyDataSetChanged()
+            }
+        })
+        setDataStatus(mViewModel.liveCommendQuestions, {
+
+        }, {
+            if(!it.isNullOrEmpty()) {
+                mBinding.tvQuestionCommendNum.text = "${it.size}"
+                mViewModel.commendQuestions.clear()
+                mViewModel.commendQuestions.addAll(it)
+                commendQuestionsAdapter.notifyDataSetChanged()
+            }
+        })
     }
 
 }

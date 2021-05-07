@@ -13,6 +13,7 @@ class QuestionViewModel : ViewModel() {
     var questions = arrayListOf<Question>()
     var myAnswers = arrayListOf<String>()
     var comments = arrayListOf<Comment>()
+    var commendQuestions = arrayListOf<Question>()
 
 
     private var mutableLiveComments = MutableLiveData<Int>()
@@ -23,6 +24,21 @@ class QuestionViewModel : ViewModel() {
 
     val liveComments = Transformations.switchMap(mutableLiveComments) { id ->
         NetworkRepository.getQuestionComments(id)
+    }
+
+    data class Entity(
+        var subjectId: Int? = null,
+        var keywords: String? = null
+    )
+
+    private var mutableKeywords = MutableLiveData<Entity>()
+
+    fun getCommendQuestions(subjectId: Int, keywords: String) {
+        mutableKeywords.value = Entity(subjectId, keywords)
+    }
+
+    val liveCommendQuestions = Transformations.switchMap(mutableKeywords) { obj ->
+        NetworkRepository.getCommendQuestions(obj.subjectId!!, obj.keywords!!)
     }
 
 }

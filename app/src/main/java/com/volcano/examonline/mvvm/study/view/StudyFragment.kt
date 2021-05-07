@@ -26,7 +26,6 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
     private var subjectNames = arrayListOf<String>()
 
     override fun initView() {
-        initToolbar()
         initListener()
         contentView = mBinding.mslVpQuestions
         mBinding.tlSubjects.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -43,18 +42,11 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
         }
     }
 
-    private fun initToolbar() {
-        mBinding.toolbarHomepage.apply {
-            toolbarTitle.text = "学习"
-            toolbarRightImage.setImageResource(R.drawable.ic_grey_search)
-            toolbarRightImage.setOnClickListener {
-                val intent = Intent(activity, SearchActivity::class.java)
-                startActivity(intent)
-            }
-        }
-    }
-
     private fun initListener() {
+        mBinding.tvSearch.setOnClickListener {
+            val intent = Intent(activity, SearchActivity::class.java).putExtra("type","试题")
+            startActivity(intent)
+        }
         mBinding.llOrderlyPractice.setOnClickListener {
             goToExamActivity(ConstantData.ORDERLY_MODE)
         }

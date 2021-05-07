@@ -7,73 +7,77 @@ import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.base.hideSoftInput
 import com.volcano.examonline.databinding.ActivitySearchBinding
 import com.volcano.examonline.mvvm.forum.adapter.ArticleListAdapter
+import com.volcano.examonline.mvvm.question.adapter.QuestionAdapter
 import com.volcano.examonline.mvvm.search.adapter.SearchAdapter
 import com.volcano.examonline.mvvm.search.viewmodel.SearchViewModel
+import com.volcano.examonline.mvvm.study.adapter.QuestionListAdapter
 import com.volcano.examonline.widget.FlowLayoutManager
 import com.volcano.examonline.widget.SpaceItemDecoration
 
 class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>() {
 
-//    private val searchAdapter : SearchAdapter by lazy { SearchAdapter(mViewModel.hotkeys, onItemClickListener) }
-    private val articleAdapter : ArticleListAdapter by lazy{ ArticleListAdapter(this, mViewModel.results) }
-    private val onItemClickListener = object : SearchAdapter.OnItemClickListener {
-        override fun onClick(position: Int) {
-//            val name = mViewModel.hotkeys[position].name
-//            mBinding.searchEditText.text = name
-//            mBinding.searchEditText.setSelection(name!!.length)
-        }
-    }
+    private val articleAdapter : ArticleListAdapter by lazy{ ArticleListAdapter(this, mViewModel.articlesRes) }
+    private val questionAdapter: QuestionListAdapter by lazy { QuestionListAdapter(this, mViewModel.questionsRes) }
 
     override fun initView() {
+        mViewModel.type = intent.getStringExtra("type")!!
         mBinding.etSearch.apply {
             requestFocus()
             addTextChangedListener {
                 if(it.isNullOrEmpty()) {
-                    mBinding.rvHotkey.visibility = View.VISIBLE
                     mBinding.rvSearchResult.visibility = View.GONE
-                    mViewModel.getSearchWords()
                 }
             }
         }
         mBinding.ivSearch.setOnClickListener {
             hideSoftInput(mBinding.root, this)
             mBinding.etSearch.clearFocus()
-            mViewModel.getSearchResult(mBinding.etSearch.text.toString())
+            val content = mBinding.etSearch.text.toString()
+            when(mViewModel.type) {
+                "试题" -> mViewModel.searchQuestions(content)
+                else -> mViewModel.searchArticles(content)
+            }
         }
         mBinding.ivBack.setOnClickListener{
             finish()
         }
-        mBinding.rvHotkey.apply {
-            addItemDecoration(
-                SpaceItemDecoration(8)
-            )
-            layoutManager = FlowLayoutManager()
-//            adapter = searchAdapter
-        }
         mBinding.rvSearchResult.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = articleAdapter
+            adapter = if(mViewModel.type == "试题") questionAdapter else articleAdapter
             visibility = View.GONE
         }
     }
 
     override fun initData() {
-//        mViewModel.hotkeyFlag.observe(this){
-//            if(!it.isNullOrEmpty()) {
-//                mViewModel.hotkeys.addAll(it)
-//                searchAdapter.notifyDataSetChanged()
-//            }
-//        }
-//        mViewModel.searchKey.observe(this) {
-//            if(it != null) {
-//                mBinding.hotkeyRcv.visibility = View.GONE
-//                mBinding.searchRcv.visibility = View.VISIBLE
-//                mViewModel.results.add(it)
-//                articleAdapter.notifyDataSetChanged()
-//            }
-//        }
-        mViewModel.getSearchWords()
+        when(mViewModel.type) {
+            "试题" -> {
+                setDataStatus(mViewModel.liveQuestionResult, {
+
+                }, {
+                    if(!it.isNullOrEmpty()) {
+                        mBinding.rvSearchResult.visibility = View.VISIBLE
+                        mViewModel.questionsRes.clear()
+                        mViewModel.questionsRes.addAll(it)
+                        questionAdapter.notifyDataSetChanged()
+                    }else {
+
+                    }
+                })
+            }
+            else -> {
+                setDataStatus(mViewModel.liveArticleResult, {
+
+                }, {
+                    if(!it.isNullOrEmpty()) {
+                        mBinding.rvSearchResult.visibility = View.VISIBLE
+                        mViewModel.articlesRes.clear()
+                        mViewModel.articlesRes.addAll(it)
+                        articleAdapter.notifyDataSetChanged()
+                    }else {
+
+                    }
+                })
+            }
+        }
     }
-
-
 }

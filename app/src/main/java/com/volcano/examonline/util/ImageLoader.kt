@@ -15,10 +15,10 @@ import java.nio.charset.Charset
 object ImageLoader {
 
     // 客户端 -> 服务器 上传
-    fun bitmap2ByteArray(bitmap: Bitmap): ByteArray {
+    fun bitmap2String(bitmap: Bitmap): String {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-        return baos.toByteArray()
+        return baos.toString()
     }
 
     // 拍照文件 -> 客户端回显
@@ -31,7 +31,7 @@ object ImageLoader {
 
     // 服务器 -> 客户端 转换
     fun byteArray2Bitmap(str: String): Bitmap {
-        val bytes = 
+        val bytes = str.toByteArray(Charsets.UTF_8)
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 

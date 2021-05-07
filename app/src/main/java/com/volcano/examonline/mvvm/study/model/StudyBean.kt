@@ -49,6 +49,7 @@ class Question : Serializable {
     var description: String? = null
     var type: String? = null
     var img: String? = null
+    var keywords: String? = null
     var level: String? = null
     var source: String? = null
     var analysis: String? = null
@@ -58,6 +59,7 @@ class Question : Serializable {
     var optionc: String? = null
     var optiond: String? = null
     var optione: String? = null
+    var commentnums: Int? = null
 }
 
 data class Ranking(

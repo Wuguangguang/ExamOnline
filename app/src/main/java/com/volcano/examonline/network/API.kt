@@ -14,11 +14,8 @@ import retrofit2.http.*
 
 interface API {
 
-    /**
-     * 题库页 考试页 相关API
-     */
     // 获取学科列表
-    @GET("api/v1/subjects")
+    @GET("api/v1/questions/subject")
     fun getSubjects(): Observable<Response<List<Subject>>>
 
     // 获取试题列表
@@ -26,29 +23,25 @@ interface API {
     fun getQuestions(@Query("subjectId") id: Int): Observable<Response<List<Question>>>
 
     // 搜索试题
-    @GET("api/v1/question")
+    @GET("api/v1/questions/search")
     fun searchQuestion(@Query("content") content: String): Observable<Response<List<Question>>>
 
     // 根据试题id搜索评论
-    @GET("api/v1/question/comment")
+    @GET("api/v1/questions/comments")
     fun getQuestionComments(@Query("id") id: Int): Observable<Response<List<Comment>>>
-
-    // 搜索框热词
-    @GET("api/v1/question/hotkey")
-    fun getQuestionHotKey() : Observable<Response<List<Any>>>
 
     // 上传试题
     @Headers("Content-Type: application/json;charset=UTF-8")
-    @POST("api/v1/question/edit")
+    @POST("api/v1/questions/edit")
     fun uploadQuestion(@Header("Authorization") token: String,@Body obj: Question): Observable<Response<Any>>
 
-    @GET("api/v1/question/random")
+    @GET("api/v1/questions/random")
     fun getRandomQuestions(@Query("subjectId") id: Int, @Query("num") num: Int): Observable<Response<List<Question>>>
 
+    @GET("api/v1/questions/commend")
+    fun getCommendQuestions(@Query("subjectId") id: Int, @Query("keywords") keywords: String): Observable<Response<List<Question>>>
 
-    /**
-     * 论坛页 相关API
-     */
+
 
     // 获取文章列表
     @GET("api/v1/articles")
@@ -59,17 +52,16 @@ interface API {
     fun getHotArticles(): Observable<Response<List<Article>>>
 
     // 根据文章id获取评论列表
-    @GET("api/v1/article")
+    @GET("api/v1/articles/comments")
     fun getArticleComments(@Query("id") id: Int): Observable<Response<List<Comment>>>
 
     // 上传文章
     @Headers("Content-Type: application/json;charset=UTF-8")
-    @POST("api/v1/article/edit")
+    @POST("api/v1/articles/edit")
     fun uploadArticle(@Header("Authorization") token: String,@Body obj: Article): Observable<Response<Any>>
 
-    // 搜索框热词
-    @GET("api/v1/article/hotkey")
-    fun getArticleHotKey() : Observable<Response<List<Any>>>
+    @GET("api/v1/articles/search")
+    fun searchArticle(@Query("content") content: String): Observable<Response<List<Article>>>
 
     /**
      * 用户 相关API

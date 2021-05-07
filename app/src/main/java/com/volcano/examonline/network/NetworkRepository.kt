@@ -52,15 +52,15 @@ object NetworkRepository {
         return result
     }
 
-    fun getQuestionHotKey(): LiveData<Response<List<Any>>> {
-        var result = MutableLiveData<Response<List<Any>>>()
-        api.getQuestionHotKey().transform(result)
-        return result
-    }
-
     fun getSubjects(): LiveData<Response<List<Subject>>> {
         val result = MutableLiveData<Response<List<Subject>>>()
         api.getSubjects().transform(result)
+        return result
+    }
+
+    fun getCommendQuestions(subjectId: Int, keywords: String): LiveData<Response<List<Question>>> {
+        var result = MutableLiveData<Response<List<Question>>>()
+        api.getCommendQuestions(subjectId, keywords).transform(result)
         return result
     }
 
@@ -93,11 +93,12 @@ object NetworkRepository {
         return result
     }
 
-    fun getArticleHotKey(): LiveData<Response<List<Any>>> {
-        var result = MutableLiveData<Response<List<Any>>>()
-        api.getArticleHotKey().transform(result)
+    fun searchArticle(content: String): LiveData<Response<List<Article>>> {
+        var result = MutableLiveData<Response<List<Article>>>()
+        api.searchArticle(content).transform(result)
         return result
     }
+
 
     /**
      * 考试页

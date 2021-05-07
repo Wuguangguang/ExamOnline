@@ -1,38 +1,38 @@
 package com.volcano.examonline.mvvm.search.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.volcano.examonline.base.Response
 import com.volcano.examonline.mvvm.forum.model.Article
+import com.volcano.examonline.mvvm.study.model.Question
+import com.volcano.examonline.network.NetworkRepository
 
 class SearchViewModel : ViewModel() {
 
-    private val mutableHotkeyFlag = MutableLiveData<Boolean>()
+    lateinit var type: String
 
-//    val hotkeys = arrayListOf<Hotkey>()
-
-//    val hotkeyFlag : LiveData<List<Hotkey>> = Transformations.switchMap(mutableHotkeyFlag) {
-//        NetworkRepository.getInstance().getSearchWords()
-//    }
-
-    fun getSearchWords() {
-        mutableHotkeyFlag.value = true
+    fun searchQuestions(content: String) {
+        mutableQuestionContent.value = content
     }
 
-    class Entity(val page:Int, val key: String)
-
-    fun getSearchResult(key : String) {
-        mutableSearchKey.value =
-            Entity(
-                0,
-                key
-            )
+    fun searchArticles(content: String) {
+        mutableArticleContent.value = content
     }
 
-    private val mutableSearchKey = MutableLiveData<Entity>()
+    private val mutableQuestionContent = MutableLiveData<String>()
+    private val mutableArticleContent = MutableLiveData<String>()
 
-//    val searchKey : LiveData<Article> = Transformations.switchMap(mutableSearchKey){ obj ->
-//        NetworkRepository.getInstance().getSearchResult(obj.page,obj.key)
-//    }
+    val liveQuestionResult = Transformations.switchMap(mutableQuestionContent){ content ->
+        NetworkRepository.searchQuestion(content)
+    }
 
-    val results = arrayListOf<Article>()
+    val liveArticleResult = Transformations.switchMap(mutableArticleContent) { content ->
+        NetworkRepository.searchArticle(content)
+    }
+
+    val articlesRes = arrayListOf<Article>()
+    val questionsRes = arrayListOf<Question>()
+
 }

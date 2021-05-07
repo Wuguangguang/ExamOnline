@@ -43,13 +43,12 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_article_author_avatar"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:scaleType="fitXY"
-                    android:src="@color/COLOR_GREY"/>
+                    android:src="@drawable/ic_avatar"/>
 
                 <LinearLayout
                     android:layout_width="0dp"

@@ -24,13 +24,13 @@ class StudyViewModel : ViewModel() {
 
     var questionData = arrayListOf<Question>()
 
-    private var mutableQuestions = MutableLiveData<Int>()
+    private var mutableQuestions = MutableLiveData<String>()
 
-    val questions = Transformations.switchMap(mutableQuestions) { id ->
-        NetworkRepository.getQuestions(id)
+    val questions = Transformations.switchMap(mutableQuestions) { name ->
+        NetworkRepository.getQuestions(name)
     }
 
-    fun getQuestions(subjectId: Int) {
-        mutableQuestions.value = subjectId
+    fun getQuestions(subjectName: String) {
+        mutableQuestions.value = subjectName
     }
 }

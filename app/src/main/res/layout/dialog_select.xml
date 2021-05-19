@@ -5,28 +5,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_white_rect">
 
-    <TextView
-        android:id="@+id/tv_take_photo"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_select_list"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="拍摄"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:textColor="@android:color/background_dark"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/COLOR_GREY"/>
-
-    <TextView
-        android:id="@+id/tv_take_pic"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="从手机相册选择"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:textColor="@android:color/background_dark"/>
+        android:layout_height="wrap_content"/>
 
     <View
         android:layout_width="match_parent"

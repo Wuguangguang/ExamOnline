@@ -1,12 +1,9 @@
 package com.volcano.examonline.mvvm.study.view
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentStudyBinding
 import com.volcano.examonline.mvvm.exam.view.ExamActivity
@@ -14,6 +11,8 @@ import com.volcano.examonline.mvvm.search.view.SearchActivity
 import com.volcano.examonline.mvvm.study.adapter.SubjectAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.widget.CommonDialog
+import com.volcano.examonline.widget.CommonDialogOnItemClickListener
 
 class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
@@ -24,6 +23,7 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
     private val subjectAdapter : SubjectAdapter by lazy { SubjectAdapter(this , mViewModel.subjectData) }
     private var tabLayoutMediator: TabLayoutMediator? = null
     private var subjectNames = arrayListOf<String>()
+    private val subjectSelectDialog by lazy { CommonDialog(activity!!) }
 
     override fun initView() {
         initListener()
@@ -63,17 +63,18 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
         }
     }
 
-    //对话框需要加入LCE布局
     private fun goToExamActivity(mode: Int) {
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle("请选择学科~")
-        builder.setItems(subjectNames.toTypedArray<CharSequence>()) { _, which ->
-            val intent = Intent(activity, ExamActivity::class.java)
-            intent.putExtra("mode", mode)
-            intent.putExtra("subject", mViewModel.subjectData[which].id)
-            startActivity(intent)
-        }
-        builder.show()
+        subjectSelectDialog.show()
+        subjectSelectDialog.setDatas(subjectNames)
+        subjectSelectDialog.setOnItemClickListener(object : CommonDialogOnItemClickListener {
+            override fun onCLick(item: String) {
+                val intent = Intent(activity, ExamActivity::class.java)
+                intent.putExtra("mode", mode)
+                intent.putExtra("subject", item)
+                startActivity(intent)
+                subjectSelectDialog.dismiss()
+            }
+        })
     }
 
     override fun initData() {

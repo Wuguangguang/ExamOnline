@@ -24,11 +24,11 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
     private var currentPos = 0
     private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions, mode) }
     private var mode : Int? = null
-    private var subject: Int? = null
+    private var subject: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mode = intent.getIntExtra("mode", ConstantData.ORDERLY_MODE)
-        subject = intent.getIntExtra("subject", 1)
+        subject = intent.getStringExtra("subject")
         super.onCreate(savedInstanceState)
     }
 

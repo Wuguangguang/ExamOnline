@@ -16,7 +16,7 @@ class SubjectAdapter(mContext: Fragment, private val subjects: ArrayList<Subject
     fun initFragments() {
         fragments.clear()
         subjects.forEach{
-            fragments.add(StudyDetailFragment.newInstance(it.id!!))
+            fragments.add(StudyDetailFragment.newInstance(it.subjectname!!))
         }
 
     }

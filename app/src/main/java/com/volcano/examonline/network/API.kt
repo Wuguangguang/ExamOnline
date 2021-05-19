@@ -20,7 +20,10 @@ interface API {
 
     // 获取试题列表
     @GET("api/v1/questions")
-    fun getQuestions(@Query("subjectId") id: Int): Observable<Response<List<Question>>>
+    fun getQuestions(@Query("subjectName") name: String): Observable<Response<List<Question>>>
+
+    @GET("api/v1/questions/random")
+    fun getRandomQuestions(@Query("subjectName")name: String, @Query("num") num: Int): Observable<Response<List<Question>>>
 
     // 搜索试题
     @GET("api/v1/questions/search")
@@ -35,8 +38,6 @@ interface API {
     @POST("api/v1/questions/edit")
     fun uploadQuestion(@Header("Authorization") token: String,@Body obj: Question): Observable<Response<Any>>
 
-    @GET("api/v1/questions/random")
-    fun getRandomQuestions(@Query("subjectId") id: Int, @Query("num") num: Int): Observable<Response<List<Question>>>
 
     @GET("api/v1/questions/commend")
     fun getCommendQuestions(@Query("subjectId") id: Int, @Query("keywords") keywords: String): Observable<Response<List<Question>>>

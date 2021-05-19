@@ -65,4 +65,18 @@
         <item name="android:windowExitAnimation">@anim/dialog_out_anim</item>
     </style>
 
+    <style name="FixedTextStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="UnfixedTextStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/COLOR_SECOND_TEXT</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>

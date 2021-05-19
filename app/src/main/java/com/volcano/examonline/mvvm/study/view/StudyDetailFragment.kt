@@ -8,11 +8,11 @@ import com.volcano.examonline.mvvm.study.adapter.QuestionListAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
 import com.volcano.examonline.util.ConstantData
 
-class StudyDetailFragment(private val subjectId : Int)
+class StudyDetailFragment(private val subjectName : String)
     : BaseMvvmFragment<FragmentStudyDetailBinding, StudyViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
     companion object {
-        fun newInstance(id : Int) = StudyDetailFragment(id)
+        fun newInstance(name : String) = StudyDetailFragment(name)
     }
 
     private val questionAdapter by lazy { QuestionListAdapter(activity!! , mViewModel.questionData) }
@@ -21,7 +21,7 @@ class StudyDetailFragment(private val subjectId : Int)
         mBinding.srlQuestionDetail.apply{
             setColorSchemeResources(R.color.colorAccent)
             setOnRefreshListener {
-                mViewModel.getQuestions(subjectId)
+                mViewModel.getQuestions(subjectName)
                 mBinding.srlQuestionDetail.isRefreshing = true
             }
         }
@@ -42,12 +42,12 @@ class StudyDetailFragment(private val subjectId : Int)
             }
             mBinding.srlQuestionDetail.isRefreshing = false
         })
-        mViewModel.getQuestions(subjectId)
+        mViewModel.getQuestions(subjectName)
     }
 
     override fun doRetry() {
         super.doRetry()
-        mViewModel.getQuestions(subjectId)
+        mViewModel.getQuestions(subjectName)
     }
 
 }

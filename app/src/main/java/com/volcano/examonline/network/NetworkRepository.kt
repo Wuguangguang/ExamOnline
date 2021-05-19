@@ -34,9 +34,9 @@ object NetworkRepository {
      * 题库页
      */
 
-    fun getQuestions(id: Int): LiveData<Response<List<Question>>> {
+    fun getQuestions(name: String): LiveData<Response<List<Question>>> {
         var result = MutableLiveData<Response<List<Question>>>()
-        api.getQuestions(id).transform(result)
+        api.getQuestions(name).transform(result)
         return result
     }
 
@@ -103,9 +103,9 @@ object NetworkRepository {
     /**
      * 考试页
      */
-    fun getRandomQuestions(id:Int, num: Int): LiveData<Response<List<Question>>> {
+    fun getRandomQuestions(name:String, num: Int): LiveData<Response<List<Question>>> {
         var result = MutableLiveData<Response<List<Question>>>()
-        api.getRandomQuestions(id, num).transform(result)
+        api.getRandomQuestions(name, num).transform(result)
         return result
     }
 

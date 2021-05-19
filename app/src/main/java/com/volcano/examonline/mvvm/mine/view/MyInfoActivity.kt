@@ -16,7 +16,8 @@ import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.mine.viewmodel.MineViewModel
 import com.volcano.examonline.util.ConstantData
 import com.volcano.examonline.util.ImageLoader
-import com.volcano.examonline.widget.PictureSelectDialog
+import com.volcano.examonline.widget.CommonDialog
+import com.volcano.examonline.widget.CommonDialogOnItemClickListener
 import java.io.File
 
 class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() {
@@ -27,7 +28,7 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
     private var avatar:Bitmap? = null
     lateinit var imageUri: Uri
     lateinit var outputImage: File
-    private val pictureSelectDialog by lazy { PictureSelectDialog(this) }
+    private val pictureSelectDialog by lazy { CommonDialog(this) }
 
     override fun initView() {
         window.statusBarColor = resources.getColor(R.color.COLOR_GREY)
@@ -35,22 +36,29 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
         initToolbar()
         mBinding.llUserAvatar.setOnClickListener {
             pictureSelectDialog.show()
-            pictureSelectDialog.setTakePhotoListener {
-                outputImage = File(externalCacheDir, "output_image.jpg")
-                if(outputImage.exists()) {
-                    outputImage.delete()
+            pictureSelectDialog.setDatas(arrayListOf("拍摄","从手机相册选择"))
+            pictureSelectDialog.setOnItemClickListener(object : CommonDialogOnItemClickListener {
+                override fun onCLick(item: String) {
+                    when(item) {
+                        "拍摄" -> {
+                            outputImage = File(externalCacheDir, "output_image.jpg")
+                            if(outputImage.exists()) {
+                                outputImage.delete()
+                            }
+                            outputImage.createNewFile()
+                            imageUri = FileProvider.getUriForFile(applicationContext, "com.volcano.examonline.fileprovider", outputImage)
+                            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                            startActivityForResult(intent, takePhoto)
+                        }
+                        else -> {
+                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            intent.type = "image/*"
+                            startActivityForResult(intent, fromAlbum)
+                        }
+                    }
                 }
-                outputImage.createNewFile()
-                imageUri = FileProvider.getUriForFile(this, "com.volcano.examonline.fileprovider", outputImage)
-                val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                startActivityForResult(intent, takePhoto)
-            }
-            pictureSelectDialog.setTakePicListener {
-                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                intent.type = "image/*"
-                startActivityForResult(intent, fromAlbum)
-            }
+            })
         }
         mBinding.llUserName.setOnClickListener {
 

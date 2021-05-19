@@ -8,24 +8,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.volcano.examonline.R;
-import com.volcano.examonline.databinding.DialogSelectPhotoBinding;
+import com.volcano.examonline.databinding.DialogSelectBinding;
 
-public class PictureSelectDialog extends Dialog{
+import java.util.ArrayList;
+
+public class CommonDialog extends Dialog{
 
     private Context mContext;
-    private DialogSelectPhotoBinding binding;
+    private DialogSelectBinding binding;
+    private CommonDialogAdapter mAdapter;
+    private ArrayList<String> datas;
 
-    public PictureSelectDialog(@NonNull Context context) {
+    public CommonDialog(@NonNull Context context) {
         super(context, R.style.dialog);
         this.mContext = context;
         initDialog();
     }
-
 
     /**
      * 初始化Dialog
@@ -36,14 +38,14 @@ public class PictureSelectDialog extends Dialog{
         win.setWindowAnimations(R.style.main_menu_animStyle);
         win.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setCanceledOnTouchOutside(true);
+        datas = new ArrayList<>();
+        mAdapter = new CommonDialogAdapter(mContext, datas);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DialogSelectPhotoBinding.inflate(LayoutInflater.from(mContext));
-
-//        View view = View.inflate(mContext, R.layout.dialog_select_photo, null);
+        binding = DialogSelectBinding.inflate(LayoutInflater.from(mContext));
         setContentView(binding.getRoot());
         binding.tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +54,18 @@ public class PictureSelectDialog extends Dialog{
                 dismiss();
             }
         });
+        binding.rvSelectList.setLayoutManager(new LinearLayoutManager(mContext));
+        binding.rvSelectList.setAdapter(mAdapter);
     }
 
-    public void setTakePhotoListener(View.OnClickListener listener) {
-        binding.tvTakePhoto.setOnClickListener(listener);
+    public void setDatas(ArrayList<String> target) {
+        datas.clear();
+        datas.addAll(target);
+        mAdapter.notifyDataSetChanged();
     }
 
-    public void setTakePicListener(View.OnClickListener listener) {
-        binding.tvTakePic.setOnClickListener(listener);
+    public void setOnItemClickListener(CommonDialogOnItemClickListener listener) {
+        mAdapter.setOnClickListener(listener);
     }
 }
+

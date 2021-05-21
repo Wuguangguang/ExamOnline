@@ -64,7 +64,11 @@ interface API {
     @GET("api/v1/articles/search")
     fun searchArticle(@Query("content") content: String): Observable<Response<List<Article>>>
 
-    /**
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/articles/uploadcomment")
+    fun uploadArticleComment(@Header("Authorization") token: String ,@Body obj: CommentEntity): Observable<Response<Any>>
+
+            /**
      * 用户 相关API
      */
     @GET("api/v1/userinfo/id")

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.volcano.examonline.base.CommentEntity
 import com.volcano.examonline.mvvm.study.model.Comment
 import com.volcano.examonline.network.NetworkRepository
 
@@ -19,5 +20,16 @@ class ArticleViewModel: ViewModel() {
 
     val liveComments = Transformations.switchMap(mutableComments) {id ->
         NetworkRepository.getArticleComments(id)
+    }
+
+    //发表评论
+    private var mutableEditComment = MutableLiveData<CommentEntity>()
+
+    fun editComment(targetId: Int, comments: String) {
+        mutableEditComment.value = CommentEntity(targetId, "文章", comments, null)
+    }
+
+    val liveEditComment = Transformations.switchMap(mutableEditComment) {obj ->
+        NetworkRepository.uploaArticleComment(obj)
     }
 }

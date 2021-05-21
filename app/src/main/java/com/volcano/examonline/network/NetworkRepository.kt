@@ -118,6 +118,13 @@ object NetworkRepository {
     }
 
 
+    fun uploaArticleComment(obj: CommentEntity): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        api.uploadArticleComment(ConstantData.TOKEN!! ,obj).transform(result)
+        return result
+
+    }
+
     /**
      * 考试页
      */
@@ -171,5 +178,6 @@ object NetworkRepository {
         api.getRanking().transform(result)
         return result
     }
+
 
 }

@@ -1,6 +1,8 @@
 package com.volcano.examonline.util
 
 import com.volcano.examonline.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 object ConstantData {
 
@@ -57,5 +59,9 @@ object ConstantData {
     fun exitLogin() {
         TOKEN = null
         ID = null
+    }
+
+    fun str2Timestamp(str: String): String {
+        return str.substring(0,10)+" "+str.substring(11,19)
     }
 }

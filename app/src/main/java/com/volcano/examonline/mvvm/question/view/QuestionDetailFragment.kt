@@ -14,6 +14,8 @@ import com.volcano.examonline.mvvm.forum.adapter.CommentsAdapter
 import com.volcano.examonline.mvvm.study.adapter.QuestionListAdapter
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.widget.CommonDialog
+import com.volcano.examonline.widget.CommonDialogOnItemClickListener
 import java.lang.StringBuilder
 
 /**
@@ -31,6 +33,7 @@ class QuestionDetailFragment(private val question: Question, private val current
     private var correctSelect = arrayListOf<Int>()
     private var options = arrayListOf<String>()
     private var mode:Int? = null
+    private val orderDialog by lazy { CommonDialog(activity!!) }
 
     companion object {
         fun newInstance(question: Question, i: Int) = QuestionDetailFragment(question, i)
@@ -113,6 +116,27 @@ class QuestionDetailFragment(private val question: Question, private val current
                         }
                     }
                 }
+            }
+        }
+        mBinding.tvQuestionCommentOrder.setOnClickListener {
+            orderDialog.apply {
+                show()
+                setDatas(arrayListOf("默认排序","时间排序","热度排序"))
+                setOnItemClickListener(object : CommonDialogOnItemClickListener {
+                    override fun onCLick(item: String) {
+                        when(item) {
+                            "默认排序" -> {
+
+                            }
+                            "时间排序" -> {
+                            }
+                            else -> {
+
+                            }
+                        }
+                        orderDialog.dismiss()
+                    }
+                })
             }
         }
         optionsAdapter.setOnClickListener(object : OnItemClickListener {

@@ -29,8 +29,8 @@ class QuestionViewModel : ViewModel() {
     //发表评论
     private var mutableEditComment = MutableLiveData<CommentEntity>()
 
-    fun editComment(subjectId: Int, comments: String) {
-        mutableEditComment.value = CommentEntity(subjectId, "试题", comments, null)
+    fun editComment(targetId: Int, comments: String) {
+        mutableEditComment.value = CommentEntity(targetId, "试题", comments, null)
     }
 
     val liveEditComment = Transformations.switchMap(mutableEditComment) {obj ->

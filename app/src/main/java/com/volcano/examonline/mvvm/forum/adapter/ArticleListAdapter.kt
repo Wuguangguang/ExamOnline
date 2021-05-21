@@ -9,6 +9,7 @@ import com.volcano.examonline.databinding.AdapterArticleListBinding
 import com.volcano.examonline.databinding.AdapterFooterBinding
 import com.volcano.examonline.mvvm.forum.view.ArticleActivity
 import com.volcano.examonline.mvvm.forum.model.Article
+import com.volcano.examonline.util.ConstantData
 
 class ArticleListAdapter(val context : Context, private val articles : ArrayList<Article>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -21,7 +22,7 @@ class ArticleListAdapter(val context : Context, private val articles : ArrayList
         fun bind(article : Article) {
             binding.tvArticleAuthor.text = article.username
             binding.tvArticleTitle.text = article.title
-            binding.tvArticleDate.text = article.createat
+            binding.tvArticleDate.text = ConstantData.str2Timestamp(article.createat!!)
             binding.tvArticleSource.text = article.field
             val comments = article.commentnums ?: 0
             val zans = article.zannums ?: 0

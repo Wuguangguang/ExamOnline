@@ -22,7 +22,7 @@ class CommentsAdapter(private val mContext: Context, private val comments: Array
         fun bind(comment: Comment) {
             binding.tvCommenterAuthor.text = comment.userName
             binding.tvCommentDesc.text = comment.description
-            binding.tvCommenterDate.text = comment.createat
+            binding.tvCommenterDate.text = ConstantData.str2Timestamp(comment.createat!!)
         }
 
     }

@@ -1,15 +1,10 @@
 package com.volcano.examonline.mvvm.forum.view
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
@@ -22,12 +17,14 @@ import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.util.ConstantData
 import com.volcano.examonline.widget.CommonDialog
 import com.volcano.examonline.widget.CommonDialogOnItemClickListener
+import kotlin.Comparator
 
 class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewModel>() {
 
     private var article: Article? = null
     private val commentsAdapter: CommentsAdapter by lazy{ CommentsAdapter(this, mViewModel.comments) }
     private val orderDialog by lazy { CommonDialog(this) }
+    private var zanFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         article = intent.getSerializableExtra("article") as Article
@@ -36,6 +33,7 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
 
     override fun initView() {
         initToolbar()
+        initListener()
         mBinding.etComment.apply {
             addTextChangedListener {
                 if(!it.isNullOrEmpty()) {
@@ -47,6 +45,19 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
                 }
             }
         }
+        mBinding.rvArticleCommentList.apply {
+            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(context)
+            adapter = commentsAdapter
+        }
+        mBinding.tvArticleTitle.text = article!!.title
+        mBinding.tvArticleAuthorName.text = article!!.username
+        mBinding.tvArticleDate.text = ConstantData.str2Timestamp(article!!.createat!!)
+        mBinding.tvArticleContent.text = article!!.description
+        mBinding.tvZanNums.text = "${article!!.zannums}"
+    }
+
+    private fun initListener() {
         mBinding.tvCommentEdit.setOnClickListener {
             if(ConstantData.isLogin()) {
                 mViewModel.editComment(article!!.id!!, mBinding.etComment.text.toString())
@@ -60,36 +71,53 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
                 startActivity(intent)
             }
         }
+        mBinding.ivZan.setOnClickListener {
+            zanFlag = !zanFlag
+            mBinding.ivZan.setImageResource(if(zanFlag) R.drawable.ic_zaned else R.drawable.ic_zan)
+            if(zanFlag) {
+                mViewModel.increaseZan(article!!.id!!)
+                val num = article!!.zannums!! + 1
+                mBinding.tvZanNums.text = "$num"
+            }else {
+                mViewModel.decreaseZan(article!!.id!!)
+                mBinding.tvZanNums.text = "${article!!.zannums}"
+            }
+        }
         mBinding.tvArticleCommentOrder.setOnClickListener {
             orderDialog.apply {
                 show()
-                setDatas(arrayListOf("默认排序","时间排序","热度排序"))
+                setDatas(arrayListOf(ConstantData.ORDER_DEFAULT, ConstantData.ORDER_TIME, ConstantData.ORDER_HOT))
                 setOnItemClickListener(object : CommonDialogOnItemClickListener {
                     override fun onCLick(item: String) {
                         when(item) {
-                            "默认排序" -> {
-
+                            ConstantData.ORDER_DEFAULT -> {
+                                mViewModel.comments.sortWith(Comparator { o1, o2 ->
+                                    o1.id!! - o2.id!!
+                                })
+                                mBinding.tvArticleCommentOrder.text = ConstantData.ORDER_DEFAULT
+                                mBinding.ivArticleCommentOrder.setImageResource(R.drawable.ic_grey_search)
                             }
-                            "时间排序" -> {
+                            ConstantData.ORDER_TIME -> {
+                                mViewModel.comments.sortWith(Comparator { o1, o2 ->
+                                    o2.createat!!.compareTo(o1.createat!!)
+                                })
+                                mBinding.tvArticleCommentOrder.text = ConstantData.ORDER_TIME
+                                mBinding.ivArticleCommentOrder.setImageResource(R.drawable.ic_timer)
                             }
                             else -> {
-
+                                mViewModel.comments.sortWith(Comparator { o1, o2 ->
+                                    o2.zan!! - o1.zan!!
+                                })
+                                mBinding.tvArticleCommentOrder.text = ConstantData.ORDER_HOT
+                                mBinding.ivArticleCommentOrder.setImageResource(R.drawable.ic_zan)
                             }
                         }
+                        commentsAdapter.notifyDataSetChanged()
                         orderDialog.dismiss()
                     }
                 })
             }
         }
-        mBinding.rvArticleCommentList.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = commentsAdapter
-        }
-        mBinding.tvArticleTitle.text = article!!.title
-        mBinding.tvArticleAuthorName.text = article!!.username
-        mBinding.tvArticleDate.text = ConstantData.str2Timestamp(article!!.createat!!)
-        mBinding.tvArticleContent.text = article!!.description
-        mBinding.tvZanNums.text = "${article!!.zannums}"
     }
 
     private fun initToolbar() {

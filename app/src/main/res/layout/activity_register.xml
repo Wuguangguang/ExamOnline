@@ -61,7 +61,7 @@
         android:background="@drawable/shape_grey_rect"
         android:hint="@string/prompt_password"
         android:imeOptions="actionDone"
-        android:inputType="numberPassword"
+        android:inputType="textPassword"
         android:selectAllOnFocus="true"
         android:layout_below="@id/tv_login_username"/>
 

@@ -118,12 +118,24 @@ object NetworkRepository {
     }
 
 
-    fun uploaArticleComment(obj: CommentEntity): LiveData<Response<Any>> {
+    fun uploadArticleComment(obj: CommentEntity): LiveData<Response<Any>> {
         var result = MutableLiveData<Response<Any>>()
         api.uploadArticleComment(ConstantData.TOKEN!! ,obj).transform(result)
         return result
-
     }
+
+    fun increaseArticleZan(id: Int): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        api.increaseArticleZan(id).transform(result)
+        return result
+    }
+
+    fun decreaseArticleZan(id: Int): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        api.decreaseArticleZan(id).transform(result)
+        return result
+    }
+
 
     /**
      * 考试页

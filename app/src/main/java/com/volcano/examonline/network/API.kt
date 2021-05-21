@@ -68,7 +68,15 @@ interface API {
     @POST("api/v1/articles/uploadcomment")
     fun uploadArticleComment(@Header("Authorization") token: String ,@Body obj: CommentEntity): Observable<Response<Any>>
 
-            /**
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/articles/increaseZan")
+    fun increaseArticleZan(@Query("articleId") id: Int) : Observable<Response<Any>>
+
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/articles/decreaseZan")
+    fun decreaseArticleZan(@Query("articleId") id: Int) : Observable<Response<Any>>
+
+    /**
      * 用户 相关API
      */
     @GET("api/v1/userinfo/id")
@@ -95,5 +103,6 @@ interface API {
 
     @GET("api/v1/userinfo/ranking")
     fun getRanking(): Observable<Response<List<Ranking>>>
+
 
 }

@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.volcano.examonline.R
 import com.volcano.examonline.databinding.AdapterCommentsBinding
 import com.volcano.examonline.databinding.AdapterFooterBinding
 import com.volcano.examonline.databinding.AdapterQuestionListBinding
@@ -23,6 +25,7 @@ class CommentsAdapter(private val mContext: Context, private val comments: Array
             binding.tvCommenterAuthor.text = comment.userName
             binding.tvCommentDesc.text = comment.description
             binding.tvCommenterDate.text = ConstantData.str2Timestamp(comment.createat!!)
+            binding.tvCommentZan.text = "点赞 ${comment.zan}"
         }
 
     }
@@ -39,6 +42,7 @@ class CommentsAdapter(private val mContext: Context, private val comments: Array
             DATA_ITEM -> {
                 val binding = AdapterCommentsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 holder = DataViewHolder(binding)
+
             }
         }
         return holder
@@ -49,6 +53,9 @@ class CommentsAdapter(private val mContext: Context, private val comments: Array
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is DataViewHolder) {
             holder.bind(comments[position])
+            holder.itemView.setOnClickListener {
+                //点赞、点击头像
+            }
         }
     }
 

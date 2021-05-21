@@ -67,7 +67,8 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
 
         }
         mBinding.llUserPwd.setOnClickListener {
-
+            val intent = Intent(this, ChgPwdActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -128,7 +129,6 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
         setDataStatus(mViewModel.liveUserInfo, {
 
         }, {
-
             Toast.makeText(this, "修改成功！", Toast.LENGTH_SHORT).show()
             refresh()
         })

@@ -32,6 +32,15 @@
         android:text="2020-03-23 16:36"/>
 
     <TextView
+        android:id="@+id/tv_comment_zan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点赞 99"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
         android:id="@+id/tv_comment_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

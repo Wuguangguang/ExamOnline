@@ -26,6 +26,10 @@ object ConstantData {
     const val TYPE_MULTI_SELECT = "多选题"
     const val TYPE_JUDGE = "判断题"
 
+    const val ORDER_DEFAULT = "默认排序"
+    const val ORDER_TIME = "时间排序"
+    const val ORDER_HOT = "热度排序"
+
     val normalImages = arrayListOf(
         R.drawable.ic_option_a_normal,
         R.drawable.ic_option_b_normal,

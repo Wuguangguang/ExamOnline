@@ -121,19 +121,33 @@ class QuestionDetailFragment(private val question: Question, private val current
         mBinding.tvQuestionCommentOrder.setOnClickListener {
             orderDialog.apply {
                 show()
-                setDatas(arrayListOf("默认排序","时间排序","热度排序"))
+                setDatas(arrayListOf(ConstantData.ORDER_DEFAULT, ConstantData.ORDER_TIME, ConstantData.ORDER_HOT))
                 setOnItemClickListener(object : CommonDialogOnItemClickListener {
                     override fun onCLick(item: String) {
                         when(item) {
-                            "默认排序" -> {
-
+                            ConstantData.ORDER_DEFAULT -> {
+                                mViewModel.comments.sortWith(Comparator { o1, o2 ->
+                                    o1.id!! - o2.id!!
+                                })
+                                mBinding.tvQuestionCommentOrder.text = ConstantData.ORDER_DEFAULT
+                                mBinding.ivQuestionCommentOrder.setImageResource(R.drawable.ic_grey_search)
                             }
-                            "时间排序" -> {
+                            ConstantData.ORDER_TIME -> {
+                                mViewModel.comments.sortWith(Comparator { o1, o2 ->
+                                    o2.createat!!.compareTo(o1.createat!!)
+                                })
+                                mBinding.tvQuestionCommentOrder.text = ConstantData.ORDER_TIME
+                                mBinding.ivQuestionCommentOrder.setImageResource(R.drawable.ic_timer)
                             }
                             else -> {
-
+                                mViewModel.comments.sortWith(Comparator { o1, o2 ->
+                                    o2.zan!! - o1.zan!!
+                                })
+                                mBinding.tvQuestionCommentOrder.text = ConstantData.ORDER_HOT
+                                mBinding.ivQuestionCommentOrder.setImageResource(R.drawable.ic_zan)
                             }
                         }
+                        commentsAdapter.notifyDataSetChanged()
                         orderDialog.dismiss()
                     }
                 })

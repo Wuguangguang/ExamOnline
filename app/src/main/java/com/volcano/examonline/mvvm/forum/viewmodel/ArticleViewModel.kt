@@ -1,6 +1,5 @@
 package com.volcano.examonline.mvvm.forum.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -30,6 +29,16 @@ class ArticleViewModel: ViewModel() {
     }
 
     val liveEditComment = Transformations.switchMap(mutableEditComment) {obj ->
-        NetworkRepository.uploaArticleComment(obj)
+        NetworkRepository.uploadArticleComment(obj)
     }
+
+    //点赞、取消点赞
+    fun increaseZan(id: Int) {
+        NetworkRepository.increaseArticleZan(id)
+    }
+
+    fun decreaseZan(id: Int) {
+        NetworkRepository.decreaseArticleZan(id)
+    }
+
 }

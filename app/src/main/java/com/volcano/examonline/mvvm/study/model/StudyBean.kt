@@ -12,17 +12,21 @@ data class Subject(
 )
 
 /**
+ * id: 1
  * userName : Volcano Paul
  * description : 为人民服务！
  * img : null
  * avatar : null
+ * zan: 0
  * createat : 2021-04-13T10:41:32.000+00:00
  */
 data class Comment(
+    var id: Int? = null,
     var userName: String? = null,
     var description: String? = null,
-    var img: Any? = null,
-    var avatar: Any? = null,
+    var img: String? = null,
+    var zan: Int? = null,
+    var avatar: String? = null,
     var createat: String? = null
 )
 

@@ -1,9 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".mvvm.mine.view.AboutMeActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/toolbar_layout"
+        android:id="@+id/toolbar_about_me"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/COLOR_GREY"/>
+
+    <ImageView
+        android:id="@+id/iv_about_me"
+        android:layout_width="160dp"
+        android:layout_height="90dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_about_me_avatar"/>
+
+    <TextView
+        style="@style/FixedTextStyle"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="吴广，2017141461059，计算机学院"/>
+
+    <TextView
+        style="@style/UnfixedTextStyle"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="谁不想千色百彩，谁不想靠目前改变未来"/>
+
+    <TextView
+        style="@style/UnfixedTextStyle"
+        android:textSize="12dp"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="20dp"
+        android:text="QQ: 834562414  Wechat: volcano9991"/>
+
+    <TextView
+        style="@style/UnfixedTextStyle"
+        android:textSize="12dp"
+        android:layout_marginTop="50dp"
+        android:text="客户端Github地址：https://github.com/Wuguangguang/ExamOnline.git"/>
+
+    <TextView
+        style="@style/UnfixedTextStyle"
+        android:textSize="12dp"
+        android:layout_marginTop="10dp"
+        android:text="服务端Github地址：https://github.com/Wuguangguang/ExamOnlineServer.git"/>
+
+</LinearLayout>

@@ -1,10 +1,14 @@
 package com.volcano.examonline.mvvm.forum.view
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
+import com.volcano.examonline.base.hideSoftInput
 import com.volcano.examonline.databinding.ActivityArticleBinding
 import com.volcano.examonline.mvvm.forum.adapter.CommentsAdapter
 import com.volcano.examonline.mvvm.forum.viewmodel.ArticleViewModel
@@ -22,6 +26,24 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
 
     override fun initView() {
         initToolbar()
+        mBinding.etComment.apply {
+            addTextChangedListener {
+                if(!it.isNullOrEmpty()) {
+                    mBinding.rlZanAndComments.visibility = View.GONE
+                    mBinding.tvCommentEdit.visibility = View.VISIBLE
+                }else {
+                    mBinding.rlZanAndComments.visibility = View.VISIBLE
+                    mBinding.tvCommentEdit.visibility = View.GONE
+                }
+            }
+        }
+        mBinding.tvCommentEdit.setOnClickListener {
+            hideSoftInput(mBinding.root, this)
+            mBinding.etComment.clearFocus()
+            mBinding.etComment.setText("")
+            mBinding.rlZanAndComments.visibility = View.VISIBLE
+            mBinding.tvCommentEdit.visibility = View.GONE
+        }
         mBinding.rvArticleCommentList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = commentsAdapter
@@ -33,7 +55,6 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
         mBinding.tvArticleCommentNum.text = "${article!!.commentnums ?: 0}"
         mBinding.tvCommentNums.text = "${article!!.commentnums ?: 0}"
         mBinding.tvZanNums.text = "${article!!.zannums ?: 0}"
-
     }
 
     private fun initToolbar() {

@@ -2,33 +2,39 @@ package com.volcano.examonline.network
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.volcano.examonline.base.CommentEntity
 import com.volcano.examonline.base.Response
 import com.volcano.examonline.base.transform
 import com.volcano.examonline.mvvm.forum.model.Article
-import com.volcano.examonline.mvvm.study.model.Comment
-import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.mine.model.UserPwd
-import com.volcano.examonline.mvvm.study.model.Question
-import com.volcano.examonline.mvvm.study.model.Ranking
+import com.volcano.examonline.mvvm.study.model.*
 import com.volcano.examonline.util.ConstantData
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object NetworkRepository {
 
-    private val TAG = "NetworkRepository"
+    private val client = OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.SECONDS)
+            .writeTimeout(1, TimeUnit.SECONDS)
+            .build()
 
     private val api : API by lazy {
         Retrofit.Builder()
             .baseUrl("http://192.168.1.107:8080/")
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(API::class.java)
     }
+
 
     /**
      * 题库页
@@ -61,6 +67,18 @@ object NetworkRepository {
     fun getCommendQuestions(subjectId: Int, keywords: String): LiveData<Response<List<Question>>> {
         var result = MutableLiveData<Response<List<Question>>>()
         api.getCommendQuestions(subjectId, keywords).transform(result)
+        return result
+    }
+
+    fun uploadQuestion(uploadBean: UploadBean): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        api.uploadQuestion(ConstantData.TOKEN!!, uploadBean).transform(result)
+        return result
+    }
+
+    fun uploadQuestionComment(obj: CommentEntity): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        api.uploadQuestionComment(ConstantData.TOKEN!! ,obj).transform(result)
         return result
     }
 
@@ -153,4 +171,5 @@ object NetworkRepository {
         api.getRanking().transform(result)
         return result
     }
+
 }

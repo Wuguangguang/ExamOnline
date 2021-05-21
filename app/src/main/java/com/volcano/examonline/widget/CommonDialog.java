@@ -12,14 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.volcano.examonline.R;
-import com.volcano.examonline.databinding.DialogSelectBinding;
+import com.volcano.examonline.databinding.DialogCommonBinding;
 
 import java.util.ArrayList;
 
 public class CommonDialog extends Dialog{
 
     private Context mContext;
-    private DialogSelectBinding binding;
+    private DialogCommonBinding binding;
     private CommonDialogAdapter mAdapter;
     private ArrayList<String> datas;
 
@@ -45,7 +45,7 @@ public class CommonDialog extends Dialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DialogSelectBinding.inflate(LayoutInflater.from(mContext));
+        binding = DialogCommonBinding.inflate(LayoutInflater.from(mContext));
         setContentView(binding.getRoot());
         binding.tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override

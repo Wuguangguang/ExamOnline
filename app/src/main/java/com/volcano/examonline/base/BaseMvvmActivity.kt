@@ -73,19 +73,21 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
         return ViewModelProvider(this).get(getVmClazz(this))
     }
 
-    fun <T> setDataStatus(dataLiveData: LiveData<Response<T>>,onDataError: () -> Unit = {}, onDataStatus: (T) -> Unit) {
+    fun <T> setDataStatus(dataLiveData: LiveData<Response<T>>,onDataError: () -> Unit = {}, onDataStatus: (T?) -> Unit) {
         dataLiveData.observe(this) {
             when {
                 it == null -> {
                     Toast.makeText(this, "网络异常，请点击屏幕重试", Toast.LENGTH_SHORT).show()
                     contentView?.showError{ doRetry() }
+                    onDataError.invoke()
                 }
                 it.code == 1 -> {
-                    val dataList = it.data!!
+                    val dataList = it.data ?: null
                     contentView?.hideLoading()
                     onDataStatus(dataList)
                 }
                 else -> {
+                    contentView?.showEmpty()
                     onDataError.invoke()
                 }
             }

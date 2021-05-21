@@ -1,14 +1,12 @@
 package com.volcano.examonline.network
 
+import com.volcano.examonline.base.CommentEntity
 import com.volcano.examonline.base.Response
 import com.volcano.examonline.mvvm.forum.model.Article
-import com.volcano.examonline.mvvm.study.model.Comment
-import com.volcano.examonline.mvvm.study.model.Subject
 import com.volcano.examonline.mvvm.login.model.TokenBean
 import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.mine.model.UserPwd
-import com.volcano.examonline.mvvm.study.model.Question
-import com.volcano.examonline.mvvm.study.model.Ranking
+import com.volcano.examonline.mvvm.study.model.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -36,12 +34,14 @@ interface API {
     // 上传试题
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("api/v1/questions/edit")
-    fun uploadQuestion(@Header("Authorization") token: String,@Body obj: Question): Observable<Response<Any>>
-
+    fun uploadQuestion(@Header("Authorization") token: String,@Body obj: UploadBean): Observable<Response<Any>>
 
     @GET("api/v1/questions/commend")
     fun getCommendQuestions(@Query("subjectId") id: Int, @Query("keywords") keywords: String): Observable<Response<List<Question>>>
 
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @POST("api/v1/questions/uploadcomment")
+    fun uploadQuestionComment(@Header("Authorization") token: String ,@Body obj: CommentEntity): Observable<Response<Any>>
 
 
     // 获取文章列表

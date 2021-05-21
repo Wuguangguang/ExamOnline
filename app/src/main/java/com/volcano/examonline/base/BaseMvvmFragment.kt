@@ -73,6 +73,7 @@ abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel>(private val isAc
                 }
                 else -> {
                     contentView?.showEmpty()
+                    onBadNetwork.invoke()
                 }
             }
         }

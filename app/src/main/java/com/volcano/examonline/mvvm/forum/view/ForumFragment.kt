@@ -50,7 +50,7 @@ class ForumFragment : BaseMvvmFragment<FragmentForumBinding, ForumViewModel>(Con
             toolbarTitle.text = "论坛"
             toolbarRightImage.setImageResource(R.drawable.ic_grey_search)
             toolbarRightImage.setOnClickListener {
-                val intent = Intent(activity, SearchActivity::class.java)
+                val intent = Intent(activity, SearchActivity::class.java).putExtra("type","文章")
                 startActivity(intent)
             }
         }

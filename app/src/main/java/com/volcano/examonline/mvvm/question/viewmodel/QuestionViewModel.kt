@@ -1,9 +1,9 @@
 package com.volcano.examonline.mvvm.question.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.volcano.examonline.base.CommentEntity
 import com.volcano.examonline.mvvm.study.model.Comment
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.network.NetworkRepository
@@ -26,6 +26,18 @@ class QuestionViewModel : ViewModel() {
         NetworkRepository.getQuestionComments(id)
     }
 
+    //发表评论
+    private var mutableEditComment = MutableLiveData<CommentEntity>()
+
+    fun editComment(subjectId: Int, comments: String) {
+        mutableEditComment.value = CommentEntity(subjectId, "试题", comments, null)
+    }
+
+    val liveEditComment = Transformations.switchMap(mutableEditComment) {obj ->
+        NetworkRepository.uploadQuestionComment(obj)
+    }
+
+    //相关性推荐
     data class Entity(
         var subjectId: Int? = null,
         var keywords: String? = null
@@ -40,5 +52,7 @@ class QuestionViewModel : ViewModel() {
     val liveCommendQuestions = Transformations.switchMap(mutableKeywords) { obj ->
         NetworkRepository.getCommendQuestions(obj.subjectId!!, obj.keywords!!)
     }
+
+
 
 }

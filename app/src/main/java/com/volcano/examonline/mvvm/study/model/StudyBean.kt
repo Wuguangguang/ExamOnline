@@ -62,6 +62,23 @@ class Question : Serializable {
     var commentnums: Int? = null
 }
 
+data class UploadBean(
+        var subjectName: String? = null,
+        var source: String? = null,
+        var level: String? = null,
+        var keywords: String? = null,
+        var description: String? = null,
+        var type: String? = null,
+        var img: String? = null,
+        var optiona: String? = null,
+        var optionb: String? = null,
+        var optionc: String? = null,
+        var optiond: String? = null,
+        var optione: String? = null,
+        var correctanswer: String? = null,
+        var analysis: String? = null
+)
+
 data class Ranking(
     var id: Int? = null,
     var userphone: String? = null,

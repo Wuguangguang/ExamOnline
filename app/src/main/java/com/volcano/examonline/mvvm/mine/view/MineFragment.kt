@@ -49,13 +49,13 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
                 setTitle("退出登录")
                 setMessage("确定要退出登录吗？")
                 setCancelable(false)
-                setPositiveButton("确定") { dialog, which ->
+                setPositiveButton("确定") { _, _ ->
                     ConstantData.exitLogin()
                     mBinding.tvUserName.text = "点击登录"
                     mBinding.tvUserPhone.text = "请点击进行登录"
                     mBinding.llExitLogin.visibility = View.GONE
                 }
-                setNegativeButton("取消") { dialog, which ->
+                setNegativeButton("取消") { _, _ ->
                 }
                 show()
             }

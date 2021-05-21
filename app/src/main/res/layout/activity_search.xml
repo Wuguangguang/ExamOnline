@@ -52,15 +52,22 @@
         android:layout_height="0.5dp"
         android:background="@color/COLOR_GREY"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search_result"
+    <com.volcano.examonline.widget.MultipleStatusLayout
+        android:id="@+id/msl_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:outlineSpotShadowColor="@color/white"
-        android:outlineAmbientShadowColor="@color/white"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:outlineSpotShadowColor="@color/white"
+            android:outlineAmbientShadowColor="@color/white"/>
+    </com.volcano.examonline.widget.MultipleStatusLayout>
+
 
 
 </LinearLayout>

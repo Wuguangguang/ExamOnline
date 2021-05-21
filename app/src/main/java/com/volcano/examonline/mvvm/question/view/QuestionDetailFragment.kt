@@ -166,9 +166,13 @@ class QuestionDetailFragment(private val question: Question, private val current
 
         }, {
             if(!it.isNullOrEmpty()) {
-                mBinding.tvQuestionCommendNum.text = "${it.size}"
                 mViewModel.commendQuestions.clear()
-                mViewModel.commendQuestions.addAll(it)
+                it.forEach { it ->
+                    if(it.id != question.id) {
+                        mViewModel.commendQuestions.add(it)
+                    }
+                }
+                mBinding.tvQuestionCommendNum.text = "${mViewModel.commendQuestions.size}"
                 commendQuestionsAdapter.notifyDataSetChanged()
             }
         })

@@ -1,71 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical" >
+    android:background="@drawable/shape_white_rect">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_select_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/dialog_title"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/colorAccent"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:text="提示"
-            android:textColor="@color/white"
-            android:textSize="16dp" />
-    </LinearLayout>
-
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="1dp"
+        android:background="@color/COLOR_GREY"/>
 
-        <TextView
-            android:id="@+id/dialog_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="left|center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="@color/black"
-            android:textSize="16dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp" >
-
-            <Button
-                android:id="@+id/dialog_sure"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_green_rect"
-                android:text="确定退出"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
-
-            <Button
-                android:id="@+id/dialog_cancel"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_green_rect"
-                android:text="继续答题"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
-        </LinearLayout>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="取消"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@android:color/background_dark"/>
 
 </LinearLayout>

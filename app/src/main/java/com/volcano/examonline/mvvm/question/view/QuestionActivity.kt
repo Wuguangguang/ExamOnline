@@ -1,14 +1,21 @@
 package com.volcano.examonline.mvvm.question.view
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.opengl.ETC1
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityQuestionBinding
+import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.mvvm.question.adapter.QuestionAdapter
 import com.volcano.examonline.mvvm.question.viewmodel.QuestionViewModel
 import com.volcano.examonline.mvvm.study.model.Question
@@ -37,6 +44,22 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
         initToolbar()
         mBinding.fabEditComment.setOnClickListener{
             //发表评论
+            if(ConstantData.isLogin()) {
+                val editText = EditText(this)
+                AlertDialog.Builder(this).apply {
+                    setTitle("发表评论")
+                    setCancelable(false)
+                    setView(editText)
+                    setNegativeButton("取消",null)
+                    setPositiveButton("发表") { _: DialogInterface, _: Int ->
+                        mViewModel.editComment(mViewModel.questions[mBinding.vpDetail.currentItem].id!!, editText.text.toString())
+                    }
+                    show()
+                }
+            }else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
         mBinding.vpDetail.apply {
             adapter = questionAdapter
@@ -67,5 +90,10 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
         mBinding.vpDetail.currentItem = 0
         mBinding.vpDetail.offscreenPageLimit = mViewModel.questions.size
         mBinding.toolbarDetail.toolbarRightTv.text = "1/${mViewModel.questions.size}"
+        setDataStatus(mViewModel.liveEditComment, {
+            Toast.makeText(this, "发表失败，请稍后再试！", Toast.LENGTH_SHORT).show()
+        }, {
+            Toast.makeText(this, "发表评论成功！", Toast.LENGTH_SHORT).show()
+        })
     }
 }

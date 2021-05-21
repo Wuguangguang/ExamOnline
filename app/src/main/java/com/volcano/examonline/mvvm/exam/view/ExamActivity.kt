@@ -1,25 +1,27 @@
 package com.volcano.examonline.mvvm.exam.view
 
-import android.app.Dialog
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
+import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
-import com.volcano.examonline.databinding.ActivityExamDetailBinding
+import com.volcano.examonline.databinding.ActivityExamBinding
 import com.volcano.examonline.mvvm.exam.adapter.ExamPagerAdapter
 import com.volcano.examonline.mvvm.exam.viewmodel.ExamViewModel
+import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.util.ConstantData
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>() {
+class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
 
     private var currentPos = 0
     private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions, mode) }
@@ -80,7 +82,24 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
         mBinding.examDetailBackImg.setOnClickListener {
             showExitDialog()
         }
-        mBinding.examDetailRecord.setOnClickListener {
+        mBinding.fabEditComment.setOnClickListener {
+            //发表评论
+            if(ConstantData.isLogin()) {
+                val editText = EditText(this)
+                AlertDialog.Builder(this).apply {
+                    setTitle("发表评论")
+                    setCancelable(false)
+                    setView(editText)
+                    setNegativeButton("取消",null)
+                    setPositiveButton("发表") { _: DialogInterface, _: Int ->
+                        mViewModel.editComment(mViewModel.questions[mBinding.examDetailViewpager2.currentItem].id!!, editText.text.toString())
+                    }
+                    show()
+                }
+            }else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
         mBinding.examDetailNextQuest.setOnClickListener {
             if(currentPos < mViewModel.questions.size - 1) {
@@ -98,14 +117,11 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
 
     private fun showCommitDialog() {
         mBinding.examDetailTimer.stop()
-        val builder = Dialog(this, R.style.dialog)
-        builder.setContentView(R.layout.dialog_common)
-        val content = builder.findViewById<TextView>(R.id.dialog_content)
-        content.text = "您确定要提交并查看结果吗？"
-        builder.findViewById<Button>(R.id.dialog_sure).apply {
-            text = "确定提交"
-            setOnClickListener {
-                builder.dismiss()
+        AlertDialog.Builder(this).apply {
+            setTitle("提交结果")
+            setMessage("您确定要提交并查看结果吗")
+            setCancelable(false)
+            setPositiveButton("确定提交") { _, _ ->
                 val intent = Intent(context, CommitResultActivity::class.java).apply {
                     putExtra("questions", mViewModel.questions)
                     putExtra("answers", mViewModel.myAnswers.value)
@@ -114,34 +130,27 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
                 startActivity(intent)
                 finish()
             }
-        }
-        builder.findViewById<Button>(R.id.dialog_cancel).apply{
-            text = "我再想想"
-            setOnClickListener {
+            setNegativeButton("我再想想") { _, _ ->
                 mBinding.examDetailTimer.start()
-                builder.dismiss()
             }
+            show()
         }
-        builder.setCanceledOnTouchOutside(false)
-        builder.show()
     }
 
     private fun showExitDialog() {
         mBinding.examDetailTimer.stop()
-        val builder = Dialog(this, R.style.dialog)
-        builder.setContentView(R.layout.dialog_common)
-        val content = builder.findViewById<TextView>(R.id.dialog_content)
-        content.text = if(mode == ConstantData.SIMULATION_MODE) "您要结束本次模拟考试吗？" else "您要结束本次顺序练习吗？"
-        builder.findViewById<Button>(R.id.dialog_sure).setOnClickListener {
-            builder.dismiss()
-            finish()
+        AlertDialog.Builder(this).apply {
+            setTitle("退出练习")
+            setMessage(if(mode == ConstantData.SIMULATION_MODE) "您要结束本次模拟考试吗？" else "您要结束本次顺序练习吗？")
+            setCancelable(false)
+            setPositiveButton("确定") { _, _ ->
+                finish()
+            }
+            setNegativeButton("我再想想") { _, _ ->
+                mBinding.examDetailTimer.start()
+            }
+            show()
         }
-        builder.findViewById<Button>(R.id.dialog_cancel).setOnClickListener {
-            mBinding.examDetailTimer.start()
-            builder.dismiss()
-        }
-        builder.setCanceledOnTouchOutside(false)
-        builder.show()
     }
 
     override fun initData() {
@@ -150,6 +159,11 @@ class ExamActivity : BaseMvvmActivity<ActivityExamDetailBinding, ExamViewModel>(
             mBinding.examDetailNextQuest.text = if(currentPos == mViewModel.questions.size - 1) "提交" else "下一题"
             mBinding.examDetailViewpager2.currentItem = currentPos
         }
+        setDataStatus(mViewModel.liveEditComment, {
+            Toast.makeText(this, "发表失败，请稍后再试！", Toast.LENGTH_SHORT).show()
+        }, {
+            Toast.makeText(this, "发表评论成功！", Toast.LENGTH_SHORT).show()
+        })
         setDataStatus(mViewModel.question) {
             if(!it.isNullOrEmpty()) {
                 mBinding.examDetailViewpager2.offscreenPageLimit = it.size

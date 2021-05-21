@@ -36,17 +36,12 @@ class RegisterActivity : BaseMvvmActivity<ActivityRegisterBinding, LoginViewMode
     }
 
     override fun initData() {
-        setDataStatus(mViewModel.registerFlag) {
-            when(it) {
-                1 -> {
-                    Toast.makeText(this, "注册成功！", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                20005 -> {
-                    Toast.makeText(this, "该用户已存在！", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+        setDataStatus(mViewModel.registerFlag, {
+            Toast.makeText(this, "该用户已存在！", Toast.LENGTH_SHORT).show()
+        }, {
+                Toast.makeText(this, "注册成功！", Toast.LENGTH_SHORT).show()
+                finish()
+        })
     }
 }
 

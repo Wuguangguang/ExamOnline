@@ -1,19 +1,18 @@
 package com.volcano.examonline.mvvm.study.view
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityQuestionUploadBinding
-import com.volcano.examonline.mvvm.exam.view.ExamActivity
+import com.volcano.examonline.mvvm.study.model.UploadBean
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
-import com.volcano.examonline.util.ImageLoader
 import com.volcano.examonline.widget.CommonDialog
 import com.volcano.examonline.widget.CommonDialogOnItemClickListener
 import java.io.File
@@ -29,6 +28,7 @@ class QuestionUploadActivity : BaseMvvmActivity<ActivityQuestionUploadBinding, S
     private val subjectSelectDialog by lazy { CommonDialog(this) }
     private val pictureSelectDialog by lazy { CommonDialog(this) }
     private var subjectNames = arrayListOf<String>()
+    private var selectedType: String? = null
 
     override fun initView() {
         initToolbar()
@@ -45,6 +45,16 @@ class QuestionUploadActivity : BaseMvvmActivity<ActivityQuestionUploadBinding, S
                     mBinding.etOptionD.visibility = View.GONE
                     mBinding.tvOptionE.visibility = View.GONE
                     mBinding.etOptionE.visibility = View.GONE
+                    selectedType = "判断题"
+                }
+                R.id.rb_multi_select -> {
+                    mBinding.tvOptionC.visibility = View.VISIBLE
+                    mBinding.etOptionC.visibility = View.VISIBLE
+                    mBinding.tvOptionD.visibility = View.VISIBLE
+                    mBinding.etOptionD.visibility = View.VISIBLE
+                    mBinding.tvOptionE.visibility = View.VISIBLE
+                    mBinding.etOptionE.visibility = View.VISIBLE
+                    selectedType = "多选题"
                 }
                 else -> {
                     mBinding.tvOptionC.visibility = View.VISIBLE
@@ -53,6 +63,7 @@ class QuestionUploadActivity : BaseMvvmActivity<ActivityQuestionUploadBinding, S
                     mBinding.etOptionD.visibility = View.VISIBLE
                     mBinding.tvOptionE.visibility = View.VISIBLE
                     mBinding.etOptionE.visibility = View.VISIBLE
+                    selectedType = "单选题"
                 }
             }
         }
@@ -107,7 +118,18 @@ class QuestionUploadActivity : BaseMvvmActivity<ActivityQuestionUploadBinding, S
         }
         //上传提交
         mBinding.btnUploadQuestion.setOnClickListener {
-
+            if(mBinding.tvQuestionSubject.text == "请选择" || mBinding.tvQuestionLevel.text == "请选择"
+                            || mBinding.etQuestionSource.text.isNullOrEmpty() || mBinding.etQuestionKeywords.text.isNullOrEmpty()
+                            || mBinding.etQuestionDesc.text.isNullOrEmpty() || selectedType.isNullOrEmpty()) {
+                Toast.makeText(this, "内容不完整，请检查输入！", Toast.LENGTH_SHORT).show()
+            }else {
+                val uploadBean = UploadBean(mBinding.tvQuestionSubject.text.toString(), mBinding.etQuestionSource.text.toString(),
+                    mBinding.tvQuestionLevel.text.toString(), mBinding.etQuestionKeywords.text.toString(), mBinding.etQuestionDesc.text.toString(), selectedType,
+                        null, mBinding.etOptionA.text.toString(), mBinding.etOptionB.text.toString(), mBinding.etOptionC.text.toString(),
+                        mBinding.etOptionD.text.toString(), mBinding.etOptionE.text.toString(),
+                    mBinding.etQuestionAnswers.text.toString(), mBinding.etQuestionAnalysis.text.toString())
+                mViewModel.uploadQuestion(uploadBean)
+            }
         }
     }
 
@@ -129,6 +151,12 @@ class QuestionUploadActivity : BaseMvvmActivity<ActivityQuestionUploadBinding, S
                     subjectNames.add(it.subjectname!!)
                 }
             }
+        })
+        setDataStatus(mViewModel.liveUploadBean, {
+            Toast.makeText(this, "上传试题失败，请稍后再试！", Toast.LENGTH_SHORT).show()
+        }, {
+            Toast.makeText(this, "上传试题成功！", Toast.LENGTH_SHORT).show()
+            finish()
         })
         mViewModel.getSubjects()
     }

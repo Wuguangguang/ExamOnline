@@ -7,6 +7,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentStudyBinding
 import com.volcano.examonline.mvvm.exam.view.ExamActivity
+import com.volcano.examonline.mvvm.login.view.LoginActivity
+import com.volcano.examonline.mvvm.mine.view.MyInfoActivity
 import com.volcano.examonline.mvvm.search.view.SearchActivity
 import com.volcano.examonline.mvvm.study.adapter.SubjectAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
@@ -58,8 +60,13 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
             startActivity(intent)
         }
         mBinding.llUploadQuestion.setOnClickListener {
-            val intent = Intent(activity, QuestionUploadActivity::class.java)
-            startActivity(intent)
+            if(ConstantData.isLogin()) {
+                val intent = Intent(activity, QuestionUploadActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

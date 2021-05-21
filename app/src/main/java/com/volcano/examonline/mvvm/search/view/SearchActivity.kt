@@ -21,6 +21,7 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
 
     override fun initView() {
         mViewModel.type = intent.getStringExtra("type")!!
+        contentView = mBinding.mslSearch
         mBinding.etSearch.apply {
             requestFocus()
             addTextChangedListener {
@@ -32,11 +33,7 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
         mBinding.ivSearch.setOnClickListener {
             hideSoftInput(mBinding.root, this)
             mBinding.etSearch.clearFocus()
-            val content = mBinding.etSearch.text.toString()
-            when(mViewModel.type) {
-                "试题" -> mViewModel.searchQuestions(content)
-                else -> mViewModel.searchArticles(content)
-            }
+            refresh()
         }
         mBinding.ivBack.setOnClickListener{
             finish()
@@ -59,8 +56,9 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
                         mViewModel.questionsRes.clear()
                         mViewModel.questionsRes.addAll(it)
                         questionAdapter.notifyDataSetChanged()
+                        contentView?.hideLoading()
                     }else {
-
+                        contentView?.showEmpty()
                     }
                 })
             }
@@ -73,11 +71,26 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
                         mViewModel.articlesRes.clear()
                         mViewModel.articlesRes.addAll(it)
                         articleAdapter.notifyDataSetChanged()
+                        contentView?.hideLoading()
                     }else {
-
+                        contentView?.showEmpty()
                     }
                 })
             }
+        }
+    }
+
+    override fun doRetry() {
+        super.doRetry()
+        refresh()
+    }
+
+    private fun refresh() {
+        val content = mBinding.etSearch.text.toString()
+        contentView?.showLoading()
+        when(mViewModel.type) {
+            "试题" -> mViewModel.searchQuestions(content)
+            else -> mViewModel.searchArticles(content)
         }
     }
 }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".mvvm.mine.view.ChgPwdActivity">
+
+    <include layout="@layout/toolbar_layout"
+        android:id="@+id/toolbar_chgpwd"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/toolbar_chgpwd"
+        android:background="@color/COLOR_GREY"/>
+
+    <TextView
+        android:id="@+id/tv_account"
+        style="@style/UnfixedTextStyle"
+        android:layout_below="@id/toolbar_chgpwd"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:text="账号"/>
+    <TextView
+        android:id="@+id/tv_my_account"
+        style="@style/UnfixedTextStyle"
+        android:textSize="20dp"
+        android:layout_alignBaseline="@id/tv_account"
+        android:layout_toEndOf="@id/tv_account"
+        android:layout_marginStart="50dp"
+        android:text="13073860573"/>
+
+    <TextView
+        android:id="@+id/tv_origin_pwd"
+        style="@style/FixedTextStyle"
+        android:layout_below="@id/tv_account"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="原密码"/>
+    <EditText
+        android:id="@+id/et_my_origin_pwd"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_alignBaseline="@id/tv_origin_pwd"
+        android:layout_alignStart="@id/tv_my_account"
+        android:inputType="textPassword"
+        android:hint="填写原密码"/>
+
+
+    <TextView
+        android:id="@+id/tv_new_pwd"
+        style="@style/FixedTextStyle"
+        android:layout_below="@id/tv_origin_pwd"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="新密码"/>
+    <EditText
+        android:id="@+id/et_my_new_pwd"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_alignBaseline="@id/tv_new_pwd"
+        android:layout_alignStart="@id/tv_my_account"
+        android:inputType="textPassword"
+        android:hint="填写新密码"/>
+
+    <TextView
+        android:id="@+id/tv_new_pwd_second"
+        style="@style/FixedTextStyle"
+        android:layout_below="@id/tv_new_pwd"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="确认密码"/>
+    <EditText
+        android:id="@+id/et_my_new_pwd_second"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_alignBaseline="@id/tv_new_pwd_second"
+        android:layout_alignStart="@id/tv_my_account"
+        android:inputType="textPassword"
+        android:hint="再次填写确认"/>
+
+</RelativeLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.volcano.examonline.R
 import com.volcano.examonline.databinding.AdapterCommentsBinding
 import com.volcano.examonline.databinding.AdapterFooterBinding
@@ -20,12 +21,15 @@ class CommentsAdapter(private val mContext: Context, private val comments: Array
     private val FOOTER_ITEM = 0x1
     private val DATA_ITEM = 0x2
 
-    class DataViewHolder(private val binding: AdapterCommentsBinding): RecyclerView.ViewHolder(binding.root) {
+    class DataViewHolder(private val mContext: Context, private val binding: AdapterCommentsBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) {
             binding.tvCommenterAuthor.text = comment.userName
             binding.tvCommentDesc.text = comment.description
             binding.tvCommenterDate.text = ConstantData.str2Timestamp(comment.createat!!)
             binding.tvCommentZan.text = "点赞 ${comment.zan}"
+            if(!comment.avatar.isNullOrEmpty()) {
+                Glide.with(mContext).load(comment.avatar).into(binding.ivCommenterAvatar)
+            }
         }
 
     }
@@ -41,7 +45,7 @@ class CommentsAdapter(private val mContext: Context, private val comments: Array
             }
             DATA_ITEM -> {
                 val binding = AdapterCommentsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-                holder = DataViewHolder(binding)
+                holder = DataViewHolder(mContext ,binding)
 
             }
         }

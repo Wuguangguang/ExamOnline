@@ -11,10 +11,14 @@ import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.mine.model.UserPwd
 import com.volcano.examonline.mvvm.study.model.*
 import com.volcano.examonline.util.ConstantData
+import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 object NetworkRepository {
@@ -158,6 +162,14 @@ object NetworkRepository {
     fun editUserInfo(obj: UserInfo): LiveData<Response<Any>> {
         var result = MutableLiveData<Response<Any>>()
         api.editUserInfo(ConstantData.TOKEN!!, obj).transform(result)
+        return result
+    }
+
+    fun uploadAvatar(file: File): LiveData<Response<Any>> {
+        var result = MutableLiveData<Response<Any>>()
+        val body = RequestBody.create(MediaType.parse("image/jpg"), file)
+        val photo = MultipartBody.Part.createFormData("file", file.name, body)
+        api.uploadAvatar(ConstantData.TOKEN!!,photo).transform(result)
         return result
     }
 

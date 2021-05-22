@@ -87,6 +87,7 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
                     onDataStatus(dataList)
                 }
                 else -> {
+                    Toast.makeText(this, "${it.msg}", Toast.LENGTH_SHORT).show()
                     contentView?.showEmpty()
                     onDataError.invoke()
                 }

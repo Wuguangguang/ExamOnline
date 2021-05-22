@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.lifecycle.observe
+import com.bumptech.glide.Glide
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityMyInfoBinding
@@ -32,8 +33,11 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
 
     override fun initView() {
         window.statusBarColor = resources.getColor(R.color.COLOR_GREY)
-        contentView = mBinding.mslMyInfo
         initToolbar()
+        initListener()
+    }
+
+    private fun initListener() {
         mBinding.llUserAvatar.setOnClickListener {
             pictureSelectDialog.show()
             pictureSelectDialog.setDatas(arrayListOf("拍摄","从手机相册选择"))
@@ -41,11 +45,6 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                 override fun onCLick(item: String) {
                     when(item) {
                         "拍摄" -> {
-                            outputImage = File(externalCacheDir, "output_image.jpg")
-                            if(outputImage.exists()) {
-                                outputImage.delete()
-                            }
-                            outputImage.createNewFile()
                             imageUri = FileProvider.getUriForFile(applicationContext, "com.volcano.examonline.fileprovider", outputImage)
                             val intent = Intent("android.media.action.IMAGE_CAPTURE")
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
@@ -78,16 +77,14 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
             takePhoto -> {
                 if(resultCode == Activity.RESULT_OK) {
                     avatar = ImageLoader.uri2Bitmap(this, imageUri)
-                    mBinding.ivAvatar.setImageBitmap(ImageLoader.rotateIfRequired(outputImage,avatar!!))
-                    mViewModel.setEditFlag()
+                    mViewModel.uploadAvatar(outputImage)
                 }
             }
             fromAlbum -> {
                 if(null != data && resultCode == Activity.RESULT_OK) {
                     data.data?.let {uri ->
                         avatar = ImageLoader.getBitMapFromUri(this,uri)
-                        mBinding.ivAvatar.setImageBitmap(avatar)
-                        mViewModel.setEditFlag()
+                        mViewModel.uploadAvatar(ImageLoader.bitmap2File(avatar!!, outputImage))
                     }
                 }
             }
@@ -103,12 +100,16 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
 
         }, {
             if(it != null) {
+                outputImage = File(externalCacheDir, "userinfo_${it.phone}_avatar.jpg")
+                if(outputImage.exists()) {
+                    outputImage.delete()
+                }
+                outputImage.createNewFile()
                 mBinding.tvUsername.text = it.username
                 mBinding.tvUserphone.text = it.phone
                 mBinding.tvAccu.text = "${it.accumulate}"
                 if(it.avatar != null) {
-                    this.avatar = ImageLoader.byteArray2Bitmap(it.avatar!!)
-                    mBinding.ivAvatar.setImageBitmap(avatar)
+                    Glide.with(this).load(it.avatar).into(mBinding.ivAvatar)
                 }
             }
         })
@@ -118,7 +119,6 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                     visibility = View.VISIBLE
                     setOnClickListener {
                         val userinfo = UserInfo()
-                        userinfo.avatar = ImageLoader.bitmap2String(avatar!!)
                         userinfo.username = mBinding.tvUsername.text.toString()
                         userinfo.phone = mBinding.tvUserphone.text.toString()
                         mViewModel.editUserInfo(userinfo)
@@ -126,23 +126,17 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                 }
             }
         }
-        setDataStatus(mViewModel.liveUserInfo, {
-
-        }, {
-            Toast.makeText(this, "修改成功！", Toast.LENGTH_SHORT).show()
-            refresh()
+        setDataStatus(mViewModel.liveUploadAvatar,{}, {
+            Toast.makeText(this, "头像上传成功！", Toast.LENGTH_SHORT).show()
+            mBinding.ivAvatar.setImageBitmap(avatar)
         })
-        refresh()
-    }
-
-    private fun refresh() {
-        contentView?.showLoading()
+//        setDataStatus(mViewModel.liveUserInfo, {
+//
+//        }, {
+//            Toast.makeText(this, "修改成功！", Toast.LENGTH_SHORT).show()
+//            mViewModel.getUserInfo(ConstantData.ID!!)
+//        })
         mViewModel.getUserInfo(ConstantData.ID!!)
-    }
-
-    override fun doRetry() {
-        super.doRetry()
-        refresh()
     }
 
     private fun initToolbar() {

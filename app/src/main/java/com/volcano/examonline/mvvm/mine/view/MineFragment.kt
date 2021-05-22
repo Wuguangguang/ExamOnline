@@ -3,6 +3,8 @@ package com.volcano.examonline.mvvm.mine.view
 import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
+import com.bumptech.glide.Glide
+import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentMineBinding
 import com.volcano.examonline.mvvm.login.view.LoginActivity
@@ -54,6 +56,7 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
                     mBinding.tvUserName.text = "点击登录"
                     mBinding.tvUserPhone.text = "请点击进行登录"
                     mBinding.llExitLogin.visibility = View.GONE
+                    mBinding.ivUserAvatar.setImageResource(R.drawable.img_nomal_head)
                 }
                 setNegativeButton("取消") { _, _ ->
                 }
@@ -63,6 +66,14 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
         mBinding.llAboutMe.setOnClickListener {
             val intent = Intent(context, AboutMeActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(ConstantData.isLogin()) {
+            mBinding.llExitLogin.visibility = View.VISIBLE
+            mViewModel.getUserInfo(ConstantData.ID!!)
         }
     }
 
@@ -78,7 +89,7 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
                 mBinding.tvUserName.text = it.username
                 mBinding.tvUserPhone.text = it.phone
                 if(it.avatar != null) {
-                    mBinding.ivUserAvatar.setImageBitmap(ImageLoader.byteArray2Bitmap(it.avatar!!))
+                    Glide.with(context).load(it.avatar).into(mBinding.ivUserAvatar)
                 }
             }
         })

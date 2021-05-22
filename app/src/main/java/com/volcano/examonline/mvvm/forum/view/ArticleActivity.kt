@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.base.hideSoftInput
@@ -146,6 +147,14 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
             Toast.makeText(this, "发表评论成功！", Toast.LENGTH_SHORT).show()
             mViewModel.getArticleComments(article!!.id!!)
         })
+        setDataStatus(mViewModel.liveUserInfo, {
+
+        }, {
+            if(it != null && !it.avatar.isNullOrEmpty()) {
+                Glide.with(this).load(it.avatar).into(mBinding.ivArticleAuthorAvatar)
+            }
+        })
+        mViewModel.getUserInfo(article!!.userid!!)
         mViewModel.getArticleComments(article!!.id!!)
     }
 }

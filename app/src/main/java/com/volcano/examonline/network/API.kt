@@ -8,6 +8,7 @@ import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.mine.model.UserPwd
 import com.volcano.examonline.mvvm.study.model.*
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface API {
@@ -85,6 +86,11 @@ interface API {
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("api/v1/userinfo/edit")
     fun editUserInfo(@Header("Authorization") token: String, @Body obj: UserInfo): Observable<Response<Any>>
+
+
+    @Multipart
+    @POST("api/v1/userinfo/uploadAvatar")
+    fun uploadAvatar(@Header("Authorization")token: String, @Part file: MultipartBody.Part): Observable<Response<Any>>
 
     @Headers("Content-Type: application/json;charset=UTF-8")
     @POST("api/v1/userinfo/pwd")

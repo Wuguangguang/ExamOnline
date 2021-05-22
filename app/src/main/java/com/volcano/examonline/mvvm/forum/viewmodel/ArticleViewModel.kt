@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.volcano.examonline.base.CommentEntity
+import com.volcano.examonline.mvvm.mine.model.UserInfo
 import com.volcano.examonline.mvvm.study.model.Comment
 import com.volcano.examonline.network.NetworkRepository
 
@@ -41,4 +42,13 @@ class ArticleViewModel: ViewModel() {
         NetworkRepository.decreaseArticleZan(id)
     }
 
+    private var mutableUserInfo = MutableLiveData<Int>()
+
+    fun getUserInfo(id: Int) {
+        mutableUserInfo.value = id
+    }
+
+    val liveUserInfo = Transformations.switchMap(mutableUserInfo) {id ->
+        NetworkRepository.getUserInfoById(id)
+    }
 }

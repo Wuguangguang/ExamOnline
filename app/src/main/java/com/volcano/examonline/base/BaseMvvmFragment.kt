@@ -72,6 +72,7 @@ abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel>(private val isAc
                     onDataStatus(dataList)
                 }
                 else -> {
+                    Toast.makeText(activity, "${it.msg}", Toast.LENGTH_SHORT).show()
                     contentView?.showEmpty()
                     onBadNetwork.invoke()
                 }

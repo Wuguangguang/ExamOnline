@@ -31,10 +31,5 @@ class RankingAdapter(private val mContext: Context, private val rankings: ArrayL
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(rankings[position], position)
-        holder.itemView.setOnClickListener {
-            //点击跳转到个人信息页面
-            val id = rankings[position].id
-//            MyInfoActivity.actionStart(mContext, id!!)
-        }
     }
 }

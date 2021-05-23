@@ -1,6 +1,8 @@
 package com.volcano.examonline.mvvm.study.view
 
 import android.content.Intent
+import android.view.View
+import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,8 +30,8 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
     private val subjectSelectDialog by lazy { CommonDialog(activity!!) }
 
     override fun initView() {
+        contentView = mBinding.loading
         initListener()
-        contentView = mBinding.mslVpQuestions
         mBinding.tlSubjects.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 mBinding.vpQuestions.currentItem = tab!!.position
@@ -101,15 +103,16 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
         refresh()
     }
 
+    private fun refresh() {
+        contentView?.showLoading()
+        mViewModel.getSubjects()
+    }
+
     override fun doRetry() {
         super.doRetry()
         refresh()
     }
 
-    private fun refresh() {
-        contentView?.showLoading()
-        mViewModel.getSubjects()
-    }
 
     private fun tabBind(pager: ViewPager2){
         tabLayoutMediator?.detach()

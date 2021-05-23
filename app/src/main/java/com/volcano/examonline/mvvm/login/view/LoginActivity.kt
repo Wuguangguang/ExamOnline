@@ -9,6 +9,7 @@ import com.volcano.examonline.databinding.ActivityLoginBinding
 import com.volcano.examonline.mvvm.login.viewmodel.LoginViewModel
 import com.volcano.examonline.util.ActivityCollector
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.util.ToastUtils
 
 class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
 
@@ -23,7 +24,7 @@ class LoginActivity : BaseMvvmActivity<ActivityLoginBinding, LoginViewModel>() {
             val phone = mBinding.tvLoginPhone.text.toString()
             val pwd = mBinding.tvLoginPassword.text.toString()
             if(phone == null || phone == "" || pwd == null || pwd == "") {
-                Toast.makeText(this, "内容不可为空，请检查输入！", Toast.LENGTH_SHORT).show()
+                ToastUtils.show(this, "内容不可为空，请检查输入！")
             }else {
                 mViewModel.login(phone, pwd)
             }

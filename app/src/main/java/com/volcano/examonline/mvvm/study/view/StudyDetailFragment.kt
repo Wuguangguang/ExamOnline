@@ -45,10 +45,6 @@ class StudyDetailFragment(private val subjectName : String)
         mViewModel.getQuestions(subjectName)
     }
 
-    override fun doRetry() {
-        super.doRetry()
-        mViewModel.getQuestions(subjectName)
-    }
 
 }
 

@@ -7,6 +7,7 @@ import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityRegisterBinding
 import com.volcano.examonline.mvvm.login.viewmodel.LoginViewModel
+import com.volcano.examonline.util.ToastUtils
 
 class RegisterActivity : BaseMvvmActivity<ActivityRegisterBinding, LoginViewModel>() {
 
@@ -17,7 +18,7 @@ class RegisterActivity : BaseMvvmActivity<ActivityRegisterBinding, LoginViewMode
             val username = mBinding.tvLoginUsername.text.toString()
             val pwd = mBinding.tvLoginPassword.text.toString()
             if(phone == null || phone == "" || username == null || username == "" || pwd == null || pwd == "") {
-                Toast.makeText(this, "内容不可为空，请检查输入！", Toast.LENGTH_SHORT).show()
+                ToastUtils.show(this, "内容不可为空，请检查输入！",)
             }else {
                 mViewModel.register(phone, username, pwd)
             }
@@ -37,10 +38,10 @@ class RegisterActivity : BaseMvvmActivity<ActivityRegisterBinding, LoginViewMode
 
     override fun initData() {
         setDataStatus(mViewModel.registerFlag, {
-            Toast.makeText(this, "该用户已存在！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "该用户已存在！")
         }, {
-                Toast.makeText(this, "注册成功！", Toast.LENGTH_SHORT).show()
-                finish()
+            ToastUtils.show(this, "注册成功！")
+            finish()
         })
     }
 }

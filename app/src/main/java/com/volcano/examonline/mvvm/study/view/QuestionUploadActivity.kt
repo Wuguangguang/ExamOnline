@@ -13,6 +13,7 @@ import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityQuestionUploadBinding
 import com.volcano.examonline.mvvm.study.model.UploadBean
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
+import com.volcano.examonline.util.ToastUtils
 import com.volcano.examonline.widget.CommonDialog
 import com.volcano.examonline.widget.CommonDialogOnItemClickListener
 import java.io.File
@@ -121,7 +122,7 @@ class QuestionUploadActivity : BaseMvvmActivity<ActivityQuestionUploadBinding, S
             if(mBinding.tvQuestionSubject.text == "请选择" || mBinding.tvQuestionLevel.text == "请选择"
                             || mBinding.etQuestionSource.text.isNullOrEmpty() || mBinding.etQuestionKeywords.text.isNullOrEmpty()
                             || mBinding.etQuestionDesc.text.isNullOrEmpty() || selectedType.isNullOrEmpty()) {
-                Toast.makeText(this, "内容不完整，请检查输入！", Toast.LENGTH_SHORT).show()
+                ToastUtils.show(this, "内容不完整，请检查输入！")
             }else {
                 val uploadBean = UploadBean(mBinding.tvQuestionSubject.text.toString(), mBinding.etQuestionSource.text.toString(),
                     mBinding.tvQuestionLevel.text.toString(), mBinding.etQuestionKeywords.text.toString(), mBinding.etQuestionDesc.text.toString(), selectedType,
@@ -153,11 +154,12 @@ class QuestionUploadActivity : BaseMvvmActivity<ActivityQuestionUploadBinding, S
             }
         })
         setDataStatus(mViewModel.liveUploadBean, {
-            Toast.makeText(this, "上传试题失败，请稍后再试！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "上传试题失败，请稍后再试！",)
         }, {
-            Toast.makeText(this, "上传试题成功！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "上传试题成功!",)
             finish()
         })
         mViewModel.getSubjects()
     }
+
 }

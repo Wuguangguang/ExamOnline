@@ -8,13 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.volcano.examonline.R;
 import com.volcano.examonline.databinding.DialogCommonBinding;
+import com.volcano.examonline.util.ToastUtils;
 
 import java.util.ArrayList;
+
+import ezy.ui.layout.LoadingLayout;
 
 public class CommonDialog extends Dialog{
 
@@ -47,6 +52,8 @@ public class CommonDialog extends Dialog{
         super.onCreate(savedInstanceState);
         binding = DialogCommonBinding.inflate(LayoutInflater.from(mContext));
         setContentView(binding.getRoot());
+        binding.rvSelectList.setLayoutManager(new LinearLayoutManager(mContext));
+        binding.rvSelectList.setAdapter(mAdapter);
         binding.tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,18 +61,23 @@ public class CommonDialog extends Dialog{
                 dismiss();
             }
         });
-        binding.rvSelectList.setLayoutManager(new LinearLayoutManager(mContext));
-        binding.rvSelectList.setAdapter(mAdapter);
     }
 
     public void setDatas(ArrayList<String> target) {
-        datas.clear();
-        datas.addAll(target);
-        mAdapter.notifyDataSetChanged();
+        if(target == null || target.isEmpty()) {
+            dismiss();
+            Toast.makeText(mContext, "系统开小差，请点击重试", Toast.LENGTH_SHORT).show();
+        }else {
+            datas.clear();
+            datas.addAll(target);
+            mAdapter.notifyDataSetChanged();
+        }
     }
+
 
     public void setOnItemClickListener(CommonDialogOnItemClickListener listener) {
         mAdapter.setOnClickListener(listener);
     }
+
 }
 

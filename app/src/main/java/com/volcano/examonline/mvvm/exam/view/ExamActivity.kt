@@ -14,6 +14,7 @@ import com.volcano.examonline.mvvm.exam.adapter.ExamPagerAdapter
 import com.volcano.examonline.mvvm.exam.viewmodel.ExamViewModel
 import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.util.ToastUtils
 import com.volcano.examonline.widget.EditDialog
 import java.text.SimpleDateFormat
 import java.util.*
@@ -91,7 +92,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
                     setEtVisibility(View.VISIBLE)
                     setSureListener("发表评论") {
                         if(etContent.isNullOrEmpty()) {
-                            Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                            ToastUtils.show(context, "评论内容不可为空！")
                         }else {
                             mViewModel.editComment(mViewModel.questions[mBinding.examDetailViewpager2.currentItem].id!!, etContent)
                             dismiss()
@@ -168,9 +169,9 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
             mBinding.examDetailViewpager2.currentItem = currentPos
         }
         setDataStatus(mViewModel.liveEditComment, {
-            Toast.makeText(this, "发表失败，请稍后再试！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "发表失败，请稍后再试！")
         }, {
-            Toast.makeText(this, "发表评论成功！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "发表评论成功")
         })
         setDataStatus(mViewModel.question) {
             if(!it.isNullOrEmpty()) {

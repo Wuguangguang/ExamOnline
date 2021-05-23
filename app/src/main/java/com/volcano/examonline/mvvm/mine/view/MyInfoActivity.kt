@@ -19,6 +19,7 @@ import com.volcano.examonline.util.ConstantData
 import com.volcano.examonline.util.ImageLoader
 import com.volcano.examonline.widget.CommonDialog
 import com.volcano.examonline.widget.CommonDialogOnItemClickListener
+import com.volcano.examonline.widget.EditDialog
 import java.io.File
 
 class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() {
@@ -30,6 +31,7 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
     lateinit var imageUri: Uri
     lateinit var outputImage: File
     private val pictureSelectDialog by lazy { CommonDialog(this) }
+    private val editDialog by lazy { EditDialog(this) }
 
     override fun initView() {
         window.statusBarColor = resources.getColor(R.color.COLOR_GREY)
@@ -60,10 +62,46 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
             })
         }
         mBinding.llUserName.setOnClickListener {
-
+            editDialog.apply {
+                show()
+                setTitle("修改昵称")
+                setContent("昵称： ${mBinding.tvUsername.text}")
+                setEtVisibility(View.VISIBLE)
+                setSureListener("完成") {
+                    if(etContent.isNullOrEmpty()) {
+                        Toast.makeText(context, "修改后内容不可为空！", Toast.LENGTH_SHORT).show()
+                    }else {
+                        mBinding.tvUsername.text = etContent
+                        dismiss()
+                        mViewModel.setEditFlag()
+                    }
+                }
+                setCancelListener("取消") {
+                    cancel()
+                    dismiss()
+                }
+            }
         }
         mBinding.llUserAccount.setOnClickListener {
-
+            editDialog.apply {
+                show()
+                setTitle("修改用户名")
+                setContent("用户名： ${mBinding.tvUserphone.text}")
+                setEtVisibility(View.VISIBLE)
+                setSureListener("完成") {
+                    if(etContent.isNullOrEmpty()) {
+                        Toast.makeText(context, "修改后内容不可为空！", Toast.LENGTH_SHORT).show()
+                    }else {
+                        mBinding.tvUserphone.text = etContent
+                        dismiss()
+                        mViewModel.setEditFlag()
+                    }
+                }
+                setCancelListener("取消") {
+                    cancel()
+                    dismiss()
+                }
+            }
         }
         mBinding.llUserPwd.setOnClickListener {
             val intent = Intent(this, ChgPwdActivity::class.java)
@@ -126,16 +164,16 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                 }
             }
         }
+        setDataStatus(mViewModel.liveUserInfo, {
+
+        }, {
+            Toast.makeText(this, "修改成功！", Toast.LENGTH_SHORT).show()
+            mViewModel.getUserInfo(ConstantData.ID!!)
+        })
         setDataStatus(mViewModel.liveUploadAvatar,{}, {
             Toast.makeText(this, "头像上传成功！", Toast.LENGTH_SHORT).show()
             mBinding.ivAvatar.setImageBitmap(avatar)
         })
-//        setDataStatus(mViewModel.liveUserInfo, {
-//
-//        }, {
-//            Toast.makeText(this, "修改成功！", Toast.LENGTH_SHORT).show()
-//            mViewModel.getUserInfo(ConstantData.ID!!)
-//        })
         mViewModel.getUserInfo(ConstantData.ID!!)
     }
 

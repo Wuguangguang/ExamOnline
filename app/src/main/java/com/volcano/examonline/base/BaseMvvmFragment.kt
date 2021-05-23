@@ -11,14 +11,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.viewbinding.ViewBinding
-import com.volcano.examonline.widget.MultipleStatusLayout
+import com.volcano.examonline.R
+import com.volcano.examonline.util.ToastUtils
+import ezy.ui.layout.LoadingLayout
 import java.lang.Exception
 
 abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel>(private val isActivitySharedVM: Int?) : Fragment(){
     lateinit var mBinding: VB
     lateinit var mViewModel: VM
 
-    var contentView: MultipleStatusLayout? = null
+    var contentView: LoadingLayout? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         try {
@@ -35,9 +37,11 @@ abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel>(private val isAc
         super.onActivityCreated(savedInstanceState)
         mViewModel = createViewModel()
         initView()
-        if (contentView != null) {
-            contentView!!.setRetryListener{ doRetry() }
-        }
+        contentView?.setLoading(R.layout.include_anim_loading)
+        contentView?.setEmpty(R.layout.include_empty_view)
+        contentView?.setErrorImage(R.drawable.bad_network_image)
+        contentView?.setErrorText("系统开小差~")
+        contentView?.setRetryText("点击重试")
         initData()
     }
 
@@ -62,17 +66,18 @@ abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel>(private val isAc
         dataLiveData.observe(this) {
             when {
                 it == null -> {
-                    Toast.makeText(activity, "网络异常，请点击屏幕重试", Toast.LENGTH_SHORT).show()
-                    contentView?.showError{ doRetry() }
+                    ToastUtils.show(activity!!, "网络异常，请点击屏幕重试")
+                    contentView?.showError()
+                    contentView?.setRetryListener { doRetry() }
                     onBadNetwork.invoke()
                 }
                 it.code == 1 -> {
                     val dataList = it.data!!
-                    contentView?.hideLoading()
+                    contentView?.showContent()
                     onDataStatus(dataList)
                 }
                 else -> {
-                    Toast.makeText(activity, "${it.msg}", Toast.LENGTH_SHORT).show()
+                    ToastUtils.show(activity!!, "${it.msg}")
                     contentView?.showEmpty()
                     onBadNetwork.invoke()
                 }
@@ -80,9 +85,10 @@ abstract class BaseMvvmFragment<VB: ViewBinding, VM: ViewModel>(private val isAc
         }
     }
 
-
     abstract fun initView()
     abstract fun initData()
-    open fun doRetry() {}
 
+    open fun doRetry() {
+
+    }
 }

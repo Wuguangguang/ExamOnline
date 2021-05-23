@@ -136,33 +136,31 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_subjects"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/WhiteTabStyle"
-            app:tabGravity="start"
-            app:tabMode="scrollable"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/ll_homepage_kingkong"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <com.volcano.examonline.widget.MultipleStatusLayout
-            android:id="@+id/msl_vp_questions"
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loading"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/tl_subjects"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_homepage_kingkong"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_questions"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        </com.volcano.examonline.widget.MultipleStatusLayout>
+                android:orientation="vertical">
 
-
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tl_subjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/WhiteTabStyle"
+                    app:tabGravity="start"
+                    app:tabMode="scrollable"
+                    android:layout_marginTop="10dp"/>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_questions"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            </LinearLayout>
+        </ezy.ui.layout.LoadingLayout>>
 </androidx.constraintlayout.widget.ConstraintLayout>

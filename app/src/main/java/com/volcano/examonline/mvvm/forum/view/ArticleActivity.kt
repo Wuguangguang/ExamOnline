@@ -16,6 +16,7 @@ import com.volcano.examonline.mvvm.forum.viewmodel.ArticleViewModel
 import com.volcano.examonline.mvvm.forum.model.Article
 import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.util.ToastUtils
 import com.volcano.examonline.widget.CommonDialog
 import com.volcano.examonline.widget.CommonDialogOnItemClickListener
 import kotlin.Comparator
@@ -142,9 +143,9 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
             }
         })
         setDataStatus(mViewModel.liveEditComment, {
-            Toast.makeText(this, "发表失败，请稍后再试！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "发表失败，请稍后再试！")
         }, {
-            Toast.makeText(this, "发表评论成功！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "发表评论成功！")
             mViewModel.getArticleComments(article!!.id!!)
         })
         setDataStatus(mViewModel.liveUserInfo, {

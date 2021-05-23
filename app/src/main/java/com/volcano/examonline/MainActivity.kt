@@ -11,6 +11,7 @@ import com.volcano.examonline.databinding.ActivityMainBinding
 import com.volcano.examonline.mvvm.forum.view.ForumFragment
 import com.volcano.examonline.mvvm.study.view.StudyFragment
 import com.volcano.examonline.mvvm.mine.view.MineFragment
+import com.volcano.examonline.util.ToastUtils
 
 class MainActivity : BaseMvvmActivity<ActivityMainBinding, MainViewModel>() {
 
@@ -59,7 +60,7 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun exit() {
         if (System.currentTimeMillis() - exitTime > 2000) {
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "再按一次退出程序")
             exitTime = System.currentTimeMillis()
         } else {
             finish()

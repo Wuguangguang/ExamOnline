@@ -10,6 +10,7 @@ import java.io.File
 
 class MineViewModel : ViewModel() {
 
+    // 获取用户信息
     var mutableId = MutableLiveData<Int>()
 
     fun getUserInfo(id: Int) {
@@ -20,7 +21,7 @@ class MineViewModel : ViewModel() {
         NetworkRepository.getUserInfoById(id)
     }
 
-    //修改用户名、昵称
+    // 修改用户名、昵称
     var editFlag = MutableLiveData<Boolean>()
 
     fun setEditFlag() {

@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_ranking">
 
-        <com.volcano.examonline.widget.MultipleStatusLayout
-            android:id="@+id/msl_ranking"
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp">
@@ -124,6 +124,6 @@
                     android:layout_below="@id/ll_no1"
                     android:layout_marginTop="20dp"/>
             </RelativeLayout>
-        </com.volcano.examonline.widget.MultipleStatusLayout>
+        </ezy.ui.layout.LoadingLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

@@ -6,6 +6,7 @@ import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityChgPwdBinding
 import com.volcano.examonline.mvvm.mine.viewmodel.MineViewModel
+import com.volcano.examonline.util.ToastUtils
 
 class ChgPwdActivity : BaseMvvmActivity<ActivityChgPwdBinding, MineViewModel>() {
 
@@ -26,7 +27,7 @@ class ChgPwdActivity : BaseMvvmActivity<ActivityChgPwdBinding, MineViewModel>() 
                     if(mBinding.etMyOriginPwd.text.toString().isNullOrEmpty() || mBinding.etMyNewPwd.text.toString().isNullOrEmpty()
                         || mBinding.etMyNewPwdSecond.text.toString().isNullOrEmpty()
                         || mBinding.etMyNewPwd.text.toString() != mBinding.etMyNewPwdSecond.text.toString()) {
-                        Toast.makeText(context, "输入有误，请检查！", Toast.LENGTH_SHORT).show()
+                        ToastUtils.show(context, "输入有误，请检查！")
                     }else {
                         mViewModel.editUserPwd(mBinding.etMyOriginPwd.text.toString(), mBinding.etMyNewPwd.text.toString())
                     }
@@ -37,9 +38,9 @@ class ChgPwdActivity : BaseMvvmActivity<ActivityChgPwdBinding, MineViewModel>() 
 
     override fun initData() {
         setDataStatus(mViewModel.liveUserPwd, {
-            Toast.makeText(this, "原密码错误，修改失败！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "原密码错误，修改失败！")
         }, {
-            Toast.makeText(this, "修改密码成功！", Toast.LENGTH_SHORT).show()
+            ToastUtils.show(this, "修改密码成功！")
             finish()
         })
     }

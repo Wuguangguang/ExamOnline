@@ -20,8 +20,8 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
     private val questionAdapter: QuestionListAdapter by lazy { QuestionListAdapter(this, mViewModel.questionsRes) }
 
     override fun initView() {
+        contentView = mBinding.loading
         mViewModel.type = intent.getStringExtra("type")!!
-        contentView = mBinding.mslSearch
         mBinding.etSearch.apply {
             requestFocus()
             addTextChangedListener {
@@ -49,14 +49,12 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
         when(mViewModel.type) {
             "试题" -> {
                 setDataStatus(mViewModel.liveQuestionResult, {
-
                 }, {
                     if(!it.isNullOrEmpty()) {
                         mBinding.rvSearchResult.visibility = View.VISIBLE
                         mViewModel.questionsRes.clear()
                         mViewModel.questionsRes.addAll(it)
                         questionAdapter.notifyDataSetChanged()
-                        contentView?.hideLoading()
                     }else {
                         contentView?.showEmpty()
                     }
@@ -64,25 +62,18 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
             }
             else -> {
                 setDataStatus(mViewModel.liveArticleResult, {
-
                 }, {
                     if(!it.isNullOrEmpty()) {
                         mBinding.rvSearchResult.visibility = View.VISIBLE
                         mViewModel.articlesRes.clear()
                         mViewModel.articlesRes.addAll(it)
                         articleAdapter.notifyDataSetChanged()
-                        contentView?.hideLoading()
                     }else {
                         contentView?.showEmpty()
                     }
                 })
             }
         }
-    }
-
-    override fun doRetry() {
-        super.doRetry()
-        refresh()
     }
 
     private fun refresh() {
@@ -92,5 +83,10 @@ class SearchActivity : BaseMvvmActivity<ActivitySearchBinding, SearchViewModel>(
             "试题" -> mViewModel.searchQuestions(content)
             else -> mViewModel.searchArticles(content)
         }
+    }
+
+    override fun doRetry() {
+        super.doRetry()
+        refresh()
     }
 }

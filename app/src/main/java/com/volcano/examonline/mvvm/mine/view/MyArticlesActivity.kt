@@ -2,6 +2,7 @@ package com.volcano.examonline.mvvm.mine.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
@@ -15,7 +16,7 @@ class MyArticlesActivity : BaseMvvmActivity<ActivityMyArticlesBinding, MyArticle
 
     override fun initView() {
         initToolbar()
-        contentView = mBinding.mslMyArticles
+        contentView = mBinding.loading
         mBinding.rvMyArticles.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = articlesAdapter
@@ -23,13 +24,14 @@ class MyArticlesActivity : BaseMvvmActivity<ActivityMyArticlesBinding, MyArticle
     }
 
     override fun initData() {
-        setDataStatus(mViewModel.liveArticle) {
+        setDataStatus(mViewModel.liveArticle, {
+        }, {
             if(!it.isNullOrEmpty()) {
                 mViewModel.articles.clear()
                 mViewModel.articles.addAll(it)
                 articlesAdapter.notifyDataSetChanged()
             }
-        }
+        })
         refresh()
     }
 

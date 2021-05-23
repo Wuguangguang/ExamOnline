@@ -1,6 +1,6 @@
 package com.volcano.examonline.mvvm.forum.view
 
-import androidx.lifecycle.observe
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
@@ -18,6 +18,7 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
     private val articleAdapter : ArticleListAdapter by lazy { ArticleListAdapter(activity!!,mViewModel.articles) }
 
     override fun initView() {
+        contentView = mBinding.loading
         mBinding.projectDetailSwipeRefreshL.setColorSchemeResources(R.color.colorAccent)
         mBinding.projectDetailSwipeRefreshL.setOnRefreshListener {
             mBinding.projectDetailSwipeRefreshL.isRefreshing = true
@@ -40,10 +41,13 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
                 mBinding.projectDetailSwipeRefreshL.isRefreshing = false
             }
         })
-        refresh()
-    }
-
-    private fun refresh() {
         mViewModel.getArticles(mId)
     }
+
+    override fun doRetry() {
+        super.doRetry()
+        contentView?.showLoading()
+        mViewModel.getArticles(mId)
+    }
+
 }

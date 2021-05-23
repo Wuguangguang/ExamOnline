@@ -13,6 +13,7 @@ import com.volcano.examonline.mvvm.question.adapter.QuestionAdapter
 import com.volcano.examonline.mvvm.question.viewmodel.QuestionViewModel
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.util.ToastUtils
 import com.volcano.examonline.widget.EditDialog
 
 class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewModel>() {
@@ -46,7 +47,7 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
                     setEtVisibility(View.VISIBLE)
                     setSureListener("发表评论") {
                         if(etContent.isNullOrEmpty()) {
-                            Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                            ToastUtils.show(context, "评论内容不可为空！")
                         }else {
                             mViewModel.editComment(mViewModel.questions[mBinding.vpDetail.currentItem].id!!, etContent)
                             dismiss()

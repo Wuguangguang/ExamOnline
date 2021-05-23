@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+
+    implementation 'com.github.czy1121:loadinglayout:1.0.1'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation "com.youth.banner:banner:2.1.0"
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'

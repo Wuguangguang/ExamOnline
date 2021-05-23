@@ -12,19 +12,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.viewbinding.ViewBinding
+import com.volcano.examonline.R
 import com.volcano.examonline.util.ActivityCollector
-import com.volcano.examonline.widget.MultipleStatusLayout
+import com.volcano.examonline.util.ToastUtils
+import ezy.ui.layout.LoadingLayout
 
 abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatActivity() {
 
     lateinit var mBinding: VB
     lateinit var mViewModel: VM
 
-    var contentView: MultipleStatusLayout? = null
-
-    companion object {
-        private const val TAG = "BaseMvvmActivity"
-    }
+    var contentView: LoadingLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +49,11 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
         initViewBinding()
         mViewModel = createViewModel()
         initView()
-        if (contentView != null) {
-            contentView!!.setRetryListener { doRetry() }
-        }
+        contentView?.setLoading(R.layout.include_anim_loading)
+        contentView?.setEmpty(R.layout.include_empty_view)
+        contentView?.setErrorImage(R.drawable.bad_network_image)
+        contentView?.setErrorText("系统开小差~")
+        contentView?.setRetryText("点击重试")
         initData()
     }
 
@@ -77,17 +77,18 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
         dataLiveData.observe(this) {
             when {
                 it == null -> {
-                    Toast.makeText(this, "网络异常，请点击屏幕重试", Toast.LENGTH_SHORT).show()
-                    contentView?.showError{ doRetry() }
+                    ToastUtils.show(this, "网络异常，请点击屏幕重试")
+                    contentView?.showError()
+                    contentView?.setRetryListener { doRetry() }
                     onDataError.invoke()
                 }
                 it.code == 1 -> {
                     val dataList = it.data ?: null
-                    contentView?.hideLoading()
+                    contentView?.showContent()
                     onDataStatus(dataList)
                 }
                 else -> {
-                    Toast.makeText(this, "${it.msg}", Toast.LENGTH_SHORT).show()
+                    ToastUtils.show(this, "${it.msg}")
                     contentView?.showEmpty()
                     onDataError.invoke()
                 }
@@ -99,6 +100,7 @@ abstract class BaseMvvmActivity<VB : ViewBinding, VM : ViewModel> : AppCompatAct
 
     abstract fun initData()
 
-    // 请求异常重试
-    open fun doRetry() {}
+    open fun doRetry() {
+
+    }
 }

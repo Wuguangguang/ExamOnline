@@ -16,8 +16,8 @@
         android:layout_height="0.5dp"
         android:background="@color/COLOR_GREY"/>
 
-    <com.volcano.examonline.widget.MultipleStatusLayout
-        android:id="@+id/msl_my_articles"
+    <ezy.ui.layout.LoadingLayout
+        android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,6 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"/>
-    </com.volcano.examonline.widget.MultipleStatusLayout>
+    </ezy.ui.layout.LoadingLayout>
 
 </LinearLayout>

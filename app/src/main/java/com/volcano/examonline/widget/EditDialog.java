@@ -53,6 +53,7 @@ public class EditDialog extends Dialog {
     }
 
     public void setEtVisibility(int vis) {
+        binding.etEditDialog.setText("");
         binding.etEditDialog.setVisibility(vis);
     }
 

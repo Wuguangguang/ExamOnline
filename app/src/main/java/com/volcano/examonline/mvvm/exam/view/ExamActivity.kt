@@ -1,12 +1,9 @@
 package com.volcano.examonline.mvvm.exam.view
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
@@ -17,6 +14,7 @@ import com.volcano.examonline.mvvm.exam.adapter.ExamPagerAdapter
 import com.volcano.examonline.mvvm.exam.viewmodel.ExamViewModel
 import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.widget.EditDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +25,8 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
     private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions, mode) }
     private var mode : Int? = null
     private var subject: String? = null
+    private val dialog by lazy { EditDialog(this) }
+    private val commentDialog by lazy { EditDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mode = intent.getIntExtra("mode", ConstantData.ORDERLY_MODE)
@@ -85,16 +85,22 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
         mBinding.fabEditComment.setOnClickListener {
             //发表评论
             if(ConstantData.isLogin()) {
-                val editText = EditText(this)
-                AlertDialog.Builder(this).apply {
-                    setTitle("发表评论")
-                    setCancelable(false)
-                    setView(editText)
-                    setNegativeButton("取消",null)
-                    setPositiveButton("发表") { _: DialogInterface, _: Int ->
-                        mViewModel.editComment(mViewModel.questions[mBinding.examDetailViewpager2.currentItem].id!!, editText.text.toString())
-                    }
+                commentDialog.apply {
                     show()
+                    setTitle("发表评论")
+                    setEtVisibility(View.VISIBLE)
+                    setSureListener("发表评论") {
+                        if(etContent.isNullOrEmpty()) {
+                            Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                        }else {
+                            mViewModel.editComment(mViewModel.questions[mBinding.examDetailViewpager2.currentItem].id!!, etContent)
+                            dismiss()
+                        }
+                    }
+                    setCancelListener("取消") {
+                        cancel()
+                        dismiss()
+                    }
                 }
             }else {
                 val intent = Intent(this, LoginActivity::class.java)
@@ -117,11 +123,11 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
 
     private fun showCommitDialog() {
         mBinding.examDetailTimer.stop()
-        AlertDialog.Builder(this).apply {
+        dialog.apply {
+            show()
             setTitle("提交结果")
-            setMessage("您确定要提交并查看结果吗")
-            setCancelable(false)
-            setPositiveButton("确定提交") { _, _ ->
+            setContent("您确定要提交并查看结果吗？")
+            setSureListener("确定提交") {
                 val intent = Intent(context, CommitResultActivity::class.java).apply {
                     putExtra("questions", mViewModel.questions)
                     putExtra("answers", mViewModel.myAnswers.value)
@@ -130,26 +136,28 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
                 startActivity(intent)
                 finish()
             }
-            setNegativeButton("我再想想") { _, _ ->
+            setCancelListener("我再想想") {
                 mBinding.examDetailTimer.start()
+                cancel()
+                dismiss()
             }
-            show()
         }
     }
 
     private fun showExitDialog() {
         mBinding.examDetailTimer.stop()
-        AlertDialog.Builder(this).apply {
+        dialog.apply {
+            show()
             setTitle("退出练习")
-            setMessage(if(mode == ConstantData.SIMULATION_MODE) "您要结束本次模拟考试吗？" else "您要结束本次顺序练习吗？")
-            setCancelable(false)
-            setPositiveButton("确定") { _, _ ->
+            setContent(if(mode == ConstantData.SIMULATION_MODE) "您要结束本次模拟考试吗？" else "您要结束本次顺序练习吗？")
+            setSureListener("确定") {
                 finish()
             }
-            setNegativeButton("我再想想") { _, _ ->
+            setCancelListener("我再想想") {
                 mBinding.examDetailTimer.start()
+                cancel()
+                dismiss()
             }
-            show()
         }
     }
 

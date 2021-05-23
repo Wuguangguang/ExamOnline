@@ -1,16 +1,9 @@
 package com.volcano.examonline.mvvm.question.view
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.opengl.ETC1
-import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
@@ -20,6 +13,7 @@ import com.volcano.examonline.mvvm.question.adapter.QuestionAdapter
 import com.volcano.examonline.mvvm.question.viewmodel.QuestionViewModel
 import com.volcano.examonline.mvvm.study.model.Question
 import com.volcano.examonline.util.ConstantData
+import com.volcano.examonline.widget.EditDialog
 
 class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewModel>() {
 
@@ -36,6 +30,7 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
 
     private var type:Int? = null
     private val questionAdapter by lazy { QuestionAdapter(this, mViewModel.questions)}
+    private val commentDialog by lazy { EditDialog(this) }
 
     override fun initView() {
         type = intent.getIntExtra("type", ConstantData.SINGLE_QUESTION)
@@ -45,16 +40,22 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
         mBinding.fabEditComment.setOnClickListener{
             //发表评论
             if(ConstantData.isLogin()) {
-                val editText = EditText(this)
-                AlertDialog.Builder(this).apply {
-                    setTitle("发表评论")
-                    setCancelable(false)
-                    setView(editText)
-                    setNegativeButton("取消",null)
-                    setPositiveButton("发表") { _: DialogInterface, _: Int ->
-                        mViewModel.editComment(mViewModel.questions[mBinding.vpDetail.currentItem].id!!, editText.text.toString())
-                    }
+                commentDialog.apply {
                     show()
+                    setTitle("发表评论")
+                    setEtVisibility(View.VISIBLE)
+                    setSureListener("发表评论") {
+                        if(etContent.isNullOrEmpty()) {
+                            Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                        }else {
+                            mViewModel.editComment(mViewModel.questions[mBinding.vpDetail.currentItem].id!!, etContent)
+                            dismiss()
+                        }
+                    }
+                    setCancelListener("取消") {
+                        cancel()
+                        dismiss()
+                    }
                 }
             }else {
                 val intent = Intent(this, LoginActivity::class.java)

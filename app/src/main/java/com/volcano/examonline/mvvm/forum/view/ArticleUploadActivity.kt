@@ -1,31 +1,31 @@
 package com.volcano.examonline.mvvm.forum.view
 
-import android.app.AlertDialog
-import android.content.Intent
-import android.graphics.Color
-import android.os.Build
-import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmActivity
 import com.volcano.examonline.databinding.ActivityArticleUploadBinding
-import com.volcano.examonline.mvvm.exam.view.ExamActivity
 import com.volcano.examonline.mvvm.forum.viewmodel.ArticleUploadViewModel
+import com.volcano.examonline.widget.CommonDialog
+import com.volcano.examonline.widget.CommonDialogOnItemClickListener
 
 class ArticleUploadActivity : BaseMvvmActivity<ActivityArticleUploadBinding, ArticleUploadViewModel>() {
 
-    private val items = arrayOf("生活日常","面试求职","学习心得")
+    private val items = arrayListOf("生活日常","面试求职","学习心得")
+    private val fieldDialog by lazy { CommonDialog(this) }
 
     override fun initView() {
         initToolbar()
         mBinding.llArticleField.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("请选择话题~")
-            builder.setItems(items) { _, which ->
-               mBinding.tvArticleType.text = items[which]
+            fieldDialog.apply {
+                show()
+                setDatas(items)
+                setOnItemClickListener(object : CommonDialogOnItemClickListener {
+                    override fun onCLick(item: String) {
+                        mBinding.tvArticleType.text = item
+                        dismiss()
+                    }
+                })
             }
-            builder.show()
         }
         mBinding.btnArticleEdit.setOnClickListener {
             val title = mBinding.etArticleTitle.text.toString()

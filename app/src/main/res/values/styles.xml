@@ -56,7 +56,7 @@
         <!-- 模糊 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 遮罩层 -->
-        <item name="android:backgroundDimAmount">0.1</item>
+        <item name="android:backgroundDimAmount">0.3</item>
     </style>
 
     <!-- dialog的动画 -->

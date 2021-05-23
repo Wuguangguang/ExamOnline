@@ -1,6 +1,5 @@
 package com.volcano.examonline.mvvm.mine.view
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
 import com.bumptech.glide.Glide
@@ -10,13 +9,15 @@ import com.volcano.examonline.databinding.FragmentMineBinding
 import com.volcano.examonline.mvvm.login.view.LoginActivity
 import com.volcano.examonline.mvvm.mine.viewmodel.MineViewModel
 import com.volcano.examonline.util.ConstantData
-import com.volcano.examonline.util.ImageLoader
+import com.volcano.examonline.widget.EditDialog
 
 class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
     companion object {
         fun newInstance() = MineFragment()
     }
+
+    private val dialog by lazy { EditDialog(activity!!) }
 
     override fun initView() {
         mBinding.rlUserInfo.setOnClickListener {
@@ -47,20 +48,22 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding, MineViewModel>(Consta
             }
         }
         mBinding.llExitLogin.setOnClickListener {
-            AlertDialog.Builder(context).apply {
+            dialog.apply {
+                show()
                 setTitle("退出登录")
-                setMessage("确定要退出登录吗？")
-                setCancelable(false)
-                setPositiveButton("确定") { _, _ ->
+                setContent("确定要退出登录吗？")
+                setSureListener("确定") {
                     ConstantData.exitLogin()
                     mBinding.tvUserName.text = "点击登录"
                     mBinding.tvUserPhone.text = "请点击进行登录"
                     mBinding.llExitLogin.visibility = View.GONE
                     mBinding.ivUserAvatar.setImageResource(R.drawable.img_nomal_head)
+                    dismiss()
                 }
-                setNegativeButton("取消") { _, _ ->
+                setCancelListener("取消") {
+                    cancel()
+                    dismiss()
                 }
-                show()
             }
         }
         mBinding.llAboutMe.setOnClickListener {

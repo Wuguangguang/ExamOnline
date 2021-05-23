@@ -20,7 +20,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_avatar"
+        android:src="@drawable/img_nomal_head"
         android:layout_marginStart="30dp"/>
 
     <TextView

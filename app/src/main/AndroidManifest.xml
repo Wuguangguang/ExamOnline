@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamOnline">
         <activity android:name=".mvvm.mine.view.ChgPwdActivity"></activity>
-        <activity android:name=".mvvm.mine.view.OthersInfoActivity" />
         <activity android:name=".mvvm.mine.view.MyInfoActivity" />
         <activity android:name=".mvvm.mine.view.AboutMeActivity" />
         <activity android:name=".mvvm.mine.view.MyArticlesActivity" />

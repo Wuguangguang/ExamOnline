@@ -1,22 +1,28 @@
 package com.volcano.examonline.mvvm.study.view
 
 import android.content.Intent
-import android.view.View
-import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.volcano.examonline.R
 import com.volcano.examonline.base.BaseMvvmFragment
 import com.volcano.examonline.databinding.FragmentStudyBinding
 import com.volcano.examonline.mvvm.exam.view.ExamActivity
 import com.volcano.examonline.mvvm.login.view.LoginActivity
-import com.volcano.examonline.mvvm.mine.view.MyInfoActivity
+import com.volcano.examonline.mvvm.question.view.QuestionActivity
 import com.volcano.examonline.mvvm.search.view.SearchActivity
 import com.volcano.examonline.mvvm.study.adapter.SubjectAdapter
 import com.volcano.examonline.mvvm.study.viewmodel.StudyViewModel
 import com.volcano.examonline.util.ConstantData
 import com.volcano.examonline.widget.CommonDialog
 import com.volcano.examonline.widget.CommonDialogOnItemClickListener
+import com.youth.banner.adapter.BannerImageAdapter
+import com.youth.banner.holder.BannerImageHolder
+import com.youth.banner.indicator.CircleIndicator
 
 class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(ConstantData.VIEWMODEL_EXCLUSIVE) {
 
@@ -32,6 +38,19 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
     override fun initView() {
         contentView = mBinding.loading
         initListener()
+        mBinding.bannerHomepage.apply {
+            adapter = object : BannerImageAdapter<Int>(ConstantData.banners) {
+                override fun onBindView(holder: BannerImageHolder, data: Int, position: Int, size: Int) {
+//                    holder.imageView.setImageResource(data)
+                    Glide.with(activity).load(data)
+                            .apply(RequestOptions().transforms(CenterCrop(), RoundedCorners(50)))
+                            .into(holder.imageView)
+                }
+            }
+            addBannerLifecycleObserver(activity)
+            indicator = CircleIndicator(activity)
+
+        }
         mBinding.tlSubjects.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 mBinding.vpQuestions.currentItem = tab!!.position
@@ -52,10 +71,24 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
             startActivity(intent)
         }
         mBinding.llOrderlyPractice.setOnClickListener {
-            goToExamActivity(ConstantData.ORDERLY_MODE)
+            subjectSelectDialog.show()
+            subjectSelectDialog.setDatas(subjectNames)
+            subjectSelectDialog.setOnItemClickListener(object : CommonDialogOnItemClickListener {
+                override fun onCLick(item: String) {
+                    QuestionActivity.actionStart(activity!!, ConstantData.ORDERLY_MODE, item)
+                    subjectSelectDialog.dismiss()
+                }
+            })
         }
         mBinding.llSimulationExam.setOnClickListener {
-            goToExamActivity(ConstantData.SIMULATION_MODE)
+            subjectSelectDialog.show()
+            subjectSelectDialog.setDatas(subjectNames)
+            subjectSelectDialog.setOnItemClickListener(object : CommonDialogOnItemClickListener {
+                override fun onCLick(item: String) {
+                    ExamActivity.actionStart(activity!!, item)
+                    subjectSelectDialog.dismiss()
+                }
+            })
         }
         mBinding.llRanking.setOnClickListener {
             val intent = Intent(activity, RankingActivity::class.java)
@@ -70,20 +103,6 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
                 startActivity(intent)
             }
         }
-    }
-
-    private fun goToExamActivity(mode: Int) {
-        subjectSelectDialog.show()
-        subjectSelectDialog.setDatas(subjectNames)
-        subjectSelectDialog.setOnItemClickListener(object : CommonDialogOnItemClickListener {
-            override fun onCLick(item: String) {
-                val intent = Intent(activity, ExamActivity::class.java)
-                intent.putExtra("mode", mode)
-                intent.putExtra("subject", item)
-                startActivity(intent)
-                subjectSelectDialog.dismiss()
-            }
-        })
     }
 
     override fun initData() {
@@ -112,7 +131,6 @@ class StudyFragment : BaseMvvmFragment<FragmentStudyBinding, StudyViewModel>(Con
         super.doRetry()
         refresh()
     }
-
 
     private fun tabBind(pager: ViewPager2){
         tabLayoutMediator?.detach()

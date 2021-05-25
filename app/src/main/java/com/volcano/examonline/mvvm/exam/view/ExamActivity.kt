@@ -1,5 +1,6 @@
 package com.volcano.examonline.mvvm.exam.view
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -23,80 +24,39 @@ import java.util.*
 class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
 
     private var currentPos = 0
-    private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions, mode) }
-    private var mode : Int? = null
+    private val examAdapter: ExamPagerAdapter by lazy { ExamPagerAdapter(this, mViewModel.questions) }
     private var subject: String? = null
     private val dialog by lazy { EditDialog(this) }
-    private val commentDialog by lazy { EditDialog(this) }
+
+    companion object {
+        fun actionStart(context: Context, param1: String) {
+            context.startActivity(Intent(context, ExamActivity::class.java).putExtra("subject", param1))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mode = intent.getIntExtra("mode", ConstantData.ORDERLY_MODE)
         subject = intent.getStringExtra("subject")
         super.onCreate(savedInstanceState)
     }
 
     override fun initView() {
         mBinding.apply {
-            when(mode) {
-                ConstantData.SIMULATION_MODE -> {
-                    rlExamSimulation.visibility = View.VISIBLE
-                    tvExamTitle.visibility = View.GONE
-                    fabEditComment.visibility = View.GONE
-                    examDetailTimer.apply {
-                        visibility = View.VISIBLE
-                        setOnChronometerTickListener {
-                            val time = System.currentTimeMillis() - it.base
-                            val date = Date(time)
-                            val sdf = SimpleDateFormat("HH:mm:ss", Locale.US)
-                            sdf.timeZone = TimeZone.getTimeZone("UTC")
-                            text = sdf.format(date)
-                        }
-                        base = System.currentTimeMillis()
-                        start()
-                    }
+            rlExamSimulation.visibility = View.VISIBLE
+            examDetailTimer.apply {
+                visibility = View.VISIBLE
+                setOnChronometerTickListener {
+                    val time = System.currentTimeMillis() - it.base
+                    val date = Date(time)
+                    val sdf = SimpleDateFormat("HH:mm:ss", Locale.US)
+                    sdf.timeZone = TimeZone.getTimeZone("UTC")
+                    text = sdf.format(date)
                 }
-                else -> {
-                    tvExamTitle.visibility = View.VISIBLE
-                    examDetailTimer.visibility = View.GONE
-                    rlExamSimulation.visibility = View.GONE
-                    fabEditComment.apply {
-                        visibility = View.VISIBLE
-                        setOnClickListener {
-                            if (ConstantData.isLogin()) {
-                                commentDialog.apply {
-                                    show()
-                                    setTitle("发表评论")
-                                    setEtVisibility(View.VISIBLE)
-                                    setSureListener("发表评论") {
-                                        if (etContent.isNullOrEmpty()) {
-                                            ToastUtils.show(context, "评论内容不可为空！")
-                                        } else {
-                                            mViewModel.editComment(mViewModel.questions[mBinding.examDetailViewpager2.currentItem].id!!, etContent)
-                                            dismiss()
-                                        }
-                                    }
-                                    setCancelListener("取消") {
-                                        cancel()
-                                        dismiss()
-                                    }
-                                }
-                            } else {
-                                val intent = Intent(context, LoginActivity::class.java)
-                                startActivity(intent)
-                            }
-                        }
-                    }
-                    examDetailViewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                        override fun onPageSelected(position: Int) {
-                            super.onPageSelected(position)
-                            mBinding.examDetailRecord.text = "${position+1}/${mViewModel.questions.size}"
-                        }
-                    })
-                }
+                base = System.currentTimeMillis()
+                start()
             }
+            examDetailViewpager2.adapter = examAdapter
+            examDetailViewpager2.isUserInputEnabled = false
         }
-        mBinding.examDetailViewpager2.adapter = examAdapter
-        mBinding.examDetailViewpager2.isUserInputEnabled = mode != ConstantData.SIMULATION_MODE
         initListener()
     }
 
@@ -146,7 +106,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
         dialog.apply {
             show()
             setTitle("退出练习")
-            setContent(if(mode == ConstantData.SIMULATION_MODE) "您要结束本次模拟考试吗？" else "您要结束本次顺序练习吗？")
+            setContent("您要结束本次模拟考试吗？")
             setSureListener("确定") {
                 finish()
             }
@@ -164,12 +124,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
             mBinding.examDetailNextQuest.text = if(currentPos == mViewModel.questions.size - 1) "提交" else "下一题"
             mBinding.examDetailViewpager2.currentItem = currentPos
         }
-        setDataStatus(mViewModel.liveEditComment, {
-            ToastUtils.show(this, "发表失败，请稍后再试！")
-        }, {
-            ToastUtils.show(this, "发表评论成功")
-        })
-        setDataStatus(mViewModel.question, {}, {
+        setDataStatus(mViewModel.liveQuestion, {}, {
             if(!it.isNullOrEmpty()) {
                 mBinding.examDetailViewpager2.offscreenPageLimit = it.size
                 mViewModel.questions.addAll(it)
@@ -182,14 +137,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
         mViewModel.myAnswers.observe(this) {
             mBinding.examDetailRecord.text = "${it.size}/${mViewModel.questions.size}"
         }
-        when(mode) {
-            ConstantData.ORDERLY_MODE -> {
-                mViewModel.getQuestions(subject!!)
-            }
-            ConstantData.SIMULATION_MODE -> {
-                mViewModel.getRandomQuestions(subject!!, 5)
-            }
-        }
+        mViewModel.getRandomQuestions(subject!!, 5)
         mViewModel.setCurrentPos(currentPos)
     }
 

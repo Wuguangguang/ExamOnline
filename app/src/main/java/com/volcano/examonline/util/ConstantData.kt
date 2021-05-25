@@ -14,9 +14,7 @@ object ConstantData {
 
     const val SINGLE_QUESTION:Int = 0x1 //单题解析、查看单题
     const val MULTI_QUESTION:Int = 0x2  //全部解析、错题解析
-
-    const val SIMULATION_MODE:Int = 0x1 //模拟考试 : 载入ExamFragment
-    const val ORDERLY_MODE: Int = 0x2   //顺序联系 : 载入QuestionFragment
+    const val ORDERLY_MODE:Int = 0x3
 
     const val MODE_ANALYSIS:Int = 0x1   //选项不可点击，初始化答案 （解析）
     const val MODE_IMMEDIATELY:Int = 0x2    //选项点击后立即响应对错 （单题详情、顺序练习）
@@ -53,6 +51,13 @@ object ConstantData {
     )
     val answers = arrayListOf(
         "A","B","C","D","E"
+    )
+
+    val banners = arrayListOf(
+        R.drawable.ic_banner_placeholder,
+        R.drawable.ic_banner_placeholder2,
+        R.drawable.ic_banner_placeholder3,
+        R.drawable.ic_banner_placeholder4
     )
 
 

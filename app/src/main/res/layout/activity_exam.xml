@@ -52,23 +52,6 @@
         app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>
 
     <TextView
-        android:id="@+id/tv_exam_title"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="顺序练习"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/exam_detail_gl_top"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:text="答题卡"
@@ -140,17 +123,4 @@
             android:textColor="@color/colorAccent"
             android:layout_toEndOf="@id/exam_bottom_verticalline" />
     </RelativeLayout>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_edit_comment"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/ic_forum_edit"
-        app:tint="@color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

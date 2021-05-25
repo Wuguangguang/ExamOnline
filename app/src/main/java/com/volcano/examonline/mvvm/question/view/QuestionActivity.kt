@@ -27,6 +27,14 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
             }
             context.startActivity(intent)
         }
+
+        fun actionStart(context:Context, type: Int, subjectName: String) {
+            val intent = Intent(context, QuestionActivity::class.java).apply {
+                putExtra("type", type)
+                putExtra("subject", subjectName)
+            }
+            context.startActivity(intent)
+        }
     }
 
     private var type:Int? = null
@@ -35,9 +43,12 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
 
     override fun initView() {
         type = intent.getIntExtra("type", ConstantData.SINGLE_QUESTION)
-        mViewModel.myAnswers = intent.getSerializableExtra("myAnswers") as ArrayList<String>
-        mViewModel.questions = intent.getSerializableExtra("question") as ArrayList<Question>
         initToolbar()
+        // 顺序练习
+        if(type != ConstantData.ORDERLY_MODE) {
+            mViewModel.myAnswers = intent.getSerializableExtra("myAnswers") as ArrayList<String>
+            mViewModel.questions = intent.getSerializableExtra("question") as ArrayList<Question>
+        }
         mBinding.fabEditComment.setOnClickListener{
             //发表评论
             if(ConstantData.isLogin()) {
@@ -80,23 +91,43 @@ class QuestionActivity : BaseMvvmActivity<ActivityQuestionBinding, QuestionViewM
             setImageResource(R.drawable.ic_black_back)
             setOnClickListener { finish() }
         }
-        mBinding.toolbarDetail.toolbarTitle.text = if(type == ConstantData.SINGLE_QUESTION) "试题详情" else "试题解析"
-        if(type == ConstantData.MULTI_QUESTION) {
+        mBinding.toolbarDetail.toolbarTitle.text = when(type) {
+            ConstantData.SINGLE_QUESTION -> "试题详情"
+            ConstantData.MULTI_QUESTION -> "试题解析"
+            else -> "顺序练习"
+        }
+        if(type != ConstantData.SINGLE_QUESTION) {
             mBinding.toolbarDetail.toolbarRightImage.visibility = View.GONE
             mBinding.toolbarDetail.toolbarRightTv.visibility = View.VISIBLE
         }
     }
 
     override fun initData() {
-        questionAdapter.initFragments()
-        mBinding.vpDetail.currentItem = 0
-        mBinding.vpDetail.offscreenPageLimit = mViewModel.questions.size
-        mBinding.toolbarDetail.toolbarRightTv.text = "1/${mViewModel.questions.size}"
         setDataStatus(mViewModel.liveEditComment, {
             Toast.makeText(this, "发表失败，请稍后再试！", Toast.LENGTH_SHORT).show()
         }, {
             Toast.makeText(this, "发表评论成功！", Toast.LENGTH_SHORT).show()
             mViewModel.getQuestionComments(mViewModel.questions[mBinding.vpDetail.currentItem].id!!)
         })
+        if(type == ConstantData.ORDERLY_MODE) {
+            setDataStatus(mViewModel.liveQuestion, {}, {
+                if(!it.isNullOrEmpty()) {
+                    mViewModel.questions.clear()
+                    mViewModel.questions.addAll(it)
+                    refreshQuestions()
+                }
+            })
+            mViewModel.getQuestions(intent.getStringExtra("subject")!!)
+        }else {
+            refreshQuestions()
+        }
+    }
+
+    private fun refreshQuestions() {
+        questionAdapter.initFragments()
+        mBinding.vpDetail.offscreenPageLimit = mViewModel.questions.size
+        questionAdapter.notifyDataSetChanged()
+        mBinding.vpDetail.currentItem = 0
+        mBinding.toolbarDetail.toolbarRightTv.text = "0/${mViewModel.questions.size}"
     }
 }

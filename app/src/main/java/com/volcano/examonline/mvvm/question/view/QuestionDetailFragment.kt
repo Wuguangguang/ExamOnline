@@ -91,7 +91,7 @@ class QuestionDetailFragment(private val question: Question, private val current
             mBinding.tvAnalysis.visibility = View.GONE
             mBinding.llQuestionAnalysis.visibility = View.VISIBLE
             mViewModel.getQuestionComments(question.id!!)
-            mViewModel.getCommendQuestions(question.subjectid!!, question.keywords!!)
+            mViewModel.getCommendQuestions(question.subjectid!!, question.id!!, question.keywords!!)
             if(question.type == ConstantData.TYPE_MULTI_SELECT && mode == ConstantData.MODE_IMMEDIATELY) {
                 mBinding.llCorrectAnswer.visibility = View.VISIBLE
                 mBinding.tvCorrectAnswer.text = question.correctanswer
@@ -191,28 +191,27 @@ class QuestionDetailFragment(private val question: Question, private val current
         val analysis = if(question.analysis == null || question.analysis == "") "暂无解析" else question.analysis as String
         mBinding.tvQuestionAnalysis.text = analysis
         setDataStatus(mViewModel.liveComments, {
-
         }, {
+            mViewModel.comments.clear()
             if(!it.isNullOrEmpty()) {
                 mBinding.tvQuestionCommentNum.text = "${it.size}"
-                mViewModel.comments.clear()
                 mViewModel.comments.addAll(it)
-                commentsAdapter.notifyDataSetChanged()
+            }else {
+                mBinding.tvQuestionCommentNum.text = "0"
             }
+            commentsAdapter.notifyDataSetChanged()
         })
         setDataStatus(mViewModel.liveCommendQuestions, {
 
         }, {
+            mViewModel.commendQuestions.clear()
             if(!it.isNullOrEmpty()) {
-                mViewModel.commendQuestions.clear()
-                it.forEach { it ->
-                    if(it.id != question.id) {
-                        mViewModel.commendQuestions.add(it)
-                    }
-                }
-                mBinding.tvQuestionCommendNum.text = "${mViewModel.commendQuestions.size}"
-                commendQuestionsAdapter.notifyDataSetChanged()
+                mViewModel.commendQuestions.addAll(it)
+                mBinding.tvQuestionCommendNum.text = "${it.size}"
+            }else {
+                mBinding.tvQuestionCommendNum.text = "0"
             }
+            commendQuestionsAdapter.notifyDataSetChanged()
         })
     }
 

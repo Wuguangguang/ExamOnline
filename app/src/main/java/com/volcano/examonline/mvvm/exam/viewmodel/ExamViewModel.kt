@@ -23,21 +23,14 @@ class ExamViewModel : ViewModel() {
     // 试题列表
     var questions = arrayListOf<Question>()
 
-    private var mutableQuestionNum = MutableLiveData<Entity>()
+    private var mutableQuestion = MutableLiveData<String>()
 
     fun getRandomQuestions(subject: String, num: Int) {
-        mutableQuestionNum.value = Entity(subject, num)
+        mutableQuestion.value = subject
     }
 
-    fun getQuestions(subject: String) {
-        mutableQuestionNum.value = Entity(subject, -1)
-    }
-
-    val question = Transformations.switchMap(mutableQuestionNum) { obj ->
-        when(obj.nums) {
-            -1 -> NetworkRepository.getQuestions(obj.name!!)
-            else -> NetworkRepository.getRandomQuestions(obj.name!!, obj.nums!!)
-        }
+    val liveQuestion = Transformations.switchMap(mutableQuestion) { subject ->
+        NetworkRepository.getRandomQuestions(subject, 5)
     }
 
     val myAnswers = MutableLiveData<HashMap<Int, List<String>>>()

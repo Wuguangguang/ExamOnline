@@ -68,9 +68,9 @@ object NetworkRepository {
         return result
     }
 
-    fun getCommendQuestions(subjectId: Int, keywords: String): LiveData<Response<List<Question>>> {
+    fun getCommendQuestions(subjectId: Int, questionId: Int, keywords: String): LiveData<Response<List<Question>>> {
         var result = MutableLiveData<Response<List<Question>>>()
-        api.getCommendQuestions(subjectId, keywords).transform(result)
+        api.getCommendQuestions(subjectId,questionId, keywords).transform(result)
         return result
     }
 

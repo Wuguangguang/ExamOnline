@@ -40,19 +40,28 @@ class QuestionViewModel : ViewModel() {
     //相关性推荐
     data class Entity(
         var subjectId: Int? = null,
+        var questionId: Int? = null,
         var keywords: String? = null
     )
 
     private var mutableKeywords = MutableLiveData<Entity>()
 
-    fun getCommendQuestions(subjectId: Int, keywords: String) {
-        mutableKeywords.value = Entity(subjectId, keywords)
+    fun getCommendQuestions(subjectId: Int, questionId: Int, keywords: String) {
+        mutableKeywords.value = Entity(subjectId, questionId, keywords)
     }
 
     val liveCommendQuestions = Transformations.switchMap(mutableKeywords) { obj ->
-        NetworkRepository.getCommendQuestions(obj.subjectId!!, obj.keywords!!)
+        NetworkRepository.getCommendQuestions(obj.subjectId!!, obj.questionId!!, obj.keywords!!)
     }
 
+    //题目列表
+    private var mutableQuestion = MutableLiveData<String>()
 
+    fun getQuestions(subject: String) {
+        mutableQuestion.value = subject
+    }
 
+    val liveQuestion = Transformations.switchMap(mutableQuestion) { subject ->
+        NetworkRepository.getQuestions(subject)
+    }
 }

@@ -109,9 +109,17 @@ object NetworkRepository {
         return result
     }
 
-    fun uploadArticle(obj: Article): LiveData<Response<Any>> {
+    fun uploadArticle(img: File?, obj: Article): LiveData<Response<Any>> {
         val result = MutableLiveData<Response<Any>>()
-        api.uploadArticle(ConstantData.TOKEN!! ,obj).transform(result)
+        val body = if(img == null ) RequestBody.create(MediaType.parse("image/jpg"), "")
+            else RequestBody.create(MediaType.parse("image/jpg"), img)
+        val photo = MultipartBody.Part.createFormData("file",img?.name ?: "", body)
+        val map = HashMap<String, RequestBody>().apply {
+            put("title", RequestBody.create(null, obj.title!!))
+            put("description", RequestBody.create(null, obj.description!!))
+            put("field", RequestBody.create(null, obj.field!!))
+        }
+        api.uploadArticle(ConstantData.TOKEN!! ,map, photo).transform(result)
         return result
     }
 

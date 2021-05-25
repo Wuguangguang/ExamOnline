@@ -62,7 +62,28 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
                     fabEditComment.apply {
                         visibility = View.VISIBLE
                         setOnClickListener {
-
+                            if (ConstantData.isLogin()) {
+                                commentDialog.apply {
+                                    show()
+                                    setTitle("发表评论")
+                                    setEtVisibility(View.VISIBLE)
+                                    setSureListener("发表评论") {
+                                        if (etContent.isNullOrEmpty()) {
+                                            ToastUtils.show(context, "评论内容不可为空！")
+                                        } else {
+                                            mViewModel.editComment(mViewModel.questions[mBinding.examDetailViewpager2.currentItem].id!!, etContent)
+                                            dismiss()
+                                        }
+                                    }
+                                    setCancelListener("取消") {
+                                        cancel()
+                                        dismiss()
+                                    }
+                                }
+                            } else {
+                                val intent = Intent(context, LoginActivity::class.java)
+                                startActivity(intent)
+                            }
                         }
                     }
                     examDetailViewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -82,31 +103,6 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
     private fun initListener() {
         mBinding.examDetailBackImg.setOnClickListener {
             showExitDialog()
-        }
-        mBinding.fabEditComment.setOnClickListener {
-            //发表评论
-            if(ConstantData.isLogin()) {
-                commentDialog.apply {
-                    show()
-                    setTitle("发表评论")
-                    setEtVisibility(View.VISIBLE)
-                    setSureListener("发表评论") {
-                        if(etContent.isNullOrEmpty()) {
-                            ToastUtils.show(context, "评论内容不可为空！")
-                        }else {
-                            mViewModel.editComment(mViewModel.questions[mBinding.examDetailViewpager2.currentItem].id!!, etContent)
-                            dismiss()
-                        }
-                    }
-                    setCancelListener("取消") {
-                        cancel()
-                        dismiss()
-                    }
-                }
-            }else {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
         }
         mBinding.examDetailNextQuest.setOnClickListener {
             if(currentPos < mViewModel.questions.size - 1) {
@@ -173,7 +169,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
         }, {
             ToastUtils.show(this, "发表评论成功")
         })
-        setDataStatus(mViewModel.question) {
+        setDataStatus(mViewModel.question, {}, {
             if(!it.isNullOrEmpty()) {
                 mBinding.examDetailViewpager2.offscreenPageLimit = it.size
                 mViewModel.questions.addAll(it)
@@ -182,7 +178,7 @@ class ExamActivity : BaseMvvmActivity<ActivityExamBinding, ExamViewModel>() {
                 mBinding.examDetailViewpager2.currentItem = 0
                 mBinding.examDetailRecord.text = "0/${mViewModel.questions.size}"
             }
-        }
+        })
         mViewModel.myAnswers.observe(this) {
             mBinding.examDetailRecord.text = "${it.size}/${mViewModel.questions.size}"
         }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.text.InputType
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.FileProvider
@@ -28,10 +29,12 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
     var takePhoto = 1
     var fromAlbum = 2
     private var avatar:Bitmap? = null
+    private var account:String? = null
     lateinit var imageUri: Uri
     lateinit var outputImage: File
     private val pictureSelectDialog by lazy { CommonDialog(this) }
     private val editDialog by lazy { EditDialog(this) }
+
 
     override fun initView() {
         window.statusBarColor = resources.getColor(R.color.COLOR_GREY)
@@ -67,6 +70,7 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                 setTitle("修改昵称")
                 setContent("昵称： ${mBinding.tvUsername.text}")
                 setEtVisibility(View.VISIBLE)
+                setEtInputType(InputType.TYPE_CLASS_TEXT)
                 setSureListener("完成") {
                     if(etContent.isNullOrEmpty()) {
                         Toast.makeText(context, "修改后内容不可为空！", Toast.LENGTH_SHORT).show()
@@ -88,6 +92,7 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                 setTitle("修改用户名")
                 setContent("用户名： ${mBinding.tvUserphone.text}")
                 setEtVisibility(View.VISIBLE)
+                setEtInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
                 setSureListener("完成") {
                     if(etContent.isNullOrEmpty()) {
                         Toast.makeText(context, "修改后内容不可为空！", Toast.LENGTH_SHORT).show()
@@ -104,7 +109,7 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
             }
         }
         mBinding.llUserPwd.setOnClickListener {
-            val intent = Intent(this, ChgPwdActivity::class.java)
+            val intent = Intent(this, ChgPwdActivity::class.java).putExtra("account",account)
             startActivity(intent)
         }
     }
@@ -143,6 +148,7 @@ class MyInfoActivity : BaseMvvmActivity<ActivityMyInfoBinding, MineViewModel>() 
                     outputImage.delete()
                 }
                 outputImage.createNewFile()
+                this.account = it.phone
                 mBinding.tvUsername.text = it.username
                 mBinding.tvUserphone.text = it.phone
                 mBinding.tvAccu.text = "${it.accumulate}"

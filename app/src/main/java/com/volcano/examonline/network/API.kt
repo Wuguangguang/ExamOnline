@@ -9,7 +9,9 @@ import com.volcano.examonline.mvvm.mine.model.UserPwd
 import com.volcano.examonline.mvvm.study.model.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
+import java.io.File
 
 interface API {
 
@@ -58,9 +60,10 @@ interface API {
     fun getArticleComments(@Query("id") id: Int): Observable<Response<List<Comment>>>
 
     // 上传文章
-    @Headers("Content-Type: application/json;charset=UTF-8")
+    @Multipart
     @POST("api/v1/articles/edit")
-    fun uploadArticle(@Header("Authorization") token: String,@Body obj: Article): Observable<Response<Any>>
+    @JvmSuppressWildcards
+    fun uploadArticle(@Header("Authorization") token: String, @PartMap map: Map<String, RequestBody>, @Part img: MultipartBody.Part): Observable<Response<Any>>
 
     @GET("api/v1/articles/search")
     fun searchArticle(@Query("content") content: String): Observable<Response<List<Article>>>

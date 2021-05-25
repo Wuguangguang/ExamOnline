@@ -10,8 +10,12 @@ import com.volcano.examonline.util.ToastUtils
 
 class ChgPwdActivity : BaseMvvmActivity<ActivityChgPwdBinding, MineViewModel>() {
 
+    private var account: String? = null
+
     override fun initView() {
         initToolbar()
+        account = intent.getStringExtra("account")
+        mBinding.tvMyAccount.text = account
     }
 
     private fun initToolbar() {

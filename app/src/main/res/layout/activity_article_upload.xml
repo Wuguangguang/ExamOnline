@@ -53,11 +53,26 @@
         android:background="@null"
         android:layout_below="@id/et_article_title"/>
 
+    <ImageView
+        android:id="@+id/iv_article_img"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_banner_placeholder"
+        android:layout_above="@id/ll_article_field"
+        android:layout_below="@id/et_article_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"/>
+
     <LinearLayout
         android:id="@+id/ll_article_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
@@ -77,6 +92,16 @@
             android:layout_marginStart="10dp"
             android:textColor="@color/COLOR_SECOND_TEXT"
             android:text="生活日常"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/tv_article_select_img"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="选择图片"
+            android:textColor="@color/colorAccent"
             android:textSize="18dp"/>
     </LinearLayout>
 

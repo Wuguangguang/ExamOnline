@@ -57,6 +57,10 @@ public class EditDialog extends Dialog {
         binding.etEditDialog.setVisibility(vis);
     }
 
+    public void setEtInputType(int type) {
+        binding.etEditDialog.setInputType(type);
+    }
+
     public String getEtContent() {
         return binding.etEditDialog.getText().toString();
     }

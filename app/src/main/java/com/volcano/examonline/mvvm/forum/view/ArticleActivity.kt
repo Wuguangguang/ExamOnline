@@ -57,6 +57,10 @@ class ArticleActivity : BaseMvvmActivity<ActivityArticleBinding, ArticleViewMode
         mBinding.tvArticleDate.text = ConstantData.str2Timestamp(article!!.createat!!)
         mBinding.tvArticleContent.text = article!!.description
         mBinding.tvZanNums.text = "${article!!.zannums}"
+        if(!article!!.img.isNullOrEmpty()) {
+            mBinding.ivArticleImg.visibility = View.VISIBLE
+            Glide.with(this).load(article!!.img).into(mBinding.ivArticleImg)
+        }
     }
 
     private fun initListener() {

@@ -50,4 +50,9 @@ class ForumDetailFragment(private val mId : Int) : BaseMvvmFragment<FragmentForu
         mViewModel.getArticles(mId)
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.getArticles(mId)
+    }
+
 }
